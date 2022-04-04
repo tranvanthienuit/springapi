@@ -117,10 +117,16 @@ public class HomeController {
     @GetMapping("/dang-xuat")
     public ResponseEntity<?> logout(HttpServletRequest request) {
         String jwt = getJwtFromRequest(request);
-
         Token token = new Token(jwt);
-        tokenService.removeToken(token);
-        return new ResponseEntity<>(HttpStatus.OK);
+        List<Token> tokenList = tokenService.getAllToken();
+        for (Token token1 : tokenList) {
+            System.out.println(token.getTokenRefesh().equals(token1.getTokenRefesh()));
+            if (token.getTokenRefesh().equals(token1.getTokenRefesh())) {
+                tokenService.removeToken(token);
+                return new ResponseEntity<>(HttpStatus.OK);
+            }
+        }
+       return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
     }
 
     @PostMapping("/dang-ky")
