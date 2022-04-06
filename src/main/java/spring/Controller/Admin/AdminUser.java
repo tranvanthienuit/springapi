@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
-import spring.Entity.Book;
 import spring.Entity.User;
 import spring.Entity.UserList;
 import spring.Service.RoleService;
@@ -17,7 +16,7 @@ import spring.Service.UserService;
 import java.util.List;
 
 @RestController
-public class AdmminUser {
+public class AdminUser {
     @Autowired
     UserService userService;
     @Autowired
