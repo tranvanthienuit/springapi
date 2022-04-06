@@ -27,4 +27,6 @@ public interface BorrowDeRepository extends JpaRepository<BorrowDetail, String> 
     BorrowDetail findBorrowDetailByBorrowDeId(String idBorrowDe);
     @Query("select u.book,count(u.count) from BorrowDetail u group by u.book")
     public Page<Book> getBookFromBorrDe(Pageable pageable);
+    @Query("select u.book,count(u.count) from BorrowDetail u where u.borrow.user.userId=:userId group by u.book")
+    public Page<Book> getBookFromBorrDeAndUser(Pageable pageable,@Param("userId")String userId);
 }

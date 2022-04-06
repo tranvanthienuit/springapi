@@ -77,6 +77,7 @@ public class HomeController {
         Pageable pageable = PageRequest.of(0,8,sort);
         Page<Book> bookPage = borrowDeSevice.getBookFromBorrDe(pageable);
         List<Book> bookList = bookPage.getContent();
+        List<Book> books = borrowDeSevice.getBookFromBorrDeAndUser(pageable,"a");
         return new ResponseEntity<>(bookList,HttpStatus.OK);
     }
     //
