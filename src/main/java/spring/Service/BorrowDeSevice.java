@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import spring.Entity.Book;
 import spring.Entity.BorrowDetail;
 import spring.Repository.BorrowDeRepository;
 
@@ -32,5 +33,8 @@ public class BorrowDeSevice {
 
     public BorrowDetail findBorrowDe(String idBorrowDe){
         return borrowDeRepository.findBorrowDetailByBorrowDeId(idBorrowDe);
+    }
+    public Page<Book> getBookFromBorrDe(Pageable pageable){
+        return borrowDeRepository.getBookFromBorrDe(pageable);
     }
 }

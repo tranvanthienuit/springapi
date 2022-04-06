@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -33,6 +34,7 @@ public class HomeController {
     RoleService roleService;
     @Autowired
     CategoryService categoryService;
+    @Autowired BorrowDeSevice borrowDeSevice;
     @Autowired
     AuthenticationManager manager;
     @Autowired
@@ -62,6 +64,26 @@ public class HomeController {
             return new ResponseEntity<>(bookList, HttpStatus.OK);
         }
     }
+
+
+
+
+
+
+    // khuyến nghị cho khách hàng đang build
+    @GetMapping("/recomen")
+    public ResponseEntity<List<Book>> recommen(){
+        Sort sort = Sort.by("count").descending();
+        Pageable pageable = PageRequest.of(0,8,sort);
+        Page<Book> bookPage = borrowDeSevice.getBookFromBorrDe(pageable);
+        List<Book> bookList = bookPage.getContent();
+        return new ResponseEntity<>(bookList,HttpStatus.OK);
+    }
+    //
+
+
+
+
 
     @GetMapping(value = {"/thu-vien/{page}","/thu-vien"})
     public ResponseEntity<BookList> shop(
