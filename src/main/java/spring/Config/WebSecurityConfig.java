@@ -65,7 +65,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .disable()
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
-                .antMatchers("/xem-tai-khoan","/sua-thong-tin/*","/cap-nhat-anh/*","").authenticated()
+                .antMatchers("/xem-tai-khoan","/sua-thong-tin/*","/cap-nhat-anh/*").authenticated()
                 .and()
                 .authorizeRequests().antMatchers("/librarian/*").hasAnyAuthority("LIBRARIAN","ADMIN")
                 .and()
