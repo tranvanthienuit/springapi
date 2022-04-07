@@ -19,7 +19,9 @@ import spring.Sercurity.userDetail;
 import spring.Service.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import static spring.JWT.JwtAuthenticationFilter.getJwtFromRequest;
 
@@ -34,7 +36,8 @@ public class HomeController {
     RoleService roleService;
     @Autowired
     CategoryService categoryService;
-    @Autowired BorrowDeSevice borrowDeSevice;
+    @Autowired
+    BorrowDeSevice borrowDeSevice;
     @Autowired
     AuthenticationManager manager;
     @Autowired
@@ -46,9 +49,12 @@ public class HomeController {
     @Autowired
     JwtTokenProvider tokenProvider;
 
-    @GetMapping(value = {"/trang-chu/{page}","/trang-chu"})
-    public ResponseEntity<BookList> home(
+    @GetMapping(value = {"/trang-chu/{page}", "/trang-chu"})
+    public ResponseEntity<BookReturn> home(
             @PathVariable(name = "page", required = false) Integer page) throws Exception {
+        BookReturn bookReturn = new BookReturn();
+
+
         BookList bookList = new BookList();
         if (page == null) {
             page = 0;
@@ -56,39 +62,39 @@ public class HomeController {
         Pageable pageable = PageRequest.of(page, 8);
         Page<Book> bookPage = booksService.getAllBooks(pageable);
         List<Book> bookPageContent = bookPage.getContent();
-        if (bookPageContent.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        } else {
-            bookList.setBookList(bookPageContent);
-            bookList.setCount(bookPageContent.size());
-            return new ResponseEntity<>(bookList, HttpStatus.OK);
-        }
-    }
+        bookList.setBookList(bookPageContent);
+        bookList.setCount(bookPageContent.size());
 
 
-
-
-
-
-    // khuyến nghị cho khách hàng đang build
-    @GetMapping("/recomen")
-    public ResponseEntity<List<Book>> recommen(){
         Sort sort = Sort.by("count").descending();
-        Pageable pageable = PageRequest.of(0,8,sort);
-        Page<Book> bookPage = borrowDeSevice.getBookFromBorrDe(pageable);
-        List<Book> bookList = bookPage.getContent();
-        List<Book> books = borrowDeSevice.getBookFromBorrDeAndUser(pageable,"a");
-        return new ResponseEntity<>(bookList,HttpStatus.OK);
+        Pageable pageable1 = PageRequest.of(0, 8, sort);
+        Page<Book> bookPage1 = borrowDeSevice.getBookFromBorrDe(pageable1);
+        List<Book> bookList1 = bookPage1.getContent();
+
+
+        String userDetail = SecurityContextHolder.getContext().getAuthentication().getName();
+        List<Book> bookUser = borrowDeSevice.getBookFromBorrDeAndUser(pageable1, userDetail);
+
+        if (bookUser == null) {
+            bookReturn.setBookList(bookList);
+            bookReturn.setBooks(bookList1);
+            return new ResponseEntity<>(bookReturn, HttpStatus.OK);
+        } else {
+            bookReturn.setBookList(bookList);
+            bookReturn.setBooks(bookUser);
+            return new ResponseEntity<>(bookReturn, HttpStatus.OK);
+        }
+
+
     }
-    //
 
 
-
-
-
-    @GetMapping(value = {"/thu-vien/{page}","/thu-vien"})
-    public ResponseEntity<BookList> shop(
+    @GetMapping(value = {"/thu-vien/{page}", "/thu-vien"})
+    public ResponseEntity<BookReturn> shop(
             @PathVariable(name = "page", required = false) Integer page) throws Exception {
+        BookReturn bookReturn = new BookReturn();
+
+
         BookList bookList = new BookList();
         if (page == null) {
             page = 0;
@@ -96,17 +102,34 @@ public class HomeController {
         Pageable pageable = PageRequest.of(page, 8);
         Page<Book> bookPage = booksService.getAllBooks(pageable);
         List<Book> bookPageContent = bookPage.getContent();
-        if (bookPageContent.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        bookList.setBookList(bookPageContent);
+        bookList.setCount(bookPageContent.size());
+
+
+        Sort sort = Sort.by("count").descending();
+        Pageable pageable1 = PageRequest.of(0, 8, sort);
+        Page<Book> bookPage1 = borrowDeSevice.getBookFromBorrDe(pageable1);
+        List<Book> bookList1 = bookPage1.getContent();
+
+
+        String userDetail = SecurityContextHolder.getContext().getAuthentication().getName();
+        List<Book> bookUser = borrowDeSevice.getBookFromBorrDeAndUser(pageable1, userDetail);
+
+        if (bookUser == null) {
+            bookReturn.setBookList(bookList);
+            bookReturn.setBooks(bookList1);
+            return new ResponseEntity<>(bookReturn, HttpStatus.OK);
         } else {
-            bookList.setBookList(bookPageContent);
-            bookList.setCount(bookPageContent.size());
-            return new ResponseEntity<>(bookList, HttpStatus.OK);
+            bookReturn.setBookList(bookList);
+            bookReturn.setBooks(bookUser);
+            return new ResponseEntity<>(bookReturn, HttpStatus.OK);
         }
+
     }
 
-    @GetMapping(value = {"/xem-tai-khoan/{idUser}","/xem-tai-khoan"})
-    public ResponseEntity<User> about(@RequestBody @PathVariable(value = "idUser",required = false) String idUser) throws Exception {
+
+    @GetMapping(value = {"/xem-tai-khoan/{idUser}", "/xem-tai-khoan"})
+    public ResponseEntity<User> about(@RequestBody @PathVariable(value = "idUser", required = false) String idUser) throws Exception {
         User user = userService.findUserByUserId(idUser);
         if (user == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -115,8 +138,8 @@ public class HomeController {
     }
 
 
-    @GetMapping(value = {"/loai-sach/{idCate}","/loai-sach"})
-    public ResponseEntity<Categories> getCategoryBook(@RequestBody @PathVariable(value = "idCate",required = false) String idCate) throws Exception {
+    @GetMapping(value = {"/loai-sach/{idCate}", "/loai-sach"})
+    public ResponseEntity<Categories> getCategoryBook(@RequestBody @PathVariable(value = "idCate", required = false) String idCate) throws Exception {
         Categories categoriesList = categoryService.findByCategoryId(idCate);
         if (categoriesList == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -131,8 +154,8 @@ public class HomeController {
                 loginReQuest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         userDetail user = (userDetail) authentication.getPrincipal();
-        String accessToken = jwtTokenProvider.generateAccessToken(user.getUserId(),user.getUsername());
-        String refreshToken = jwtTokenProvider.generateRefreshToken(user.getUserId(),user.getUsername());
+        String accessToken = jwtTokenProvider.generateAccessToken(user.getUserId(), user.getUsername());
+        String refreshToken = jwtTokenProvider.generateRefreshToken(user.getUserId(), user.getUsername());
         tokenService.saveToken(new Token(refreshToken));
         return new LoginResponse(accessToken, refreshToken);
     }
@@ -149,7 +172,7 @@ public class HomeController {
                 return new ResponseEntity<>(HttpStatus.OK);
             }
         }
-       return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+        return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
     }
 
     @PostMapping("/dang-ky")
@@ -180,7 +203,7 @@ public class HomeController {
             if (token.getTokenRefesh().equals(token1.getTokenRefesh())) {
                 String userId = tokenProvider.getUserIdFromJWT(jwt);
                 User user = userService.findUserByUserId(userId);
-                String accessToken = jwtTokenProvider.generateAccessToken(user.getUserId(),user.getNameUser());
+                String accessToken = jwtTokenProvider.generateAccessToken(user.getUserId(), user.getNameUser());
                 return ResponseEntity.ok(new LoginResponse(accessToken, token.getTokenRefesh()));
             }
         }

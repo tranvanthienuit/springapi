@@ -47,6 +47,9 @@ public class BorrowDeSevice {
 
     public List<Book> getBookFromBorrDeAndUser(Pageable pageable, String userId) {
         List<Book> recomBook = new ArrayList<>();
+        if (userId.equals("anonymousUser")){
+            userId=" ";
+        }
         Page<Book> bookPage = borrowDeRepository.getBookFromBorrDeAndUser(pageable, userId);
         List<Book> bookList = bookPage.getContent();
         List<Book> books = bookRepository.findAll();
