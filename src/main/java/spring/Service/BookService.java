@@ -47,5 +47,12 @@ public class BookService {
         return booksRepository.findAll(pageable);
     }
 
+    public List<Book> getAllBook() {
+        return booksRepository.findAll();
+    }
+
+    public void findBookAndUpdate(Integer count, String bookId) {
+        booksRepository.findBookAndUpdate(count, bookId);
+    }
 }
 
