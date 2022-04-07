@@ -48,11 +48,17 @@ public class UserCart {
         for (CartBook cartBook : cart) {
             BorrowDetail borrowDetail = new BorrowDetail();
             borrowDetail.setCount(cartBook.getQuantity());
+            List<Book> books = bookService.getAllBook();
+            for (Book book1:books){
+                if (cartBook.getBooks().getNameBook().equals(book1.getNameBook())){
+                    bookService.findBookAndUpdate(book1.getCount()-cartBook.getBooks().getCount(),cartBook.getBooks().getBookId());
+                }
+            }
             borrowDetail.setStatus("exist");
             borrowDetail.setBorrow(borrow);
             borrowDetail.setBook(cartBook.getBooks());
             borrowDeSevice.saveBorrowDe(borrowDetail);
         }
-        return new ResponseEntity<List<CartBook>>(cart, HttpStatus.OK);
+        return new ResponseEntity<>(cart, HttpStatus.OK);
     }
 }
