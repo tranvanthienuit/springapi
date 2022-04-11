@@ -64,11 +64,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf()
                 .disable()
                 .authorizeRequests()
-                .antMatchers("/*").permitAll()
                 .antMatchers("/librarian/*").hasAnyAuthority("LIBRARIAN", "ADMIN")
                 .antMatchers("/user/*").hasAnyAuthority("USER", "ADMIN")
                 .antMatchers("/admin/*").hasAnyAuthority("ADMIN")
-                .antMatchers("/xem-tai-khoan/*", "/sua-thong-tin/*", "/cap-nhat-anh/*","/xem-tai-khoan", "/sua-thong-tin", "/cap-nhat-anh").hasAnyAuthority("USER","ADMIN","LIBRARI")
+                .antMatchers("/xem-tai-khoan/*", "/sua-thong-tin/*", "/cap-nhat-anh/*","/xem-tai-khoan", "/sua-thong-tin", "/cap-nhat-anh").hasAnyAuthority("USER","ADMIN","LIBRARIAN")
                 .and().httpBasic();// Cho phép tất cả mọi người truy cập vào 2 địa chỉ này;
 
         // Thêm một lớp Filter kiểm tra jwt
