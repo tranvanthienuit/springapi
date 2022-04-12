@@ -41,9 +41,14 @@ public class BorrowDeSevice {
         return borrowDeRepository.findBorrowDetailByBorrowDeId(idBorrowDe);
     }
 
+    public List<BorrowDetail> findBorrowDetailsByBorrow(String borrowId){
+        return borrowDeRepository.findBorrowDetailsByBorrow(borrowId);
+    }
+
     public Page<Book> getBookFromBorrDe(Pageable pageable) {
         return borrowDeRepository.getBookFromBorrDe(pageable);
     }
+
 
     public List<Book> getBookFromBorrDeAndUser(Pageable pageable, String userId) {
         List<Book> recomBook = new ArrayList<>();

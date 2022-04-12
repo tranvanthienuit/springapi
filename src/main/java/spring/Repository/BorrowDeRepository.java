@@ -20,13 +20,19 @@ public interface BorrowDeRepository extends JpaRepository<BorrowDetail, String> 
     @Modifying
     @Query("delete from BorrowDetail u where u.borrowDeId=:idBorrowDe")
     public void removeByBorrowDeId(@Param("idBorrowDe") String idBorrowDe);
+
     @Transactional
     @Modifying
     @Query("delete from BorrowDetail u where u.borrow=:idBorrow ")
     public void removeByBorrowId(@Param("idBorrow") String idBorrow);
+
     BorrowDetail findBorrowDetailByBorrowDeId(String idBorrowDe);
+
     @Query("select u.book,count(u.count) from BorrowDetail u group by u.book")
     public Page<Book> getBookFromBorrDe(Pageable pageable);
+
     @Query("select u.book,count(u.count) from BorrowDetail u where u.borrow.user.userId=:userId group by u.book")
-    public Page<Book> getBookFromBorrDeAndUser(Pageable pageable,@Param("userId")String userId);
+    public Page<Book> getBookFromBorrDeAndUser(Pageable pageable, @Param("userId") String userId);
+
+    List<BorrowDetail> findBorrowDetailsByBorrow(String borrowId);
 }

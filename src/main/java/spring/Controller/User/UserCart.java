@@ -13,6 +13,7 @@ import spring.Service.BookService;
 import spring.Service.BorrowDeSevice;
 import spring.Service.BorrowSevice;
 import spring.Service.UserService;
+
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
@@ -47,11 +48,16 @@ public class UserCart {
 
         for (CartBook cartBook : cart) {
             BorrowDetail borrowDetail = new BorrowDetail();
-            borrowDetail.setCount(cartBook.getQuantity());
             List<Book> books = bookService.getAllBook();
-            for (Book book1:books){
-                if (cartBook.getBooks().getNameBook().equals(book1.getNameBook())){
-                    bookService.findBookAndUpdate(book1.getCount()-cartBook.getBooks().getCount(),cartBook.getBooks().getBookId());
+            for (Book book1 : books) {
+                if (cartBook.getBooks().getNameBook().equals(book1.getNameBook())) {
+                    if (book1.getCount() - cartBook.getQuantity() > 0) {
+                        borrowDetail.setCount(cartBook.getQuantity());
+                        bookService.findBookAndUpdate(book1.getCount() - cartBook.getBooks().getCount(), cartBook.getBooks().getBookId());
+                    } else {
+                        bookService.findBookAndUpdate(book1.getCount(), cartBook.getBooks().getBookId());
+                        borrowDetail.setCount(book1.getCount());
+                    }
                 }
             }
             borrowDetail.setStatus("exist");
