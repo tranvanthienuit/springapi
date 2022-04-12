@@ -15,7 +15,7 @@ public class BookService {
     BookRepository booksRepository;
 
     public Page<Book> getAllBooks(Pageable pageable) {
-        return booksRepository.getAllBooks(pageable);
+        return booksRepository.findAll(pageable);
     }
 
     public Book saveBook(Book book) {
