@@ -68,8 +68,7 @@ public class HomeController {
         bookList.setCount(bookPageContent.size());
 
 
-        Sort sort = Sort.by("total").descending();
-        Pageable pageable1 = PageRequest.of(0, 8, sort);
+        Pageable pageable1 = PageRequest.of(0, 4);
         List<Book> bookList1 = borrowDeSevice.getBookFromBorrDe(pageable1);
 
 
@@ -108,8 +107,7 @@ public class HomeController {
         bookList.setCount(bookPageContent.size());
 
 
-        Sort sort = Sort.by("total").descending();
-        Pageable pageable1 = PageRequest.of(0, 8, sort);
+        Pageable pageable1 = PageRequest.of(0, 4);
         List<Book> bookList1 = borrowDeSevice.getBookFromBorrDe(pageable1);
 
 
