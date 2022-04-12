@@ -12,6 +12,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.*;
 import spring.Entity.*;
 import spring.JWT.JwtTokenProvider;
@@ -19,6 +20,7 @@ import spring.Sercurity.userDetail;
 import spring.Service.*;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -161,15 +163,19 @@ public class HomeController {
     }
 
     @GetMapping("/dang-xuat")
-    public ResponseEntity<?> logout(HttpServletRequest request) {
-        String jwt = getJwtFromRequest(request);
-        Token token = new Token(jwt);
-        List<Token> tokenList = tokenService.getAllToken();
-        for (Token token1 : tokenList) {
-            System.out.println(token.getTokenRefesh().equals(token1.getTokenRefesh()));
-            if (token.getTokenRefesh().equals(token1.getTokenRefesh())) {
-                tokenService.removeToken(token);
-                return new ResponseEntity<>(HttpStatus.OK);
+    public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth!=null){
+            String jwt = getJwtFromRequest(request);
+            Token token = new Token(jwt);
+            List<Token> tokenList = tokenService.getAllToken();
+            for (Token token1 : tokenList) {
+                System.out.println(token.getTokenRefesh().equals(token1.getTokenRefesh()));
+                if (token.getTokenRefesh().equals(token1.getTokenRefesh())) {
+                    tokenService.removeToken(token);
+                    new SecurityContextLogoutHandler().logout(request, response, auth);
+                    return new ResponseEntity<>(HttpStatus.OK);
+                }
             }
         }
         return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
