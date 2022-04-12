@@ -70,6 +70,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .disable()
                 .authorizeRequests()
                 .antMatchers("/*").permitAll()
+                .antMatchers("/dang-xuat").authenticated()
                 .antMatchers("/librarian/*").hasAnyAuthority("LIBRARIAN", "ADMIN")
                 .antMatchers("/user/*").hasAnyAuthority("USER", "ADMIN")
                 .antMatchers("/admin/*").hasAnyAuthority("ADMIN")
