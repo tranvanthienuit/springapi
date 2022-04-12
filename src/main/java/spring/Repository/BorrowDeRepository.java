@@ -29,7 +29,7 @@ public interface BorrowDeRepository extends JpaRepository<BorrowDetail, String> 
 
     BorrowDetail findBorrowDetailByBorrowDeId(String idBorrowDe);
 
-    @Query("select u.book,sum(u.count) from BorrowDetail u group by u.book")
+    @Query("select new spring.Entity.BookSelect(u.book,sum(u.count)) from BorrowDetail u group by u.book.bookId")
     public List<BookSelect> getBookFromBorrDe(Pageable pageable);
 
     @Query("select new spring.Entity.BookSelect(u.book,sum(u.count)) from BorrowDetail u where u.borrow.user.userId=:userId group by u.book.bookId")
