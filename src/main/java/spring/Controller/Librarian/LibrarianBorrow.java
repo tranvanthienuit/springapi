@@ -51,4 +51,13 @@ public class LibrarianBorrow {
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+    @GetMapping(value = {"/librarian/tim-borrow/{userId}","/librarian   /tim-borrow"})
+    public ResponseEntity<List<Borrow>> findBorrow(@PathVariable(name = "userId",required = false)String userId){
+        if (userId==null){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } else {
+            List<Borrow> borrowList = borrowSevice.findBorrowsByUser(userId);
+            return new ResponseEntity<>(borrowList,HttpStatus.OK);
+        }
+    }
 }
