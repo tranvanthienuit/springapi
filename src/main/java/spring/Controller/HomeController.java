@@ -74,10 +74,11 @@ public class HomeController {
         List<Book> bookList1 = bookPage1.getContent();
 
 
-        String userDetail = SecurityContextHolder.getContext().getAuthentication().getName();
-        List<Book> bookUser = borrowDeSevice.getBookFromBorrDeAndUser(pageable1, userDetail);
+        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userService.findUserName(userName);
+        List<Book> bookUser = borrowDeSevice.getBookFromBorrDeAndUser(pageable1, user.getUserId());
 
-        if (bookUser == null) {
+        if (bookUser.isEmpty()) {
             bookReturn.setBookList(bookList);
             bookReturn.setBooks(bookList1);
             return new ResponseEntity<>(bookReturn, HttpStatus.OK);
@@ -114,8 +115,9 @@ public class HomeController {
         List<Book> bookList1 = bookPage1.getContent();
 
 
-        String userDetail = SecurityContextHolder.getContext().getAuthentication().getName();
-        List<Book> bookUser = borrowDeSevice.getBookFromBorrDeAndUser(pageable1, userDetail);
+        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
+        User user = userService.findUserName(userName);
+        List<Book> bookUser = borrowDeSevice.getBookFromBorrDeAndUser(pageable1, user.getUserId());
 
         if (bookUser == null) {
             bookReturn.setBookList(bookList);
