@@ -77,7 +77,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/admin/*").hasAnyAuthority("ADMIN")
                 .antMatchers("/xem-tai-khoan/*", "/sua-thong-tin/*", "/cap-nhat-anh/*","/xem-tai-khoan", "/sua-thong-tin", "/cap-nhat-anh").hasAnyAuthority("USER","ADMIN","LIBRARIAN")
                 .and()
-                .logout().logoutSuccessHandler(new SimpleUrlLogoutSuccessHandler()).permitAll()
+                .logout().logoutUrl("/dang-xuat").permitAll()
+                .logoutSuccessHandler(new SimpleUrlLogoutSuccessHandler()).permitAll()
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
                 .and().httpBasic();// Cho phép tất cả mọi người truy cập vào 2 địa chỉ này;
 
         // Thêm một lớp Filter kiểm tra jwt
