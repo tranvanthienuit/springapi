@@ -168,7 +168,6 @@ public class HomeController {
             Token token = new Token(jwt);
             List<Token> tokenList = tokenService.getAllToken();
             for (Token token1 : tokenList) {
-                System.out.println(token.getTokenRefesh().equals(token1.getTokenRefesh()));
                 if (token.getTokenRefesh().equals(token1.getTokenRefesh())) {
                     tokenService.removeToken(token);
                     new SecurityContextLogoutHandler().logout(request, response, auth);

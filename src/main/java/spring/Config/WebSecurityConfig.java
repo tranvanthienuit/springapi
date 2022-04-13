@@ -12,6 +12,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.SimpleUrlLogoutSuccessHandler;
 import spring.Entity.User;
 import spring.JWT.JwtAuthenticationFilter;
 import spring.Sercurity.userServiceDetail;
@@ -75,6 +76,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/user/*").hasAnyAuthority("USER", "ADMIN")
                 .antMatchers("/admin/*").hasAnyAuthority("ADMIN")
                 .antMatchers("/xem-tai-khoan/*", "/sua-thong-tin/*", "/cap-nhat-anh/*","/xem-tai-khoan", "/sua-thong-tin", "/cap-nhat-anh").hasAnyAuthority("USER","ADMIN","LIBRARIAN")
+                .and()
+                .logout().logoutSuccessHandler(new SimpleUrlLogoutSuccessHandler()).permitAll()
                 .and().httpBasic();// Cho phép tất cả mọi người truy cập vào 2 địa chỉ này;
 
         // Thêm một lớp Filter kiểm tra jwt
