@@ -62,6 +62,8 @@ public class User {
     }
 
     public String getImage() {
+        if (image==null)
+            return null;
         return new String(image);
     }
 }
