@@ -39,7 +39,6 @@ public class User {
     @Column(name = "image")
     @Lob
     @Basic(fetch = FetchType.LAZY)
-    @ToString.Exclude
     private byte[] image;
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "RoleId")
@@ -56,5 +55,13 @@ public class User {
     @Override
     public int hashCode() {
         return getClass().hashCode();
+    }
+
+    public void setImage(String image) {
+        this.image = image.getBytes();
+    }
+
+    public String getImage() {
+        return new String(image);
     }
 }

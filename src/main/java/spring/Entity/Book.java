@@ -55,4 +55,11 @@ public class Book {
     public int hashCode() {
         return getClass().hashCode();
     }
+    public void setImage(String image) {
+        this.image = image.getBytes();
+    }
+
+    public String getImage() {
+        return new String(image);
+    }
 }
