@@ -60,7 +60,7 @@ public class UserService {
         userRepository.editUserSex(sex, userid);
     }
 
-    public void editImage(Base64 image, String userid) {
+    public void editImage(byte[] image, String userid) {
         userRepository.editImage(image, userid);
     }
 

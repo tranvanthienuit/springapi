@@ -52,7 +52,7 @@ public interface UserRepository extends JpaRepository<User, String> {
     @Transactional
     @Modifying
     @Query("update User u set u.image=:image where u.userId=:userid")
-    void editImage(@Param("image") Base64 image, @Param("userid") String userid);
+    void editImage(@Param("image") byte[] image, @Param("userid") String userid);
 
     User findUserByUserId(String userid);
 

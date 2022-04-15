@@ -229,7 +229,7 @@ public class HomeController {
         Random rnd = new Random();
         int number = rnd.nextInt(999999);
         String code =  String.format("%06d", number);
-        userService.setPassword(code,email);
+        userService.setPassword(passwordEncoder.encode(code),email);
         mail.setMailContent("Code: "+code);
         mailService.sendEmail(mail);
         return new ResponseEntity<>(HttpStatus.OK);
