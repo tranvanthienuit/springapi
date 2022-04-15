@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,14 +15,13 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.web.bind.annotation.*;
 import spring.Entity.*;
 import spring.JWT.JwtTokenProvider;
+import spring.Repository.MailService;
 import spring.Sercurity.userDetail;
 import spring.Service.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 import static spring.JWT.JwtAuthenticationFilter.getJwtFromRequest;
 
@@ -50,6 +48,8 @@ public class HomeController {
     TokenService tokenService;
     @Autowired
     JwtTokenProvider tokenProvider;
+    @Autowired
+    MailService mailService;
 
     @GetMapping(value = {"/trang-chu/{page}", "/trang-chu"})
     public ResponseEntity<BookReturn> home(
@@ -128,7 +128,7 @@ public class HomeController {
     }
 
 
-    @GetMapping(value = { "/xem-tai-khoan"})
+    @GetMapping(value = {"/xem-tai-khoan"})
     public ResponseEntity<User> getUser() throws Exception {
         userDetail userDetail = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.findUserByUserId(userDetail.getUserId());
@@ -141,8 +141,8 @@ public class HomeController {
 
     @GetMapping(value = {"/loai-sach/{CategoryId}", "/loai-sach"})
     public ResponseEntity<List<Categories>> getCategoryBook(@RequestBody @PathVariable(value = "CategoryId", required = false) String CategoryId) throws Exception {
-        if (CategoryId==null){
-            return new ResponseEntity<>(categoryService.getAllCategory(),HttpStatus.OK);
+        if (CategoryId == null) {
+            return new ResponseEntity<>(categoryService.getAllCategory(), HttpStatus.OK);
         } else {
             List<Categories> categoriesList = categoryService.findByCategoryId(CategoryId);
             if (categoriesList == null) {
@@ -217,5 +217,16 @@ public class HomeController {
         }
         return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 
+    }
+
+    @PostMapping("/quen-mat-khau/{email}")
+    public ResponseEntity<?> forgetPass(@PathVariable("email") String email) {
+        Mail mail = new Mail();
+        mail.setMailFrom("tranvanthienuit@gmail.com");
+        mail.setMailTo(email);
+        mail.setMailSubject("Quên password");
+        mail.setMailContent("a");
+        mailService.sendEmail(mail);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 }
