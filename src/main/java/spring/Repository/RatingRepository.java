@@ -10,6 +10,6 @@ import java.util.List;
 
 @Repository
 public interface RatingRepository extends JpaRepository<Rating,String> {
-    @Query("select new spring.Entity.BookRating(u,avg (u.rating))from Rating u group by u.bookId")
-    List<BookRating> getAllBookRating();
+//    @Query("select new spring.Entity.BookRating(u,avg (u.rating))from Rating u group by u.bookId")
+//    List<BookRating> getAllBookRating();
 }
