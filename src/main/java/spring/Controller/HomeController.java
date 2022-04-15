@@ -14,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.web.bind.annotation.*;
 import spring.Entity.*;
+import spring.Entity.Model.*;
 import spring.JWT.JwtTokenProvider;
 import spring.Repository.MailService;
 import spring.Sercurity.userDetail;

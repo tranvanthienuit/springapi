@@ -1,5 +1,4 @@
-package spring.Entity;
-
+package spring.Entity.Model;
 
 import lombok.*;
 import org.hibernate.Hibernate;
@@ -7,38 +6,38 @@ import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Objects;
-import java.util.UUID;
 
 @Entity
-@Table(name = "Borrow")
+@Table(name = "BorrowDetail")
 @Getter
 @Setter
 @ToString
 @RequiredArgsConstructor
-public class Borrow {
+public class BorrowDetail {
 
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
-    @Column(name = "BorrowId", updatable = false, nullable = false)
+    @Column(name = "BorrowDeId", updatable = false)
 //    @org.hibernate.annotations.Type(type="org.hibernate.type.PostgresUUIDType")
-    private String borrowId;
-    @Column(name = "BorrowDate")
-    @Temporal(TemporalType.TIMESTAMP)
-    private java.util.Date borrowDate;
-    @Column(name = "ReturnDate")
-    @Temporal(TemporalType.TIMESTAMP)
-    private java.util.Date returnDate;
+    private String borrowDeId;
+    @Column(name = "Status")
+    private String status;
+    @Column(name = "count")
+    private Integer count;
     @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "UserId")
-    private User user;
+    @JoinColumn(name = "BorrowId")
+    private Borrow borrow;
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "BooksId")
+    private Book book;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        Borrow borrow = (Borrow) o;
-        return borrowId != null && Objects.equals(borrowId, borrow.borrowId);
+        BorrowDetail that = (BorrowDetail) o;
+        return borrowDeId != null && Objects.equals(borrowDeId, that.borrowDeId);
     }
 
     @Override

@@ -7,7 +7,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import spring.Entity.User;
+import spring.Entity.Model.User;
 import spring.Sercurity.userDetail;
 import spring.Service.UserService;
 

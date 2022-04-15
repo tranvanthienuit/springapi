@@ -1,4 +1,4 @@
-package spring.Entity;
+package spring.Entity.Model;
 
 import lombok.*;
 

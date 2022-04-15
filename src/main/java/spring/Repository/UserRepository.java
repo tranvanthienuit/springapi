@@ -5,10 +5,9 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-import spring.Entity.User;
+import spring.Entity.Model.User;
 
 import javax.transaction.Transactional;
-import java.util.Base64;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
