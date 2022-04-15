@@ -64,8 +64,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                                     ex.getMessage()
                             );
                         }
-                ).and()
-                .cors()
+                )
                 .and()
                 .csrf()
                 .disable()
