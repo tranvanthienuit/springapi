@@ -12,10 +12,10 @@ import java.util.List;
 public class RatingService {
     @Autowired
     RatingRepository ratingRepository;
-    public void save(Rating rating){
-        ratingRepository.save(rating);
-    }
-    public List<Book> bookRating(){
-
-    }
+//    public void save(Rating rating){
+//        ratingRepository.save(rating);
+//    }
+//    public List<Book> bookRating(){
+//
+//    }
 }
