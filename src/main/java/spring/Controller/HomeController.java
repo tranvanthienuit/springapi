@@ -190,7 +190,7 @@ public class HomeController {
             return new ResponseEntity<>(HttpStatus.SERVICE_UNAVAILABLE);
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        Role role = roleService.fineRoleByName("ADMIN");
+        Role role = roleService.fineRoleByName("USER");
         user.setRole(role);
         userService.saveUser(user);
         return new ResponseEntity<>(user, HttpStatus.OK);
