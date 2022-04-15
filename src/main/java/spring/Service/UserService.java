@@ -75,4 +75,8 @@ public class UserService {
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
+
+    public void setPassword(String password, String email) {
+        userRepository.setPassword(password, email);
+    }
 }

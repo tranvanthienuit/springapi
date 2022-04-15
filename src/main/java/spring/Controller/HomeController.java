@@ -22,6 +22,7 @@ import spring.Service.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Random;
 
 import static spring.JWT.JwtAuthenticationFilter.getJwtFromRequest;
 
@@ -225,7 +226,11 @@ public class HomeController {
         mail.setMailFrom("tranvanthienuit@gmail.com");
         mail.setMailTo(email);
         mail.setMailSubject("Quên password");
-        mail.setMailContent("a");
+        Random rnd = new Random();
+        int number = rnd.nextInt(999999);
+        String code =  String.format("%06d", number);
+        userService.setPassword(code,email);
+        mail.setMailContent("Code: "+code);
         mailService.sendEmail(mail);
         return new ResponseEntity<>(HttpStatus.OK);
     }
