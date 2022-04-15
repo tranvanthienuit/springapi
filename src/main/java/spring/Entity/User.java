@@ -24,6 +24,8 @@ public class User {
     @Column(name = "UserId", updatable = false, nullable = false)
 //    @org.hibernate.annotations.Type(type="org.hibernate.type.PostgresUUIDType")
     private String userId;
+    @Column(name = "fullName")
+    private String fullName;
     @Column(name = "NameUser")
     private String nameUser;
     @Column(name = "Password")

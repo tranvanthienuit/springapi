@@ -139,12 +139,16 @@ public class HomeController {
 
 
     @GetMapping(value = {"/loai-sach/{CategoryId}", "/loai-sach"})
-    public ResponseEntity<Categories> getCategoryBook(@RequestBody @PathVariable(value = "CategoryId", required = false) String CategoryId) throws Exception {
-        Categories categoriesList = categoryService.findByCategoryId(CategoryId);
-        if (categoriesList == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    public ResponseEntity<List<Categories>> getCategoryBook(@RequestBody @PathVariable(value = "CategoryId", required = false) String CategoryId) throws Exception {
+        if (CategoryId==null){
+            return new ResponseEntity<>(categoryService.getAllCategory(),HttpStatus.OK);
+        } else {
+            List<Categories> categoriesList = categoryService.findByCategoryId(CategoryId);
+            if (categoriesList == null) {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+            return new ResponseEntity<>(categoriesList, HttpStatus.OK);
         }
-        return new ResponseEntity<>(categoriesList, HttpStatus.OK);
     }
 
 
