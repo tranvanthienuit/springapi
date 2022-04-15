@@ -128,9 +128,10 @@ public class HomeController {
     }
 
 
-    @GetMapping(value = {"/xem-tai-khoan/{userId}", "/xem-tai-khoan"})
-    public ResponseEntity<User> about(@RequestBody @PathVariable(value = "userId", required = false) String userId) throws Exception {
-        User user = userService.findUserByUserId(userId);
+    @GetMapping(value = { "/xem-tai-khoan"})
+    public ResponseEntity<User> getUser() throws Exception {
+        userDetail userDetail = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.findUserByUserId(userDetail.getUserId());
         if (user == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
