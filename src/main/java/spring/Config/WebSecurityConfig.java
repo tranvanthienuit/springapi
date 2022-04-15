@@ -1,6 +1,5 @@
 package spring.Config;
 
-import com.sun.tools.javac.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,6 +19,7 @@ import spring.JWT.JwtAuthenticationFilter;
 import spring.Sercurity.userServiceDetail;
 
 import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
