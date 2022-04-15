@@ -4,7 +4,6 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
@@ -16,12 +15,11 @@ import javax.persistence.*;
 @RequiredArgsConstructor
 public class Rating {
     @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    @GeneratedValue()
     @Column(name = "RatingId", updatable = false, nullable = false)
     //    @org.hibernate.annotations.Type(type="org.hibernate.type.PostgresUUIDType")
     private String ratingId;
     private String userId;
     private String bookId;
-    private float rating;
+    private int rating;
 }
