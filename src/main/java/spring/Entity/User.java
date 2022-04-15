@@ -39,8 +39,6 @@ public class User {
     @Column(name = "Sex")
     private String sex;
     @Column(name = "image")
-    @Lob
-    @Basic(fetch = FetchType.LAZY)
     private byte[] image;
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "RoleId")

@@ -35,9 +35,6 @@ public class Book {
     @Column(name = "Description")
     private String description;
     @Column(name = "image")
-    @Lob
-    @Basic(fetch = FetchType.LAZY)
-    @ToString.Exclude
     private byte[] image;
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "CategoryId")
