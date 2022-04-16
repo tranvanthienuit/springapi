@@ -20,6 +20,9 @@ public class UserController {
     public ResponseEntity<?> editInfo(@RequestBody(required = false) User user) throws Exception {
         userDetail userDetail = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user1 = userService.findUserByUserId(userDetail.getUserId());
+        if(user.getFullName()!=null){
+            userService.editUserFullname(user.getFullName(), user.getUserId());
+        }
         if (user.getNameUser() != null) {
             userService.editUserName(user.getNameUser(), user1.getUserId());
         }
