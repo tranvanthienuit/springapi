@@ -17,31 +17,39 @@ public class UserController {
     UserService userService;
 
     @PostMapping("/sua-thong-tin")
-    public ResponseEntity<?> editInfo(@RequestBody(required = false) User user) throws Exception {
+    public ResponseEntity<String> editInfo(@RequestBody(required = false) User user) throws Exception {
         userDetail userDetail = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user1 = userService.findUserByUserId(userDetail.getUserId());
+        String info=null;
         if(user.getFullName()!=null){
             userService.editUserFullname(user.getFullName(), user.getUserId());
+            info = user.getFullName();
         }
         if (user.getNameUser() != null) {
             userService.editUserName(user.getNameUser(), user1.getUserId());
+            info = user.getNameUser();
         }
         if (user.getPassword() != null) {
             userService.editUserPass(user.getPassword(), user1.getUserId());
+            info = user.getPassword();
         }
         if (user.getAddress() != null) {
             userService.editUserAdress(user.getAddress(), user1.getUserId());
+            info = user.getAddress();
         }
         if (user.getTelephone() != null) {
             userService.editUserTelephone(user.getTelephone(), user1.getUserId());
+            info = user.getTelephone();
         }
         if (user.getEmail() != null) {
             userService.editUserEmail(user.getEmail(), user1.getUserId());
+            info = user.getEmail();
         }
         if (user.getSex() != null) {
             userService.editUserSex(user.getSex(), user1.getUserId());
+            info = user.getSex();
         }
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(info,HttpStatus.OK);
     }
 
     @PostMapping("/cap-nhat-anh")
