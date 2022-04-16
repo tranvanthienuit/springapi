@@ -25,32 +25,34 @@ public class UserController {
         if(user.getFullName()!=null){
             userService.editUserFullname(user.getFullName(), user.getUserId());
             info = user.getFullName();
+            return new ResponseEntity<>(info,HttpStatus.OK);
         }
         if (user.getNameUser() != null) {
             userService.editUserName(user.getNameUser(), user1.getUserId());
             info = user.getNameUser();
-        }
-        if (user.getPassword() != null) {
-            userService.editUserPass(user.getPassword(), user1.getUserId());
-            info = user.getPassword();
+            return new ResponseEntity<>(info,HttpStatus.OK);
         }
         if (user.getAddress() != null) {
             userService.editUserAdress(user.getAddress(), user1.getUserId());
             info = user.getAddress();
+            return new ResponseEntity<>(info,HttpStatus.OK);
         }
         if (user.getTelephone() != null) {
             userService.editUserTelephone(user.getTelephone(), user1.getUserId());
             info = user.getTelephone();
+            return new ResponseEntity<>(info,HttpStatus.OK);
         }
         if (user.getEmail() != null) {
             userService.editUserEmail(user.getEmail(), user1.getUserId());
             info = user.getEmail();
+            return new ResponseEntity<>(info,HttpStatus.OK);
         }
         if (user.getSex() != null) {
             userService.editUserSex(user.getSex(), user1.getUserId());
             info = user.getSex();
+            return new ResponseEntity<>(info,HttpStatus.OK);
         }
-        return new ResponseEntity<>(info,HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
     @PostMapping("/cap-nhat-anh")
@@ -61,11 +63,15 @@ public class UserController {
         userService.editImage(newImage, user.getUserId());
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
-//    @PostMapping("/sua-mat-khau/{old-password}/{new-password}")
-//    public ResponseEntity<?> editPassword(@RequestBody @PathVariable("old-password") String oldPassword,@RequestBody @PathVariable("new-password") String newPassword){
-//        userDetail userDetail = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        User user = userService.findUserByUserId(userDetail.getUserId());
-//        if (!oldPassword.equals(user.getPassword()))
-//
-//    }
+    @PostMapping("/sua-mat-khau/{old-password}/{new-password}")
+    public ResponseEntity<?> editPassword(@RequestBody @PathVariable("old-password") String oldPassword,@RequestBody @PathVariable("new-password") String newPassword){
+        userDetail userDetail = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.findUserByUserId(userDetail.getUserId());
+        if (!oldPassword.equals(user.getPassword())){
+            return new ResponseEntity<>("mat khau cu sai",HttpStatus.BAD_REQUEST);}
+        else {
+            userService.editUserPass(newPassword,user.getUserId());
+            return new ResponseEntity<>("thanh cong roi ban ey",HttpStatus.OK);
+        }
+    }
 }
