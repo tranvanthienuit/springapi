@@ -34,7 +34,7 @@ public class LibrarianBorrow {
         if (page == null) {
             page = 0;
         }
-        Pageable pageable = PageRequest.of(page, 16);
+        Pageable pageable = PageRequest.of(page, 4);
         Page<Borrow> borrowPage = borrowSevice.getAllBorrow(pageable);
         List<Borrow> borrowPageContent = borrowPage.getContent();
         if (borrowPageContent.isEmpty()) {

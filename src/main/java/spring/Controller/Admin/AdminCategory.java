@@ -41,7 +41,7 @@ public class AdminCategory {
         if (page == null) {
             page = 0;
         }
-        Pageable pageable = PageRequest.of(page, 16);
+        Pageable pageable = PageRequest.of(page, 4);
         Page<Categories> categoriesList = categoryService.getAllCate(pageable);
         List<Categories> categoriesListContent = categoriesList.getContent();
         if (categoriesListContent.isEmpty()) {

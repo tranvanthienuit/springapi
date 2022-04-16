@@ -43,7 +43,7 @@ public class LibraryUser {
         if (page == null) {
             page = 0;
         }
-        Pageable pageable = PageRequest.of(page, 16);
+        Pageable pageable = PageRequest.of(page, 4);
         Page<User> userPage = userService.getAllUser(pageable);
         List<User> userPageContent = userPage.getContent();
         if (userPageContent.isEmpty()) {

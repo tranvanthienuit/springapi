@@ -29,7 +29,7 @@ public class AdminBook {
         if (page == null) {
             page = 0;
         }
-        Pageable pageable = PageRequest.of(page, 8);
+        Pageable pageable = PageRequest.of(page, 4);
         Page<Book> bookPage = booksService.getAllBooks(pageable);
         List<Book> bookPageContent = bookPage.getContent();
         if (bookPageContent.isEmpty()) {
