@@ -18,39 +18,29 @@ public class UserController {
     UserService userService;
 
     @PostMapping("/sua-thong-tin")
-    public ResponseEntity<String> editInfo(@RequestBody(required = false) User user) throws Exception {
+    public ResponseEntity<User> editInfo(@RequestBody(required = false) User user) throws Exception {
         userDetail userDetail = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user1 = userService.findUserByUserId(userDetail.getUserId());
-        String info=null;
         if(user.getFullName()!=null){
-            userService.editUserFullname(user.getFullName(), user.getUserId());
-            info = user.getFullName();
-            return new ResponseEntity<>(info,HttpStatus.OK);
+            userService.editUserFullname(user.getFullName(), userDetail.getUserId());
         }
         if (user.getNameUser() != null) {
-            userService.editUserName(user.getNameUser(), user1.getUserId());
-            info = user.getNameUser();
-            return new ResponseEntity<>(info,HttpStatus.OK);
+            userService.editUserName(user.getNameUser(), userDetail.getUserId());
         }
         if (user.getAddress() != null) {
-            userService.editUserAdress(user.getAddress(), user1.getUserId());
-            info = user.getAddress();
-            return new ResponseEntity<>(info,HttpStatus.OK);
+            userService.editUserAdress(user.getAddress(), userDetail.getUserId());
         }
         if (user.getTelephone() != null) {
-            userService.editUserTelephone(user.getTelephone(), user1.getUserId());
-            info = user.getTelephone();
-            return new ResponseEntity<>(info,HttpStatus.OK);
+            userService.editUserTelephone(user.getTelephone(), userDetail.getUserId());
         }
         if (user.getEmail() != null) {
-            userService.editUserEmail(user.getEmail(), user1.getUserId());
-            info = user.getEmail();
-            return new ResponseEntity<>(info,HttpStatus.OK);
+            userService.editUserEmail(user.getEmail(), userDetail.getUserId());
         }
         if (user.getSex() != null) {
-            userService.editUserSex(user.getSex(), user1.getUserId());
-            info = user.getSex();
-            return new ResponseEntity<>(info,HttpStatus.OK);
+            userService.editUserSex(user.getSex(), userDetail.getUserId());
+        }
+        user = userService.findUserByUserId(userDetail.getUserId());
+        if (user!=null){
+            return new ResponseEntity<>(user,HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
