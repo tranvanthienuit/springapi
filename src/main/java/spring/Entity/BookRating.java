@@ -10,5 +10,5 @@ import spring.Entity.Model.Book;
 @NoArgsConstructor
 public class BookRating {
     private Book book;
-    private float rating;
+    private Double rating;
 }

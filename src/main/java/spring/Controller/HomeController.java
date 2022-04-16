@@ -52,6 +52,7 @@ public class HomeController {
     JwtTokenProvider tokenProvider;
     @Autowired
     MailService mailService;
+    @Autowired RatingService ratingService;
 
     @GetMapping(value = {"/trang-chu/{page}", "/trang-chu"})
     public ResponseEntity<BookReturn> home(
@@ -78,13 +79,18 @@ public class HomeController {
         User user = userService.findUserName(userName);
         List<Book> bookUser = borrowDeSevice.getBookFromBorrDeAndUser(pageable1, user.getUserId());
 
+
+        List<BookRating> bookRatings = ratingService.bookRating();
+
         if (bookUser.isEmpty()) {
             bookReturn.setBookList(bookList);
             bookReturn.setBooks(bookList1);
+            bookReturn.setBookRatings(bookRatings);
             return new ResponseEntity<>(bookReturn, HttpStatus.OK);
         } else {
             bookReturn.setBookList(bookList);
             bookReturn.setBooks(bookUser);
+            bookReturn.setBookRatings(bookRatings);
             return new ResponseEntity<>(bookReturn, HttpStatus.OK);
         }
 
@@ -117,13 +123,18 @@ public class HomeController {
         User user = userService.findUserName(userName);
         List<Book> bookUser = borrowDeSevice.getBookFromBorrDeAndUser(pageable1, user.getUserId());
 
+
+        List<BookRating> bookRatings = ratingService.bookRating();
+
         if (bookUser == null) {
             bookReturn.setBookList(bookList);
             bookReturn.setBooks(bookList1);
+            bookReturn.setBookRatings(bookRatings);
             return new ResponseEntity<>(bookReturn, HttpStatus.OK);
         } else {
             bookReturn.setBookList(bookList);
             bookReturn.setBooks(bookUser);
+            bookReturn.setBookRatings(bookRatings);
             return new ResponseEntity<>(bookReturn, HttpStatus.OK);
         }
 
@@ -234,5 +245,16 @@ public class HomeController {
         mail.setMailContent("Code: "+code);
         mailService.sendEmail(mail);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @PostMapping(value = {"/danh-gia-sach/{bookId}/{star}","/danh-gia-sach"})
+    public void appriciateBook(@PathVariable(value = "bookId",required = false)String bookId,@PathVariable(value = "star",required = false)int star){
+        Rating rating = new Rating();
+        userDetail userDetail = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.findUserByUserId(userDetail.getUserId());
+        Book book = booksService.findBooksByBookId(bookId);
+        rating.setUser(user);
+        rating.setBook(book);
+        rating.setRating(star);
+        ratingService.save(rating);
     }
 }

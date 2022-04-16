@@ -13,4 +13,5 @@ import java.util.List;
 public class BookReturn {
     private BookList bookList;
     private List<Book> books;
+    private List<BookRating> bookRatings;
 }
