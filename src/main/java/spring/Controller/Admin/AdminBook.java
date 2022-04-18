@@ -45,7 +45,7 @@ public class AdminBook {
     public ResponseEntity<Book> saveBook(@RequestBody Book book) throws Exception {
         List<Book> books = booksService.getAllBook();
         for (Book book1 : books) {
-            if (book.getNameBook().equals(book1.getNameBook())) {
+            if (book.getNameBook().equals(book1.getNameBook()) && book.getBookId().equals(book1.getBookId())) {
                 booksService.findBookAndUpdate(book1.getCount() + book.getCount(), book.getBookId());
                 return new ResponseEntity<>(HttpStatus.OK);
             }

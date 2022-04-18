@@ -6,6 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,7 +30,7 @@ public class AdminBorrowDe {
     @Autowired
     BookService bookService;
 
-    @GetMapping(value = {"/admin/xoa-borrow-detail/{borrowDeId}", "/admin/xoa-borrow-detail"})
+    @DeleteMapping(value = {"/admin/xoa-borrow-detail/{borrowDeId}", "/admin/xoa-borrow-detail"})
     public ResponseEntity<BorrowDetail> removeBorrowDe(@PathVariable(value = "borrowDeId", required = false) String borrowDeId) throws Exception {
         if (borrowDeSevice.findBorrowDe(borrowDeId) != null) {
             BorrowDetail borrowDetail = borrowDeSevice.findBorrowDe(borrowDeId);

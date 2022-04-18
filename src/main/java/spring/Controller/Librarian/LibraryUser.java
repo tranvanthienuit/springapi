@@ -6,6 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,7 +25,7 @@ public class LibraryUser {
     RoleService roleService;
 
 
-    @GetMapping(value = {"/librarian/xoa-user/{userId}", "/librarian/xoa-user"})
+    @DeleteMapping(value = {"/librarian/xoa-user/{userId}", "/librarian/xoa-user"})
     public ResponseEntity<User> removeUser(@PathVariable(value = "userId", required = false) String userId) throws Exception {
         if (userService.findUserByUserId(userId) != null) {
             if (!userService.countUser().equals(1)) {
