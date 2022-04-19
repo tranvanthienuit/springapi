@@ -42,7 +42,7 @@ public class AdminBook {
     }
 
     @PostMapping(value = "/admin/luu-sach")
-    public ResponseEntity<Book> saveBook(@RequestBody Book book) throws Exception {
+    public ResponseEntity<String> saveBook(@RequestBody Book book) throws Exception {
         List<Book> books = booksService.getAllBook();
         for (Book book1 : books) {
             if (book.getNameBook().equals(book1.getNameBook()) && book.getBookId().equals(book1.getBookId())) {
@@ -54,15 +54,15 @@ public class AdminBook {
         java.sql.Date date = java.sql.Date.valueOf(ldate);
         book.setDayAdd(date);
         booksService.saveBook(book);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>("successful",HttpStatus.OK);
     }
 
     @GetMapping(value = {"/admin/xoa-sach/{bookId}", "/admin/xoa-sach"})
-    public ResponseEntity<Book> removeBook(@PathVariable(value = "bookId", required = false) String bookId) throws Exception {
+    public ResponseEntity<String> removeBook(@PathVariable(value = "bookId", required = false) String bookId) throws Exception {
         if (booksService.findBooksByBookId(bookId) != null) {
             booksService.removeBookByBookId(bookId);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>("successful",HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>("error",HttpStatus.NOT_FOUND);
     }
 }
