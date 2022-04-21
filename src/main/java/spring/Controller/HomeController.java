@@ -246,7 +246,7 @@ public class HomeController {
         mailService.sendEmail(mail);
         return new ResponseEntity<>("successful",HttpStatus.OK);
     }
-    @PostMapping(value = {"/danh-gia-sach/{bookId}/{star}","/danh-gia-sach"})
+    @PostMapping(value = {"/danh-gia-sach/{bookId5}/{star}","/danh-gia-sach"})
     public void appriciateBook(@PathVariable(value = "bookId",required = false)String bookId,@PathVariable(value = "star",required = false)int star){
         Rating rating = new Rating();
         userDetail userDetail = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
