@@ -31,7 +31,7 @@ public class AdminCategory {
             categoryService.removeCategoriesByCategoryId(categoryId);
             return new ResponseEntity<>("successful",HttpStatus.OK);
         }
-        return new ResponseEntity<>("error",HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping(value = {"/admin/xem-tat-ca-loai-sach/{page}", "/admin/xem-tat-ca-loai-sach"})
@@ -45,7 +45,7 @@ public class AdminCategory {
         Page<Categories> categoriesList = categoryService.getAllCate(pageable);
         List<Categories> categoriesListContent = categoriesList.getContent();
         if (categoriesListContent.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.OK);
         } else {
             cateList.setCategoriesList(categoriesListContent);
             cateList.setCount(categoryService.getAllCategory().size());

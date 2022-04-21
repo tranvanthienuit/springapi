@@ -31,7 +31,7 @@ public class LibrarianCategory {
         Page<Categories> categoriesList = categoryService.getAllCate(pageable);
         List<Categories> categoriesListContent = categoriesList.getContent();
         if (categoriesListContent.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.OK);
         } else {
             cateList.setCategoriesList(categoriesListContent);
             cateList.setCount(categoryService.getAllCategory().size());

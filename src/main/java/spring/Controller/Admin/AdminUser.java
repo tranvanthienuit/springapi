@@ -26,15 +26,15 @@ public class AdminUser {
 
 
     @DeleteMapping(value = {"/admin/xoa-user/{userId}", "/admin/xoa-user"})
-    public ResponseEntity<User> removeUser(@PathVariable(value = "userId", required = false) String userId) throws Exception {
+    public ResponseEntity<String> removeUser(@PathVariable(value = "userId", required = false) String userId) throws Exception {
         if (userService.findUserByUserId(userId) != null) {
             if (!userService.countUser().equals(1)) {
                 userService.removeUserByUserId(userId);
-                return new ResponseEntity<>(HttpStatus.OK);
+                return new ResponseEntity<>("successful",HttpStatus.OK);
             }
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping(value = {"/admin/xem-tat-ca-user/{page}", "/admin/xem-tat-ca-user"})
@@ -48,7 +48,7 @@ public class AdminUser {
         Page<User> userPage = userService.getAllUser(pageable);
         List<User> userPageContent = userPage.getContent();
         if (userPageContent.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.OK);
         } else {
             userList.setUserList(userPageContent);
             userList.setCount(userService.getAllUsers().size());

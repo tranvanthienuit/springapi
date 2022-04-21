@@ -42,7 +42,7 @@ public class UserController {
         if (user!=null){
             return new ResponseEntity<>(user,HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/cap-nhat-anh")
@@ -58,7 +58,7 @@ public class UserController {
         userDetail userDetail = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.findUserByUserId(userDetail.getUserId());
         if (!oldPassword.equals(user.getPassword())){
-            return new ResponseEntity<>("mat khau cu sai",HttpStatus.BAD_REQUEST);}
+            return new ResponseEntity<>("mat khau cu sai",HttpStatus.OK);}
         else {
             userService.editUserPass(newPassword,user.getUserId());
             return new ResponseEntity<>("thanh cong roi ban ey",HttpStatus.OK);

@@ -30,7 +30,7 @@ public class AdminBorrow {
     BookService bookService;
 
     @DeleteMapping(value = {"/admin/xoa-borrow/{borrowId}", "/admin/xoa-borrow"})
-    public ResponseEntity<Borrow> removeBorrow(@PathVariable(value = "borrowId", required = false) String borrowId) throws Exception {
+    public ResponseEntity<String> removeBorrow(@PathVariable(value = "borrowId", required = false) String borrowId) throws Exception {
         Borrow borrow = borrowSevice.findBorrowByBorrowId(borrowId);
         if (borrow != null) {
             List<BorrowDetail> borrowDetails = borrowDeSevice.findBorrowDetailsByBorrow(borrowId);
@@ -39,9 +39,9 @@ public class AdminBorrow {
             }
             borrowSevice.removeBorrowByBorrowId(borrow.getBorrowId());
             borrowDeSevice.removeByBorrowId(borrow.getBorrowId());
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>("successful",HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @GetMapping(value = {"/admin/xem-tat-ca-borrow/{page}", "/admin/xem-tat-ca-borrow"})
@@ -55,7 +55,7 @@ public class AdminBorrow {
         Page<Borrow> borrowPage = borrowSevice.getAllBorrow(pageable);
         List<Borrow> borrowPageContent = borrowPage.getContent();
         if (borrowPageContent.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.OK);
         } else {
             borrowList.setBorrowList(borrowPageContent);
             borrowList.setCount(borrowSevice.getAllBorrow().size());
@@ -66,7 +66,7 @@ public class AdminBorrow {
     @GetMapping(value = {"/admin/tim-borrow/{userId}", "/admin/tim-borrow"})
     public ResponseEntity<List<Borrow>> findBorrow(@PathVariable(name = "userId", required = false) String userId) {
         if (userId == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.OK);
         } else {
             List<Borrow> borrowList = borrowSevice.findBorrowsByUser(userId);
             return new ResponseEntity<>(borrowList, HttpStatus.OK);

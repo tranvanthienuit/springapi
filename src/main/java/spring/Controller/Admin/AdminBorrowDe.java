@@ -31,14 +31,14 @@ public class AdminBorrowDe {
     BookService bookService;
 
     @DeleteMapping(value = {"/admin/xoa-borrow-detail/{borrowDeId}", "/admin/xoa-borrow-detail"})
-    public ResponseEntity<BorrowDetail> removeBorrowDe(@PathVariable(value = "borrowDeId", required = false) String borrowDeId) throws Exception {
+    public ResponseEntity<String> removeBorrowDe(@PathVariable(value = "borrowDeId", required = false) String borrowDeId) throws Exception {
         if (borrowDeSevice.findBorrowDe(borrowDeId) != null) {
             BorrowDetail borrowDetail = borrowDeSevice.findBorrowDe(borrowDeId);
             bookService.findBookAndUpdate(borrowDetail.getCount(),borrowDetail.getBook().getBookId());
             borrowDeSevice.removeByBorrowDeId(borrowDeId);
-            return new ResponseEntity<>(HttpStatus.OK);
+            return new ResponseEntity<>("successful",HttpStatus.OK);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(HttpStatus.OK);
 
     }
 
@@ -53,7 +53,7 @@ public class AdminBorrowDe {
         Page<BorrowDetail> borrowDetailPage = borrowDeSevice.getAllBorrowDe(pageable);
         List<BorrowDetail> borrowDetailPageContent = borrowDetailPage.getContent();
         if (borrowDetailPageContent.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.OK);
         } else {
             borrowDelist.setBorrowDelists(borrowDetailPageContent);
             borrowDelist.setCount(borrowSevice.getAllBorrow().size());
@@ -64,7 +64,7 @@ public class AdminBorrowDe {
     @GetMapping(value = {"/admin/tim-borrowde/{userId}", "/admin/tim-borrow"})
     private ResponseEntity<List<BorrowDetail>> findBorrowDe(@PathVariable(name = "userId", required = false) String userId) {
         if (userId == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.OK);
         } else {
             List<BorrowDetail> borrowDetailList = new ArrayList<>();
             List<Borrow> borrow = borrowSevice.findBorrowsByUser(userId);

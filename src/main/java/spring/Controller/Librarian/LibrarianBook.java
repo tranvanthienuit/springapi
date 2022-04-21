@@ -34,7 +34,7 @@ public class LibrarianBook {
         Page<Book> bookPage = booksService.getAllBooks(pageable);
         List<Book> bookPageContent = bookPage.getContent();
         if (bookPageContent.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.OK);
         } else {
             bookList.setBookList(bookPageContent);
             bookList.setCount(booksService.getAllBook().size());

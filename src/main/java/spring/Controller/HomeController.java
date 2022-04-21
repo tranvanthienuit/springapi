@@ -146,7 +146,7 @@ public class HomeController {
         userDetail userDetail = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.findUserByUserId(userDetail.getUserId());
         if (user == null) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
@@ -159,7 +159,7 @@ public class HomeController {
         } else {
             List<Categories> categoriesList = categoryService.findByCategoryId(CategoryId);
             if (categoriesList == null) {
-                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+                return new ResponseEntity<>(HttpStatus.OK);
             }
             return new ResponseEntity<>(categoriesList, HttpStatus.OK);
         }
@@ -189,11 +189,11 @@ public class HomeController {
                 if (token.getTokenRefesh().equals(token1.getTokenRefesh())) {
                     tokenService.removeToken(token);
                     new SecurityContextLogoutHandler().logout(request, response, auth);
-                    return new ResponseEntity<>(HttpStatus.OK);
+                    return new ResponseEntity<>("successful",HttpStatus.OK);
                 }
             }
         }
-        return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping("/dang-ky")
@@ -205,7 +205,7 @@ public class HomeController {
             username = userService.findUserName(user.getNameUser()).getNameUser();
         }
         if (user.getNameUser().equals(username)) {
-            return new ResponseEntity<>(HttpStatus.SERVICE_UNAVAILABLE);
+            return new ResponseEntity<>(HttpStatus.OK);
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         Role role = roleService.fineRoleByName("USER");
@@ -228,7 +228,7 @@ public class HomeController {
                 return ResponseEntity.ok(new LoginResponse(accessToken, token.getTokenRefesh()));
             }
         }
-        return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        return new ResponseEntity<>(HttpStatus.OK);
 
     }
 
@@ -244,7 +244,7 @@ public class HomeController {
         userService.setPassword(passwordEncoder.encode(code),email);
         mail.setMailContent("Code: "+code);
         mailService.sendEmail(mail);
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>("successful",HttpStatus.OK);
     }
     @PostMapping(value = {"/danh-gia-sach/{bookId}/{star}","/danh-gia-sach"})
     public void appriciateBook(@PathVariable(value = "bookId",required = false)String bookId,@PathVariable(value = "star",required = false)int star){
