@@ -52,5 +52,12 @@ public class AdminCategory {
             return new ResponseEntity<>(cateList, HttpStatus.OK);
         }
     }
+    @GetMapping("/admin/category")
+    public ResponseEntity<CateList> getAllCategory(){
+        CateList cateList = new CateList() ;
+        cateList.setCategoriesList(categoryService.getAllCategory());
+        cateList.setCount(categoryService.getAllCategory().size());
+        return new ResponseEntity<>(cateList,HttpStatus.OK);
+    }
 
 }
