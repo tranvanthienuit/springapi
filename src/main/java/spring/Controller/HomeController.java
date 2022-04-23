@@ -257,4 +257,11 @@ public class HomeController {
         rating.setRating(star);
         ratingService.save(rating);
     }
+    @GetMapping("/category")
+    public ResponseEntity<CateList> getAllCategory(){
+        CateList cateList = new CateList() ;
+        cateList.setCategoriesList(categoryService.getAllCategory());
+        cateList.setCount(categoryService.getAllCategory().size());
+        return new ResponseEntity<>(cateList,HttpStatus.OK);
+    }
 }
