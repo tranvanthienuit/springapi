@@ -64,4 +64,9 @@ public class User {
             return null;
         return new String(image);
     }
+    public byte[] getImageByte(){
+        if (image==null)
+            return null;
+        return image;
+    }
 }

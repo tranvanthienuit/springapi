@@ -53,8 +53,8 @@ public class UserController {
     public ResponseEntity<User> editImg(@RequestBody String image) throws Exception {
         userDetail userDetail = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.findUserByUserId(userDetail.getUserId());
-        byte[] newImage = image.getBytes();
-        userService.editImage(newImage, user.getUserId());
+        user.setImage(image);
+        userService.editImage(user.getImageByte(), user.getUserId());
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
