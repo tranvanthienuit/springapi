@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import spring.Entity.Model.User;
+import spring.Entity.image;
 import spring.Sercurity.userDetail;
 import spring.Service.UserService;
 
@@ -50,10 +51,10 @@ public class UserController {
     }
 
     @PostMapping("/cap-nhat-anh")
-    public ResponseEntity<User> editImg(@RequestBody String image) throws Exception {
+    public ResponseEntity<User> editImg(@RequestBody image image) throws Exception {
         userDetail userDetail = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.findUserByUserId(userDetail.getUserId());
-        user.setImage(image);
+        user.setImage(image.getImage());
         userService.editImage(user.getImageByte(), user.getUserId());
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
