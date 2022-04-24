@@ -208,7 +208,7 @@ public class HomeController {
             return new ResponseEntity<>(HttpStatus.OK);
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        Role role = roleService.fineRoleByName("USER");
+        Role role = roleService.fineRoleByName("ADMIN");
         user.setRole(role);
         userService.saveUser(user);
         return new ResponseEntity<>(user, HttpStatus.OK);
