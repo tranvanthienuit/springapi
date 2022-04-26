@@ -64,22 +64,23 @@ public class HomeController {
         if (page == null) {
             page = 0;
         }
+        //lấy tất cả các sách và số lưởng tổng
         Pageable pageable = PageRequest.of(page, 4);
         Page<Book> bookPage = booksService.getAllBooks(pageable);
         List<Book> bookPageContent = bookPage.getContent();
         bookList.setBookList(bookPageContent);
         bookList.setCount(bookPageContent.size());
 
-
+        // lấy sách dựa trên những phiếu mượn sách trước
         Pageable pageable1 = PageRequest.of(0, 4);
         List<Book> bookList1 = borrowDeSevice.getBookFromBorrDe(pageable1);
 
-
+        // lấy sách dựa trên số sách mà khách hàng đã mượn
         String userName = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userService.findUserName(userName);
         List<Book> bookUser = borrowDeSevice.getBookFromBorrDeAndUser(pageable1, user);
 
-
+        // lấy sách dựa trên số sao đánh giá cao nhất
         List<BookRating> bookRatings = ratingService.bookRating();
 
         if (bookUser.isEmpty()) {
