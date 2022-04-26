@@ -22,6 +22,7 @@ import spring.Service.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Random;
 
@@ -211,6 +212,9 @@ public class HomeController {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         Role role = roleService.fineRoleByName("ADMIN");
         user.setRole(role);
+        LocalDate ldate = LocalDate.now();
+        java.sql.Date date = java.sql.Date.valueOf(ldate);
+        user.setDayAdd(date);
         userService.saveUser(user);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
