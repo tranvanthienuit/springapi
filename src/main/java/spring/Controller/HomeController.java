@@ -240,7 +240,7 @@ public class HomeController {
     @PostMapping("/quen-mat-khau/{email}")
     public ResponseEntity<?> forgetPass(@PathVariable("email") String email) {
         Mail mail = new Mail();
-        mail.setMailFrom("tranvanthienuit@gmail.com");
+        mail.setMailFrom("uitsneaker@gmail.com");
         mail.setMailTo(email);
         mail.setMailSubject("Quên password");
         Random rnd = new Random();
