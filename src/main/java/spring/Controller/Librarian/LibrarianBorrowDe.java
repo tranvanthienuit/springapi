@@ -60,13 +60,13 @@ public class LibrarianBorrowDe {
         }
     }
 
-    @GetMapping(value = {"/librarian/tim-borrowde/{userId}", "/librarian/tim-borrow"})
-    private ResponseEntity<List<BorrowDetail>> findBorrowDe(@PathVariable(name = "userId", required = false) String userId) {
-        if (userId == null) {
+    @GetMapping(value = {"/librarian/tim-borrowde/{userName}", "/librarian/tim-borrow"})
+    private ResponseEntity<List<BorrowDetail>> findBorrowDe(@PathVariable(name = "userName", required = false) String userName) {
+        if (userName == null) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             List<BorrowDetail> borrowDetailList = new ArrayList<>();
-            List<Borrow> borrow = borrowSevice.findBorrowsByUser(userId);
+            List<Borrow> borrow = borrowSevice.findBorrowsByUser(userName);
             for (Borrow borrow1 : borrow) {
                 List<BorrowDetail> borrowDetailList1 = borrowDeSevice.findBorrowDetailsByBorrow(borrow1.getBorrowId());
                 borrowDetailList.addAll(borrowDetailList1);

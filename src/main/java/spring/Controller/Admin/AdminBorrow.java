@@ -63,12 +63,12 @@ public class AdminBorrow {
         }
     }
 
-    @GetMapping(value = {"/admin/tim-borrow/{userId}", "/admin/tim-borrow"})
-    public ResponseEntity<List<Borrow>> findBorrow(@PathVariable(name = "userId", required = false) String userId) {
-        if (userId == null) {
+    @GetMapping(value = {"/admin/tim-borrow/{userName}", "/admin/tim-borrow"})
+    public ResponseEntity<List<Borrow>> findBorrow(@PathVariable(name = "userName", required = false) String userName) {
+        if (userName == null) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
-            List<Borrow> borrowList = borrowSevice.findBorrowsByUser(userId);
+            List<Borrow> borrowList = borrowSevice.findBorrowsByUser(userName);
             return new ResponseEntity<>(borrowList, HttpStatus.OK);
         }
     }

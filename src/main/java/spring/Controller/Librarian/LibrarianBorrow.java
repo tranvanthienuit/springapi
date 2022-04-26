@@ -62,12 +62,12 @@ public class LibrarianBorrow {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping(value = {"/librarian/tim-borrow/{userId}", "/librarian   /tim-borrow"})
-    public ResponseEntity<List<Borrow>> findBorrow(@PathVariable(name = "userId", required = false) String userId) {
-        if (userId == null) {
+    @GetMapping(value = {"/librarian/tim-borrow/{userName}", "/librarian/tim-borrow"})
+    public ResponseEntity<List<Borrow>> findBorrow(@PathVariable(name = "userName", required = false) String userName) {
+        if (userName == null) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
-            List<Borrow> borrowList = borrowSevice.findBorrowsByUser(userId);
+            List<Borrow> borrowList = borrowSevice.findBorrowsByUser(userName);
             return new ResponseEntity<>(borrowList, HttpStatus.OK);
         }
     }
