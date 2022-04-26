@@ -77,7 +77,7 @@ public class HomeController {
 
         String userName = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userService.findUserName(userName);
-        List<Book> bookUser = borrowDeSevice.getBookFromBorrDeAndUser(pageable1, user.getUserId());
+        List<Book> bookUser = borrowDeSevice.getBookFromBorrDeAndUser(pageable1, user);
 
 
         List<BookRating> bookRatings = ratingService.bookRating();
@@ -121,7 +121,7 @@ public class HomeController {
 
         String userName = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userService.findUserName(userName);
-        List<Book> bookUser = borrowDeSevice.getBookFromBorrDeAndUser(pageable1, user.getUserId());
+        List<Book> bookUser = borrowDeSevice.getBookFromBorrDeAndUser(pageable1, user);
 
 
         List<BookRating> bookRatings = ratingService.bookRating();
