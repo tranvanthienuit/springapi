@@ -1,4 +1,4 @@
-package spring.Controller.Librarian;
+package spring.Controller.Admin_Librarian;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-public class LibrarianBorrowDe {
+public class BorrowDe {
     @Autowired
     BorrowDeSevice borrowDeSevice;
     @Autowired
@@ -29,7 +29,7 @@ public class LibrarianBorrowDe {
     @Autowired
     BookService bookService;
 
-    @DeleteMapping(value = {"/librarian/xoa-borrow-detail/{borrowDeId}", "/librarian/xoa-borrow-detail"})
+    @DeleteMapping(value = {"/librarian/xoa-borrow-detail/{borrowDeId}", "/librarian/xoa-borrow-detail","/admin/xoa-borrow-detail/{borrowDeId}", "/admin/xoa-borrow-detail"})
     public ResponseEntity<String> removeBorrowDe(@PathVariable(value = "borrowDeId", required = false) String borrowDeId) throws Exception {
         if (borrowDeSevice.findBorrowDe(borrowDeId) != null) {
             BorrowDetail borrowDetail = borrowDeSevice.findBorrowDe(borrowDeId);
@@ -41,7 +41,7 @@ public class LibrarianBorrowDe {
 
     }
 
-    @GetMapping(value = {"/librarian/xem-tat-ca-Borrow-Detail/{page}", "/librarian/xem-tat-ca-Borrow-Detail"})
+    @GetMapping(value = {"/librarian/xem-tat-ca-Borrow-Detail/{page}", "/librarian/xem-tat-ca-Borrow-Detail","/admin/xem-tat-ca-Borrow-Detail/{page}", "/admin/xem-tat-ca-Borrow-Detail"})
     public ResponseEntity<BorrowDelist> getAllBorrowDe(
             @PathVariable(name = "page", required = false) Integer page) throws Exception {
         BorrowDelist borrowDelist = new BorrowDelist();
@@ -60,7 +60,7 @@ public class LibrarianBorrowDe {
         }
     }
 
-    @GetMapping(value = {"/librarian/tim-borrowde/{userName}", "/librarian/tim-borrow"})
+    @GetMapping(value = {"/librarian/tim-borrowde/{userName}", "/librarian/tim-borrow","/admin/tim-borrowde/{userName}", "/admin/tim-borrow"})
     private ResponseEntity<List<BorrowDetail>> findBorrowDe(@PathVariable(name = "userName", required = false) String userName) {
         if (userName == null) {
             return new ResponseEntity<>(HttpStatus.OK);
