@@ -11,4 +11,5 @@ import spring.Entity.Model.Book;
 public class CartBook {
     private Integer quantity;
     private Book books;
+    private Double total;
 }
