@@ -1,5 +1,6 @@
 package spring.Controller.Admin;
 
+import com.sun.mail.imap.protocol.BODY;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -62,6 +63,47 @@ public class AdminBook {
         if (booksService.findBooksByBookId(bookId) != null) {
             booksService.removeBookByBookId(bookId);
             return new ResponseEntity<>("successful",HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @PostMapping(value = {"/admin/sua-sach/{nameBook}"})
+    public ResponseEntity<Book> editBook(@RequestBody Book book,@PathVariable("nameBook")String nameBook){
+        Book newBook = booksService.findBookByName(nameBook);
+        if (book.getNameBook()!=null){
+            newBook.setNameBook(book.getNameBook());
+            booksService.saveBook(newBook);
+        }
+        if (book.getAuthor()!=null){
+            newBook.setAuthor(book.getAuthor());
+            booksService.saveBook(newBook);
+        }
+        if (book.getPublishYear()!=null){
+            newBook.setPublishYear(book.getPublishYear());
+            booksService.saveBook(newBook);
+        }
+        if (book.getPublishCom()!=null){
+            newBook.setPublishCom(book.getPublishCom());
+            booksService.saveBook(newBook);
+        }
+        if (book.getPrice()!=null){
+            newBook.setPrice(book.getPrice());
+            booksService.saveBook(newBook);
+        }
+        if (book.getCount()!=null){
+            newBook.setCount(book.getCount());
+            booksService.saveBook(newBook);
+        }
+        if (book.getDescription()!=null){
+            newBook.setDescription(book.getDescription());
+            booksService.saveBook(newBook);
+        }
+        if (book.getImage()!=null){
+            newBook.setImage(book.getImage());
+            booksService.saveBook(newBook);
+        }
+        Book bookByName = booksService.findBookByName(nameBook);
+        if (bookByName!=null){
+            return new ResponseEntity<>(bookByName,HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
