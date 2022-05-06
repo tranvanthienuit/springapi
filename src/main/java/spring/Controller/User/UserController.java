@@ -55,7 +55,7 @@ public class UserController {
         userDetail userDetail = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.findUserByUserId(userDetail.getUserId());
         user.setImage(image.getImage());
-        userService.editImage(user.getImageByte(), user.getUserId());
+        userService.editImage(getImageByte(), user.getUserId());
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
@@ -69,5 +69,12 @@ public class UserController {
         } else {
             return new ResponseEntity<>("mat khau cu sai", HttpStatus.OK);
         }
+    }
+    public byte[] getImageByte(){
+        userDetail userDetail = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.findUserByUserId(userDetail.getUserId());
+        if (user.getImage()==null)
+            return null;
+        return user.getImage().getBytes();
     }
 }
