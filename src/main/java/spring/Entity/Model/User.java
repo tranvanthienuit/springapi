@@ -39,7 +39,8 @@ public class User {
     private String telephone;
     @Column(name = "Sex")
     private String sex;
-    @Column(name = "image")
+    @Column(name = "image", columnDefinition="BLOB")
+    @Lob
     private byte[] image;
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "RoleId")

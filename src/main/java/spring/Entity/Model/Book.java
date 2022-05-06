@@ -37,7 +37,8 @@ public class Book {
     private Integer count;
     @Column(name = "Description")
     private String description;
-    @Column(name = "image")
+    @Column(name = "image", columnDefinition="BLOB")
+    @Lob
     private byte[] image;
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "CategoryId")
