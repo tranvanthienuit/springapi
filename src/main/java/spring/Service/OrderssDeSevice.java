@@ -6,10 +6,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import spring.Entity.Model.Book;
 import spring.Entity.BookSelect;
-import spring.Entity.Model.BorrowDetail;
+import spring.Entity.Model.OrderssDetail;
 import spring.Entity.Model.User;
 import spring.Repository.BookRepository;
-import spring.Repository.BorrowDeRepository;
+import spring.Repository.OrderssDeRepository;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,38 +18,38 @@ import java.util.List;
 import static spring.Recommendation.StringSimilarity.similarity;
 
 @Service
-public class BorrowDeSevice {
+public class OrderssDeSevice {
     @Autowired
     BookRepository bookRepository;
     @Autowired
-    BorrowDeRepository borrowDeRepository;
+    OrderssDeRepository orderssDeRepository;
 
-    public void removeByBorrowId(String idBorrow) {
-        borrowDeRepository.removeByBorrowId(idBorrow);
+    public void removeByOrderssId(String idOrderss) {
+        orderssDeRepository.removeByOrderssId(idOrderss);
     }
 
-    public void removeByBorrowDeId(String idBorrowDe) {
-        borrowDeRepository.removeByBorrowDeId(idBorrowDe);
+    public void removeByOrderssDeId(String idOrderssDe) {
+        orderssDeRepository.removeByOrderssDeId(idOrderssDe);
     }
 
-    public void saveBorrowDe(BorrowDetail borrowDetail) {
-        borrowDeRepository.save(borrowDetail);
+    public void saveOrderssDe(OrderssDetail orderssDetail) {
+        orderssDeRepository.save(orderssDetail);
     }
 
-    public Page<BorrowDetail> getAllBorrowDe(Pageable pageable) {
-        return borrowDeRepository.findAll(pageable);
+    public Page<OrderssDetail> getAllOrderssDe(Pageable pageable) {
+        return orderssDeRepository.findAll(pageable);
     }
 
-    public BorrowDetail findBorrowDe(String idBorrowDe) {
-        return borrowDeRepository.findBorrowDetailByBorrowDeId(idBorrowDe);
+    public OrderssDetail findOrderssDe(String idOrderssDe) {
+        return orderssDeRepository.findOrderssDetailByOrderssDeId(idOrderssDe);
     }
 
-    public List<BorrowDetail> findBorrowDetailsByBorrow(String borrowId) {
-        return borrowDeRepository.findBorrowDetailsByBorrow(borrowId);
+    public List<OrderssDetail> findOrderssDetailsByOrderss(String OrderssId) {
+        return orderssDeRepository.findOrderssDetailsByOrderss(OrderssId);
     }
 
     public List<Book> getBookFromBorrDe(Pageable pageable) {
-        List<BookSelect> objects = borrowDeRepository.getBookFromBorrDe(pageable);
+        List<BookSelect> objects = orderssDeRepository.getBookFromBorrDe(pageable);
         List<Book> bookList = new ArrayList<>();
         for (BookSelect bookSelect : objects) {
             bookList.add(bookSelect.getBook());
@@ -61,7 +61,7 @@ public class BorrowDeSevice {
     public List<Book> getBookFromBorrDeAndUser(Pageable pageable, User user) {
         List<Book> recomBook = new ArrayList<>();
         if (user!=null){
-            List<BookSelect> objects = borrowDeRepository.getBookFromBorrDeAndUser(pageable, user.getUserId());
+            List<BookSelect> objects = orderssDeRepository.getBookFromBorrDeAndUser(pageable, user.getUserId());
             List<Book> bookList = new ArrayList<>();
             List<Book> books = bookRepository.findAll();
             for (BookSelect bookSelect : objects) {
@@ -81,7 +81,7 @@ public class BorrowDeSevice {
         return recomBook;
     }
 
-    public List<BorrowDetail> getAllBorrowDe() {
-        return borrowDeRepository.findAll();
+    public List<OrderssDetail> getAllOrderssDe() {
+        return orderssDeRepository.findAll();
     }
 }
