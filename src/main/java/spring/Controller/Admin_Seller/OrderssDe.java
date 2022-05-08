@@ -1,4 +1,4 @@
-package spring.Controller.Admin_Librarian;
+package spring.Controller.Admin_Seller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -29,7 +29,7 @@ public class OrderssDe {
     @Autowired
     BookService bookService;
 
-    @DeleteMapping(value = {"/librarian/xoa-Orderss-detail/{OrderssDeId}", "/librarian/xoa-Orderss-detail","/admin/xoa-Orderss-detail/{OrderssDeId}", "/admin/xoa-Orderss-detail"})
+    @DeleteMapping(value = {"/seller/xoa-Orderss-detail/{OrderssDeId}", "/seller/xoa-Orderss-detail","/admin/xoa-Orderss-detail/{OrderssDeId}", "/admin/xoa-Orderss-detail"})
     public ResponseEntity<String> removeOrderssDe(@PathVariable(value = "OrderssDeId", required = false) String OrderssDeId) throws Exception {
         if (orderssDeSevice.findOrderssDe(OrderssDeId) != null) {
             OrderssDetail orderssDetail = orderssDeSevice.findOrderssDe(OrderssDeId);
@@ -41,7 +41,7 @@ public class OrderssDe {
 
     }
 
-    @GetMapping(value = {"/librarian/xem-tat-ca-Orderss-Detail/{page}", "/librarian/xem-tat-ca-Orderss-Detail","/admin/xem-tat-ca-Orderss-Detail/{page}", "/admin/xem-tat-ca-Orderss-Detail"})
+    @GetMapping(value = {"/seller/xem-tat-ca-Orderss-Detail/{page}", "/seller/xem-tat-ca-Orderss-Detail","/admin/xem-tat-ca-Orderss-Detail/{page}", "/admin/xem-tat-ca-Orderss-Detail"})
     public ResponseEntity<OrderssDelist> getAllOrderssDe(
             @PathVariable(name = "page", required = false) Integer page) throws Exception {
         OrderssDelist orderssDelist = new OrderssDelist();
@@ -60,7 +60,7 @@ public class OrderssDe {
         }
     }
 
-    @GetMapping(value = {"/librarian/tim-Orderssde/{userName}", "/librarian/tim-Orderss","/admin/tim-Orderssde/{userName}", "/admin/tim-Orderss"})
+    @GetMapping(value = {"/seller/tim-Orderssde/{userName}", "/seller/tim-Orderss","/admin/tim-Orderssde/{userName}", "/admin/tim-Orderss"})
     private ResponseEntity<List<OrderssDetail>> findOrderssDe(@PathVariable(name = "userName", required = false) String userName) {
         if (userName == null) {
             return new ResponseEntity<>(HttpStatus.OK);

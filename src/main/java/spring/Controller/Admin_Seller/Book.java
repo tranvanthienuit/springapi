@@ -1,4 +1,4 @@
-package spring.Controller.Admin_Librarian;
+package spring.Controller.Admin_Seller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,7 +22,7 @@ public class Book {
     @Autowired
     CategoryService categoryService;
 
-    @GetMapping(value = {"/librarian/xem-tat-ca-sach/{page}", "/librarian/xem-tat-ca-sach","/admin/xem-tat-ca-sach/{page}", "/admin/xem-tat-ca-sach"})
+    @GetMapping(value = {"/seller/xem-tat-ca-sach/{page}", "/seller/xem-tat-ca-sach","/admin/xem-tat-ca-sach/{page}", "/admin/xem-tat-ca-sach"})
     public ResponseEntity<BookList> getAllBook(
             @PathVariable(name = "page", required = false) Integer page) throws Exception {
         BookList bookList = new BookList();

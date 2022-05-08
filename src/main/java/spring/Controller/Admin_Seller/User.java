@@ -1,4 +1,4 @@
-package spring.Controller.Admin_Librarian;
+package spring.Controller.Admin_Seller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,7 +24,7 @@ public class User {
     RoleService roleService;
 
 
-    @DeleteMapping(value = {"/admin/xoa-user/{userId}", "/admin/xoa-user","/librarian/xoa-user/{userId}", "/librarian/xoa-user"})
+    @DeleteMapping(value = {"/admin/xoa-user/{userId}", "/admin/xoa-user","/seller/xoa-user/{userId}", "/seller/xoa-user"})
     public ResponseEntity<String> removeUser(@PathVariable(value = "userId", required = false) String userId) throws Exception {
         if (userService.findUserByUserId(userId) != null) {
             if (!userService.countUser().equals(1)) {
@@ -36,7 +36,7 @@ public class User {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping(value = {"/admin/xem-tat-ca-user/{page}", "/admin/xem-tat-ca-user","/librarian/xem-tat-ca-user/{page}", "/librarian/xem-tat-ca-user"})
+    @GetMapping(value = {"/admin/xem-tat-ca-user/{page}", "/admin/xem-tat-ca-user","/seller/xem-tat-ca-user/{page}", "/seller/xem-tat-ca-user"})
     public ResponseEntity<UserList> getAllUser(
             @PathVariable(name = "page", required = false) Integer page) throws Exception {
         UserList userList = new UserList();

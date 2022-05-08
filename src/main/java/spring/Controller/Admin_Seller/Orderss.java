@@ -1,4 +1,4 @@
-package spring.Controller.Admin_Librarian;
+package spring.Controller.Admin_Seller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -27,7 +27,7 @@ public class Orderss {
     @Autowired
     BookService bookService;
 
-    @GetMapping(value = {"/librarian/xem-tat-ca-Orderss/{page}", "/librarian/xem-tat-ca-Orderss","/admin/xem-tat-ca-Orderss/{page}", "/admin/xem-tat-ca-Orderss"})
+    @GetMapping(value = {"/seller/xem-tat-ca-Orderss/{page}", "/seller/xem-tat-ca-Orderss","/admin/xem-tat-ca-Orderss/{page}", "/admin/xem-tat-ca-Orderss"})
     public ResponseEntity<OrderssList> getAllOrderss(
             @PathVariable(name = "page", required = false) Integer page) throws Exception {
         OrderssList orderssList = new OrderssList();
@@ -46,7 +46,7 @@ public class Orderss {
         }
     }
 
-    @DeleteMapping(value = {"/librarian/xoa-Orderss/{OrderssId}", "/librarian/xoa-Orderss","/admin/xoa-Orderss/{OrderssId}", "/admin/xoa-Orderss"})
+    @DeleteMapping(value = {"/seller/xoa-Orderss/{OrderssId}", "/seller/xoa-Orderss","/admin/xoa-Orderss/{OrderssId}", "/admin/xoa-Orderss"})
     public ResponseEntity<String> removeOrderss(@PathVariable(value = "OrderssId", required = false) String OrderssId) throws Exception {
         spring.Entity.Model.Orderss orderss = orderssSevice.findOrderssByOrderssId(OrderssId);
         if (orderss != null) {
@@ -61,7 +61,7 @@ public class Orderss {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping(value = {"/librarian/tim-Orderss/{userName}", "/librarian/tim-Orderss","/admin/tim-Orderss/{userName}", "/admin/tim-Orderss"})
+    @GetMapping(value = {"/seller/tim-Orderss/{userName}", "/seller/tim-Orderss","/admin/tim-Orderss/{userName}", "/admin/tim-Orderss"})
     public ResponseEntity<List<spring.Entity.Model.Orderss>> findOrderss(@PathVariable(name = "userName", required = false) String userName) {
         if (userName == null) {
             return new ResponseEntity<>(HttpStatus.OK);
