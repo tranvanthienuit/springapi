@@ -40,12 +40,10 @@ public class UserCart {
 
         LocalDate ldate = LocalDate.now();
         Date date = Date.valueOf(ldate);
-        Date date1 = Date.valueOf(ldate.plusMonths(1));
 
 
         Orderss orderss = new Orderss();
         orderss.setOrderssDate(date);
-        orderss.setReturnDate(date1);
         orderss.setUser(user);
         orderssSevice.saveOrderss(orderss);
 

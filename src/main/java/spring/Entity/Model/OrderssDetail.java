@@ -34,16 +34,5 @@ public class OrderssDetail {
     @JoinColumn(name = "BooksId")
     private Book book;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        OrderssDetail that = (OrderssDetail) o;
-        return OrderssDeId != null && Objects.equals(OrderssDeId, that.OrderssDeId);
-    }
 
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
-    }
 }
