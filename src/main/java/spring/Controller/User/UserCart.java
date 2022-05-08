@@ -33,7 +33,7 @@ public class UserCart {
     @Autowired
     UserService userService;
 
-    @GetMapping("/user/muon-sach")
+    @GetMapping("/user/mua-sach")
     public ResponseEntity<List<CartBook>> Orderss(@RequestBody List<CartBook> cart) throws Exception {
         userDetail user1 = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.findUserByUserId(user1.getUserId());
@@ -52,7 +52,7 @@ public class UserCart {
             OrderssDetail orderssDetail = new OrderssDetail();
             List<Book> books = bookService.getAllBook();
             for (Book book1 : books) {
-                if (cartBook.getBooks().getNameBook().equals(book1.getNameBook())) {
+                if (cartBook.getBooks().getBookId().equals(book1.getBookId())) {
                     if (book1.getCount() - cartBook.getQuantity() > 0) {
                         orderssDetail.setCount(cartBook.getQuantity());
                         orderssDetail.setTotal((Double) cartBook.getTotal());
