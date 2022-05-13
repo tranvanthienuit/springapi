@@ -8,7 +8,7 @@ import java.util.Map;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class chart {
+public class Chart {
     private Map<Integer,Integer> month_book;
     private Map<Integer,String> book_category;
     private Map<Integer,Integer> month_user;

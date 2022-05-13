@@ -41,5 +41,5 @@ public interface OrderssDeRepository extends JpaRepository<OrderssDetail, String
     Map<Integer, String> getBookAndCategory();
 
     @Query("select month(u.orderss.OrderssDate),sum(u.total)from OrderssDetail u group by u.orderss.OrderssDate")
-    Map<Integer, Integer> getPriceAndMonth();
+    Map<Integer, Double> getPriceAndMonth();
 }

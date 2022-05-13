@@ -46,7 +46,7 @@ public class OrderssSevice {
         return orderssRepository.findAll();
     }
 
-    public Map<Integer, Double> getBookAndMonth() {
+    public Map<Integer, Integer> getBookAndMonth() {
         return orderssRepository.getBookAndMonth();
     }
 }

@@ -30,5 +30,5 @@ public interface OrderssRepository extends JpaRepository<Orderss, String> {
     List<Orderss> findOrdersssByUser(String userName);
 
     @Query("select month(u.OrderssDate),sum(u.totalBook) from Orderss u group by month(u.OrderssDate)")
-    Map<Integer, Double> getBookAndMonth();
+    Map<Integer, Integer> getBookAndMonth();
 }

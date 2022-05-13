@@ -90,7 +90,7 @@ public class OrderssDeSevice {
         return orderssDeRepository.getBookAndCategory();
     }
 
-    public Map<Integer, Integer> getPriceAndMonth() {
+    public Map<Integer, Double> getPriceAndMonth() {
         return orderssDeRepository.getPriceAndMonth();
     }
 }
