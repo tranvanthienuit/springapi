@@ -249,7 +249,11 @@ public class HomeController {
             int number = rnd.nextInt(999999);
             String code = String.format("%06d", number);
             userService.setPassword(passwordEncoder.encode(code), email);
-            mail.setMailContent("Code: " + code);
+            mail.setMailContent("<h1>Reset mật khẩu</h1></br></br>\n" +
+                    "<h2>Xin chào quý khách mật khẩu của bạn đang được reset.</br>\n" +
+                    "\tHãy nhập code dưới đây để đăng nhập lại. Cảm ơn quý khách\n" +
+                    "</h2>\n" +
+                    "<h3>Code: </h3>" + code);
             mailService.sendEmail(mail);
             return new ResponseEntity<>("successful", HttpStatus.OK);
         }
