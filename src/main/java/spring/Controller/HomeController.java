@@ -240,7 +240,7 @@ public class HomeController {
 
     @PostMapping("/quen-mat-khau/{email}")
     public ResponseEntity<?> forgetPass(@PathVariable("email") String email) {
-        if (mailService.checkMail(email) != false) {
+        if (mailService.checkMail(email)) {
             Mail mail = new Mail();
             mail.setMailFrom("uitsneaker@gmail.com");
             mail.setMailTo(email);
