@@ -55,12 +55,15 @@ public class UserCart {
             OrderssDetail orderssDetail = new OrderssDetail();
             List<Book> books = bookService.getAllBook();
             for (Book book1 : books) {
+                // tìm từng cuốn sách
                 Book book = bookService.findBookByBookId(cartBook.getBooks());
+                //so sánh có trong list sach không
                 if (book.getBookId().equals(book1.getBookId())) {
-                    if (book1.getCount() - cartBook.getQuantity() > 0) {
+                    //nếu sách nhiều hơn mua thì lấy sách trừ mua
+                    if (book1.getCount() - cartBook.getQuantity() >= 0) {
                         orderssDetail.setCount(cartBook.getQuantity());
                         orderssDetail.setTotal((Double) cartBook.getTotal());
-                        bookService.findBookAndUpdate(book1.getCount() - book.getCount(), book.getBookId());
+                        bookService.findBookAndUpdate(book1.getCount() - cartBook.getQuantity(), book.getBookId());
                     } else {
                         bookService.findBookAndUpdate(0, book.getBookId());
                         orderssDetail.setTotal((Double) cartBook.getTotal());
