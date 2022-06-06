@@ -89,6 +89,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // Thêm một lớp Filter kiểm tra jwt
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.sessionManagement().maximumSessions(1).expiredUrl("/dang-xuat");
 
     }
     @Bean
