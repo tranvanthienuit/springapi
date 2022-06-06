@@ -53,8 +53,7 @@ public class UserCart {
 
         for (CartBook cartBook : cart) {
             OrderssDetail orderssDetail = new OrderssDetail();
-            List<Book> books = bookService.getAllBook();
-            for (Book book1 : books) {
+            for (Book book1 : bookService.getAllBook()) {
                 // tìm từng cuốn sách
                 Book book = bookService.findBookByBookId(cartBook.getBooks());
                 //so sánh có trong list sach không
