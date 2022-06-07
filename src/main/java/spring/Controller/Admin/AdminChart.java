@@ -5,12 +5,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import spring.Entity.Chart;
+import spring.Entity.*;
 import spring.Service.OrderssDeSevice;
 import spring.Service.OrderssSevice;
 import spring.Service.UserService;
 
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -23,21 +23,20 @@ public class AdminChart {
     UserService userService;
     @GetMapping(value = "/admin/chart")
     public ResponseEntity<?> chart(){
-        Map<Integer,Integer> bookAndMonth = new HashMap<>();
+        List<month_book> bookAndMonth = orderssSevice.getBookAndMonth();
         if (orderssSevice.getBookAndMonth() == null || orderssSevice.getBookAndMonth().isEmpty()){
             bookAndMonth.clear();
         }
-
-        Map<Integer,String> bookAndCategory = new HashMap<>();
-        if (orderssDeSevice.getBookAndCategory() == null || orderssDeSevice.getBookAndCategory().isEmpty()){
+        List<book_category> bookAndCategory = orderssDeSevice.getBookAndCategory();
+        if (bookAndCategory == null || bookAndCategory.isEmpty()){
             bookAndCategory.clear();
         }
-        Map<Integer,Double> priceAndMonth = new HashMap<>();
-        if (orderssDeSevice.getPriceAndMonth() == null || orderssDeSevice.getPriceAndMonth().isEmpty()){
+        List<month_price> priceAndMonth = orderssDeSevice.getPriceAndMonth();
+        if (priceAndMonth == null || priceAndMonth.isEmpty()){
             priceAndMonth.clear();
         }
-        Map<Integer,Integer> userAndMonth = new HashMap<>();
-        if (userService.getUserAndMonnth() == null || userService.getUserAndMonnth().isEmpty()){
+        List<month_user> userAndMonth = userService.getUserAndMonnth();
+        if (userAndMonth == null || userAndMonth.isEmpty()){
             userAndMonth.clear();
         }
         Chart chart = new Chart(bookAndMonth,bookAndCategory,userAndMonth,priceAndMonth);
