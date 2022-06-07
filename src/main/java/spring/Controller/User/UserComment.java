@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import spring.Entity.Model.Comment;
 import spring.Entity.Model.User;
 import spring.Sercurity.userDetail;
@@ -24,7 +21,7 @@ public class UserComment {
     @Autowired
     BookService bookService;
     @PostMapping("/user/luu-comment/{bookId}")
-    public ResponseEntity<?> saveComment(@PathVariable(name = "bookId")String bookId, Comment comment){
+    public ResponseEntity<?> saveComment(@PathVariable(name = "bookId")String bookId,@RequestBody Comment comment){
         userDetail user1 = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.findUserByUserId(user1.getUserId());
         comment.setUser(user);

@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import spring.Entity.Model.Blog;
 import spring.Entity.Model.User;
@@ -25,7 +26,7 @@ public class AdminBlog {
 
 
     @PostMapping("/admin/them-blog")
-    public ResponseEntity<?> saveBlog(Blog blog) throws Exception{
+    public ResponseEntity<?> saveBlog(@RequestBody Blog blog) throws Exception{
         userDetail user1 = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.findUserByUserId(user1.getUserId());
         blog.setUser(user);
@@ -34,7 +35,7 @@ public class AdminBlog {
     }
 
     @GetMapping("/admin/xoa-blog")
-    public ResponseEntity<?> deleteBlog(String blogId){
+    public ResponseEntity<?> deleteBlog(@RequestBody String blogId){
         blogService.findAndDeleteBlog(blogId);
         return new ResponseEntity<>("successful", HttpStatus.OK);
     }
@@ -45,7 +46,7 @@ public class AdminBlog {
     }
 
     @GetMapping("/admin/sua-blog")
-    public ResponseEntity<?> updateBlog(Blog blog){
+    public ResponseEntity<?> updateBlog(@RequestBody Blog blog){
         blogService.findAndUpdateBlog(blog.getBlogId(), blog.getContent());
         return new ResponseEntity<>("successful", HttpStatus.OK);
     }
