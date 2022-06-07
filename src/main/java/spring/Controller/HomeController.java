@@ -54,7 +54,7 @@ public class HomeController {
     @Autowired
     RatingService ratingService;
 
-    @GetMapping(value = {"/{page}", "/"})
+    @GetMapping(value = {"/trang-chu/{page}", "/trang-chu"})
     public ResponseEntity<BookReturn> home(
             @PathVariable(name = "page", required = false) Integer page) throws Exception {
         BookReturn bookReturn = new BookReturn();
