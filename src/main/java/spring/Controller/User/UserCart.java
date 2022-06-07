@@ -47,12 +47,10 @@ public class UserCart {
         orderss.setOrderssDate(date);
         orderss.setUser(user);
         Integer totalBook = 0;
-        cart.stream().map(result->totalBook+result.getQuantity());
-        orderss.setTotalBook(totalBook);
-        orderssSevice.saveOrderss(orderss);
 
 
         for (CartBook cartBook : cart) {
+            totalBook = totalBook+cartBook.getQuantity();
             OrderssDetail orderssDetail = new OrderssDetail();
             for (Book book1 : bookService.getAllBook()) {
                 // tìm từng cuốn sách
@@ -71,6 +69,10 @@ public class UserCart {
                     }
                 }
             }
+            orderss.setTotalBook(totalBook);
+            orderssSevice.saveOrderss(orderss);
+
+
             orderssDetail.setStatus("exist");
             orderssDetail.setOrderss(orderss);
             Book book = bookService.findBookByBookId(cartBook.getBooks());
