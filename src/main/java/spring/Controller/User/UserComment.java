@@ -36,8 +36,8 @@ public class UserComment {
         commentService.deleteUserAndComment(user.getUserId(),commentId);
         return new ResponseEntity<>("successfull", HttpStatus.OK);
     }
-    @PostMapping("/user/sua-comment/{commentId}/{content}")
-    public ResponseEntity<?> updateComment(@PathVariable(name = "commentId")String commentId,@PathVariable(name = "content")String content){
+    @PostMapping("/user/sua-comment/{commentId}")
+    public ResponseEntity<?> updateComment(@PathVariable(name = "commentId")String commentId,@RequestBody String content){
         commentService.updateComment(commentId, content);
         return new ResponseEntity<>("successfull", HttpStatus.OK);
     }
