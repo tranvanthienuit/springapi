@@ -95,6 +95,9 @@
                 <version>2.19.1</version>
                 <configuration>
                     <useSystemClassLoader>false</useSystemClassLoader>
+                    <skipTests>false</skipTests>
+                    <testFailureIgnore>true</testFailureIgnore>
+                    <forkMode>once</forkMode>
                 </configuration>
             </plugin>
         </plugins>
