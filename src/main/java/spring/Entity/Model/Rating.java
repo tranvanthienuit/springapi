@@ -19,10 +19,10 @@ public class Rating {
     @Column(name = "RatingId", updatable = false, nullable = false)
     //    @org.hibernate.annotations.Type(type="org.hibernate.type.PostgresUUIDType")
     private Long ratingId;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade= {CascadeType.ALL}, fetch=FetchType.EAGER)
     @JoinColumn(name = "user")
     private User user;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade= {CascadeType.ALL}, fetch=FetchType.EAGER)
     @JoinColumn(name = "book")
     private Book book;
     @Column(name = "rating")

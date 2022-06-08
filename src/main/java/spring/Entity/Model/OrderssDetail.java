@@ -25,10 +25,10 @@ public class OrderssDetail {
     private Integer count;
     @Column(name = "total_Price")
     private Double total;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade= {CascadeType.ALL}, fetch=FetchType.EAGER)
     @JoinColumn(name = "OrderssId")
     private Orderss orderss;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade= {CascadeType.ALL}, fetch=FetchType.EAGER)
     @JoinColumn(name = "BooksId")
     private Book book;
 
