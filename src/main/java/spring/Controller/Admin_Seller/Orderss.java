@@ -51,7 +51,7 @@ public class Orderss {
 //            for (OrderssDetail orderssDetail : orderssDetails) {
 //                bookService.findBookAndUpdate(orderssDetail.getCount(), orderssDetail.getBook().getBookId());
 //            }
-            orderssDeSevice.removeByOrderssId(orderss.getOrderssId());
+//            orderssDeSevice.removeByOrderssId(orderss.getOrderssId());
             orderssSevice.removeOrderssByOrderssId(orderss.getOrderssId());
             return new ResponseEntity<>("successful", HttpStatus.OK);
         }

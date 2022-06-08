@@ -25,7 +25,7 @@ public class Blog {
     @Column(name = "content")
     @Lob
     private byte[] content;
-    @ManyToOne(cascade= {CascadeType.MERGE,CascadeType.REMOVE}, fetch=FetchType.EAGER)
+    @ManyToOne(cascade= {CascadeType.ALL})
     @JoinColumn(name = "UserId")
     private User user;
 
