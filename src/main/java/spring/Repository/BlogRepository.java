@@ -16,8 +16,6 @@ public interface BlogRepository extends JpaRepository<Blog,String> {
     @Query("delete from Blog u where u.blogId=:blogId")
     void deleteByBlogId(@Param("blogId") String blogId);
 
-    @Transactional
-    @Modifying
-    @Query("update Blog u set u.content=:content where u.blogId=:blogId")
-    void findAndUpdateBlog(@Param("blogId") String blogId,@Param("content") String content);
+    @Query("select u from Blog u where u.blogId=:blogId")
+    Blog findBlogByBlogId(String blogId);
 }
