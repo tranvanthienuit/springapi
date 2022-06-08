@@ -13,7 +13,7 @@ import javax.persistence.*;
 @RequiredArgsConstructor
 public class Blog {
     @Id
-    @GeneratedValue(generator = "uuid")
+    @GeneratedValue(generator = "uuid",strategy = GenerationType.IDENTITY)
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     @Column(name = "BlogId", updatable = false, nullable = false)
     private String blogId;

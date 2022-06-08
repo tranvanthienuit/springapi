@@ -15,7 +15,7 @@ import javax.persistence.*;
 @RequiredArgsConstructor
 public class Rating {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "RatingId", updatable = false, nullable = false)
     //    @org.hibernate.annotations.Type(type="org.hibernate.type.PostgresUUIDType")
     private Long ratingId;

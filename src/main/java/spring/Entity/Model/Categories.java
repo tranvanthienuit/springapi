@@ -16,7 +16,7 @@ import java.util.Objects;
 public class Categories {
     //Categories: id, name
     @Id
-    @GeneratedValue(generator = "uuid")
+    @GeneratedValue(generator = "uuid",strategy = GenerationType.IDENTITY)
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     @Column(name = "categoryId", updatable = false, nullable = false)
     private String categoryId;

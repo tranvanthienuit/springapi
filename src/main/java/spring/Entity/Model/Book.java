@@ -16,7 +16,7 @@ import java.util.Objects;
 public class Book {
     //Books: id, name, categoryId, author, publishYear, nxb, dayAdded, price, status, description
     @Id
-    @GeneratedValue(generator = "uuid")
+    @GeneratedValue(generator = "uuid",strategy = GenerationType.IDENTITY)
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     @Column(name = "bookId", updatable = false, nullable = false)
     private String bookId;

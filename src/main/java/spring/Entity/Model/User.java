@@ -17,7 +17,7 @@ public class User {
 //    Users: id, name, email, password, roleId, address, phoneNumber, gender
 
     @Id
-    @GeneratedValue(generator = "uuid")
+    @GeneratedValue(generator = "uuid",strategy = GenerationType.IDENTITY)
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     @Column(name = "UserId", updatable = false, nullable = false)
 //    @org.hibernate.annotations.Type(type="org.hibernate.type.PostgresUUIDType")

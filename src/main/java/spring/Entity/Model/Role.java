@@ -15,6 +15,8 @@ import java.util.Objects;
 public class Role {
     //Role: id, name
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "RoleId", updatable = false, nullable = false)
     private String roleId;
     @Column(name = "NameRole")
     private String nameRole;
