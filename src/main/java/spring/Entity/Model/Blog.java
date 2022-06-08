@@ -17,9 +17,13 @@ public class Blog {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     @Column(name = "BlogId", updatable = false, nullable = false)
     private String blogId;
+    @Column(name = "title")
+    private String title;
+    @Column(name = "context")
+    private String context;
+    @Column(name = "content")
+    private String content;
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "UserId")
     private User user;
-    @Column(name = "content")
-    private String content;
 }

@@ -33,6 +33,13 @@ public class AdminCategory {
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    @GetMapping("/admin/sua-loai-sach")
+    public ResponseEntity<?> editeCategory(@RequestBody Categories category){
+        Categories categories = categoryService.findByCategoryId(category.getCategoryId());
+        categories.setNameCate(category.getNameCate());
+        categoryService.saveCategory(categories);
+        return new ResponseEntity<>("successful",HttpStatus.OK);
+    }
 
 //    @GetMapping(value = {"/admin/xem-tat-ca-loai-sach/{page}", "/admin/xem-tat-ca-loai-sach"})
 //    public ResponseEntity<CateList> getAllCate(

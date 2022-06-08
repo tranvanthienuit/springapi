@@ -18,5 +18,5 @@ public interface CategoryRepository extends JpaRepository<Categories, String> {
     void removeCategoriesByCategoryId(@Param("categoryId") String name);
 
     @Query("select u from Categories u where u.categoryId=:categoryid")
-    List<Categories> findByCategoryId(@Param("categoryid") String categoryid);
+    Categories findByCategoryId(@Param("categoryid") String categoryid);
 }

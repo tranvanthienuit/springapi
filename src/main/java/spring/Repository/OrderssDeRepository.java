@@ -37,6 +37,7 @@ public interface OrderssDeRepository extends JpaRepository<OrderssDetail, String
     @Query("select new spring.Entity.BookSelect(u.book,sum(u.count)) from OrderssDetail u where u.orderss.user.userId=:userId group by u.book.bookId order by sum (u.count) desc ")
     List<BookSelect> getBookFromBorrDeAndUser(Pageable pageable, @Param("userId") String userId);
 
+    @Query("select u from OrderssDetail u where u.OrderssDeId=:OrderssId")
     List<OrderssDetail> findOrderssDetailsByOrderss(String OrderssId);
 
     @Query("select new spring.Entity.book_category(sum(u.count),u.book.category.nameCate) from OrderssDetail u group by u.book.category.nameCate")
