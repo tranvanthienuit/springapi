@@ -24,13 +24,13 @@ public interface BookRepository extends JpaRepository<Book, String> {
     @Query("select u from Book u where u.category.nameCate=:name")
     List<Book> findBooksByCategoryName(@Param("name") String name);
 
-    @Query("select u from Book u where u.bookId=:idBook")
-    Book findBooksByBookId(@Param("idBook") String idBook);
+    @Query("select u from Book u where u.bookId=:bookId")
+    Book findBooksByBookId(@Param("bookId") String bookId);
 
     @Transactional
     @Modifying
-    @Query("delete from Book u where u.bookId=:idBook")
-    void removeBookByBookId(@Param("idBook") String idBook);
+    @Query("delete from Book u where u.bookId=:bookId")
+    void removeBookByBookId(@Param("bookId") String bookId);
 
     @Transactional
     @Modifying

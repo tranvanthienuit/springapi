@@ -27,6 +27,12 @@ public class Orderss {
     private java.util.Date OrderssDate;
     @Column(name = "totalBook")
     private Integer totalBook;
+    @Column(name = "Telephone")
+    private String telephone;
+    @Column(name = "Address")
+    private String address;
+    @Column(name = "Status")
+    private String status;
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "UserId")
     private User user;

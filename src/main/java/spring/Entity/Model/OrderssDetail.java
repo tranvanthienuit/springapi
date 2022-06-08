@@ -21,8 +21,6 @@ public class OrderssDetail {
     @Column(name = "OrderssDeId", updatable = false)
 //    @org.hibernate.annotations.Type(type="org.hibernate.type.PostgresUUIDType")
     private String OrderssDeId;
-    @Column(name = "Status")
-    private String status;
     @Column(name = "count")
     private Integer count;
     @Column(name = "total_Price")

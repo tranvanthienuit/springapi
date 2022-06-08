@@ -73,7 +73,6 @@ public class UserCart {
             orderssSevice.saveOrderss(orderss);
 
 
-            orderssDetail.setStatus("exist");
             orderssDetail.setOrderss(orderss);
             Book book = bookService.findBookByBookId(cartBook.getBooks());
             orderssDetail.setBook(book);
