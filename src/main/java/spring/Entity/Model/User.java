@@ -39,10 +39,11 @@ public class User {
     @Column(name = "image")
     @Lob
     private byte[] image;
+
+//    @Column(name = "nameRole")
+//    private String nameRole;
     @ManyToOne
     @JoinColumn(name = "RoleId")
-    @JsonIgnore
-    @ToString.Exclude
     private Role role;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnore

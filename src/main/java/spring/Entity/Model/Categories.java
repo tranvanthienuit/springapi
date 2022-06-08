@@ -5,6 +5,7 @@ import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
@@ -13,7 +14,7 @@ import java.util.List;
 @Setter
 @ToString
 @RequiredArgsConstructor
-public class Categories {
+public class Categories{
     //Categories: id, name
     @Id
     @GeneratedValue(generator = "uuid",strategy = GenerationType.IDENTITY)
