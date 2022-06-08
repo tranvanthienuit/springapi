@@ -82,15 +82,6 @@ public class Book  {
     //xóa các bảng, thông tin có khóa ngoại liên kết
     @PreRemove
     public void preRemove(){
-//        this.orderssDetails.forEach(result->{
-//            this.orderssDetails.remove(result);
-//        });
-//        this.ratings.forEach(result->{
-//            this.ratings.remove(result);
-//        });
-//        this.comments.forEach(result->{
-//            this.comments.remove(result);
-//        });
         this.orderssDetails.remove(this);
         this.ratings.remove(this);
         this.comments.remove(this);
