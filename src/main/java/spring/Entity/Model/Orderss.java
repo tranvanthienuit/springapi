@@ -45,8 +45,10 @@ public class Orderss {
     //xóa các bảng, thông tin có khóa ngoại liên kết
     @PreRemove
     public void preRemove(){
-        this.orderssDetails.forEach(result->{
-            this.orderssDetails.remove(result);
-        });
+//        this.orderssDetails.forEach(result->{
+//            this.orderssDetails.remove(result);
+//            List<OrderssDetail> list = this.getOrderssDetails();
+//        });
+        this.getOrderssDetails().remove(this);
     }
 }
