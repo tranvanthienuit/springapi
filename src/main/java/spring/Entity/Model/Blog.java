@@ -25,7 +25,7 @@ public class Blog {
     @Column(name = "content")
     @Lob
     private byte[] content;
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "UserId")
     private User user;
 

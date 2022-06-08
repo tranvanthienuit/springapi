@@ -42,7 +42,7 @@ public class User {
     @Column(name = "image")
     @Lob
     private byte[] image;
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "RoleId")
     private Role role;
 
