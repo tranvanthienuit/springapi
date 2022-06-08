@@ -74,4 +74,12 @@ public class BookController {
         List<Book> bookList = booksService.findBooksByCategoryId(categoryId);
         return new ResponseEntity<>(bookList,HttpStatus.OK);
     }
+    @PostMapping("/search/{tac-gia}/{gia-thap}/{gia-cao}/{nam-sb}")
+    public ResponseEntity<?> findBookByCondition(@PathVariable(value = "tac-gia",required = false)String tacgia,
+                                                 @PathVariable(value = "gia-thap",required = false)Integer giathap,
+                                                 @PathVariable(value = "gia-cao",required = false)Integer giacao,
+                                                 @PathVariable(value = "nam-sb",required = false)Integer namsb){
+        List<Book> bookList = booksService.findBookByCondition(tacgia, giathap, giacao, namsb);
+        return new ResponseEntity<>("successful",HttpStatus.OK);
+    }
 }

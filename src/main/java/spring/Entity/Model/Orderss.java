@@ -35,7 +35,7 @@ public class Orderss {
     private String status;
     @Column(name = "nameUser")
     private String nameUser;
-    @ManyToOne(cascade= {CascadeType.MERGE}, fetch=FetchType.EAGER)
+    @ManyToOne(cascade= {CascadeType.MERGE,CascadeType.REMOVE}, fetch=FetchType.EAGER)
     @JoinColumn(name = "UserId")
     private User user;
 

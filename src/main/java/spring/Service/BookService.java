@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 import spring.Entity.Model.Book;
 import spring.Repository.BookRepository;
 
@@ -73,6 +74,10 @@ public class BookService {
 
     public void removeBookByCategory(String categoryId){
         booksRepository.removeBookByCategory(categoryId);
+    }
+
+    public List<Book> findBookByCondition(String tacgia,Integer giathap,Integer giacao,Integer namsb){
+        return booksRepository.findBookByCondition(tacgia, giathap, giacao, namsb);
     }
 }
 
