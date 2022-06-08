@@ -9,6 +9,8 @@ import spring.Entity.Model.User;
 import spring.Service.RoleService;
 import spring.Service.UserService;
 
+import java.util.List;
+
 @RestController
 public class AdminUser {
     @Autowired
@@ -23,5 +25,11 @@ public class AdminUser {
         user.setRole(role);
         userService.saveUser(user);
         return new ResponseEntity<>("successful", HttpStatus.OK);
+    }
+
+    @GetMapping("/admin/{roleName}")
+    public ResponseEntity<?> findUsersByRole(@PathVariable("roleName")String roleName){
+        List<User> userList = userService.findUsersByRole(roleName);
+        return new ResponseEntity<>(userList,HttpStatus.OK);
     }
 }

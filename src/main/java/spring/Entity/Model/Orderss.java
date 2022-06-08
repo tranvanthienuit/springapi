@@ -33,6 +33,8 @@ public class Orderss {
     private String address;
     @Column(name = "Status")
     private String status;
+    @Column(name = "nameUser")
+    private String nameUser;
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "UserId")
     private User user;

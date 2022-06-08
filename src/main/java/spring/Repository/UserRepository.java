@@ -72,4 +72,6 @@ public interface UserRepository extends JpaRepository<User, String> {
     List<month_user> getUserAndMonnth();
 
     User findByEmail(String mail);
+    @Query("select u from User u where u.role.nameRole=:roleName")
+    List<User> findUsersByRole(@Param("roleName")String roleName);
 }

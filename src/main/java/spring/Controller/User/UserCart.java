@@ -70,6 +70,10 @@ public class UserCart {
                 }
             }
             orderss.setTotalBook(totalBook);
+            orderss.setStatus("chưa giao hàng");
+            orderss.setTelephone(user.getTelephone());
+            orderss.setAddress(user.getAddress());
+            orderss.setNameUser(user.getNameUser());
             orderssSevice.saveOrderss(orderss);
 
 
