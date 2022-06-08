@@ -56,7 +56,7 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnore
     @ToString.Exclude
-    private List<Orderss> orderssDetails;
+    private List<Orderss> ordersses;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     @JsonIgnore
     @ToString.Exclude
@@ -71,5 +71,21 @@ public class User {
         if (image == null)
             return null;
         return new String(image);
+    }
+    //xóa các bảng, thông tin có khóa ngoại liên kết
+    @PreRemove
+    public void preRemove(){
+        this.blogs.forEach(result->{
+            this.blogs.remove(result);
+        });
+        this.ratings.forEach(result->{
+            this.ratings.remove(result);
+        });
+        this.comments.forEach(result->{
+            this.comments.remove(result);
+        });
+        this.ordersses.forEach(result->{
+            this.ordersses.remove(result);
+        });
     }
 }

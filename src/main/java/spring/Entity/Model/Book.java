@@ -79,4 +79,17 @@ public class Book  {
             return null;
         return new String(description);
     }
+    //xóa các bảng, thông tin có khóa ngoại liên kết
+    @PreRemove
+    public void preRemove(){
+        this.orderssDetails.forEach(result->{
+            this.orderssDetails.remove(result);
+        });
+        this.ratings.forEach(result->{
+            this.ratings.remove(result);
+        });
+        this.comments.forEach(result->{
+            this.comments.remove(result);
+        });
+    }
 }
