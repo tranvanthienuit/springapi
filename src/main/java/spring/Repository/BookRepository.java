@@ -24,6 +24,9 @@ public interface BookRepository extends JpaRepository<Book, String> {
     @Query("select u from Book u where u.category.nameCate=:name")
     List<Book> findBooksByCategoryName(@Param("name") String name);
 
+    @Query("select u from Book u where u.category.categoryId=:categoryId")
+    List<Book> findBooksByCategoryId(@Param("categoryId")String categoryId);
+
     @Query("select u from Book u where u.bookId=:bookId")
     Book findBooksByBookId(@Param("bookId") String bookId);
 
@@ -44,5 +47,8 @@ public interface BookRepository extends JpaRepository<Book, String> {
     Page<Book> getAllBook(Pageable pageable);
 
     @Query("SELECT u FROM Book u where u.nameBook like %:keyword% or u.category.nameCate like %:keyword%")
-    public List<String> searchByNameBook(@Param("keyword") String keyword);
+    List<String> searchByNameBook(@Param("keyword") String keyword);
+
+    @Query("delete from Book u where u.category.categoryId=:categoryId")
+    void removeBookByCategory(@Param("categoryId") String categoryId);
 }

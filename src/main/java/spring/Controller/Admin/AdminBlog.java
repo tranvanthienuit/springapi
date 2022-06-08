@@ -42,9 +42,10 @@ public class AdminBlog {
         return new ResponseEntity<>(blogService.findAllBlog(),HttpStatus.OK);
     }
 
-    @GetMapping("/admin/sua-blog")
+    @PostMapping("/admin/sua-blog")
     public ResponseEntity<?> updateBlog(@RequestBody Blog blog){
         blogService.findAndUpdateBlog(blog.getBlogId(), blog.getContent());
         return new ResponseEntity<>("successful", HttpStatus.OK);
     }
+
 }

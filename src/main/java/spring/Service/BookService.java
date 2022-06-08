@@ -38,6 +38,10 @@ public class BookService {
         return booksRepository.findBooksByCategoryName(name);
     }
 
+    public List<Book> findBooksByCategoryId(String categoryId){
+        return booksRepository.findBooksByCategoryId(categoryId);
+    }
+
     public Book findBooksByBookId(String idBook) {
         return booksRepository.findBooksByBookId(idBook);
     }
@@ -65,6 +69,10 @@ public class BookService {
 
     public List<String> searchByNameBook(String keyword){
         return booksRepository.searchByNameBook(keyword);
+    }
+
+    public void removeBookByCategory(String categoryId){
+        booksRepository.removeBookByCategory(categoryId);
     }
 }
 

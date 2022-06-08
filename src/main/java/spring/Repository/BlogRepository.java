@@ -11,7 +11,10 @@ import javax.transaction.Transactional;
 
 @Repository
 public interface BlogRepository extends JpaRepository<Blog,String> {
-    void deleteByBlogId(String blogId);
+    @Transactional
+    @Modifying
+    @Query("delete from Blog u where u.blogId=:blogId")
+    void deleteByBlogId(@Param("blogId") String blogId);
 
     @Transactional
     @Modifying

@@ -47,12 +47,12 @@ public class Orderss {
     public ResponseEntity<String> removeOrderss(@PathVariable(value = "OrderssId", required = false) String OrderssId) throws Exception {
         spring.Entity.Model.Orderss orderss = orderssSevice.findOrderssByOrderssId(OrderssId);
         if (orderss != null) {
-            List<OrderssDetail> orderssDetails = orderssDeSevice.findOrderssDetailsByOrderss(OrderssId);
-            for (OrderssDetail orderssDetail : orderssDetails) {
-                bookService.findBookAndUpdate(orderssDetail.getCount(), orderssDetail.getBook().getBookId());
-            }
-            orderssSevice.removeOrderssByOrderssId(orderss.getOrderssId());
+//            List<OrderssDetail> orderssDetails = orderssDeSevice.findOrderssDetailsByOrderss(OrderssId);
+//            for (OrderssDetail orderssDetail : orderssDetails) {
+//                bookService.findBookAndUpdate(orderssDetail.getCount(), orderssDetail.getBook().getBookId());
+//            }
             orderssDeSevice.removeByOrderssId(orderss.getOrderssId());
+            orderssSevice.removeOrderssByOrderssId(orderss.getOrderssId());
             return new ResponseEntity<>("successful", HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.OK);
