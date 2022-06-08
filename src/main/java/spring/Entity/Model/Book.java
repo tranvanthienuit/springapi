@@ -36,7 +36,8 @@ public class Book {
     @Column(name = "Count")
     private Integer count;
     @Column(name = "Description")
-    private String description;
+    @Lob
+    private byte[] description;
     @Column(name = "image")
     @Lob
     private byte[] image;
@@ -52,5 +53,14 @@ public class Book {
         if (image==null)
             return null;
         return new String(image);
+    }
+    public void setDescription(String description) {
+        this.description = description.getBytes();
+    }
+
+    public String getDescription() {
+        if (description==null)
+            return null;
+        return new String(description);
     }
 }

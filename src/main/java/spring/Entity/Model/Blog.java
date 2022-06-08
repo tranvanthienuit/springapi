@@ -20,10 +20,29 @@ public class Blog {
     @Column(name = "title")
     private String title;
     @Column(name = "context")
-    private String context;
+    @Lob
+    private byte[] context;
     @Column(name = "content")
-    private String content;
+    @Lob
+    private byte[] content;
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "UserId")
     private User user;
+
+    public void setContent(String content) {
+        this.content = content.getBytes();
+    }
+    public String getContent() {
+        if (content==null)
+            return null;
+        return new String(content);
+    }
+    public void setContext(String content) {
+        this.context = content.getBytes();
+    }
+    public String getContext() {
+        if (context==null)
+            return null;
+        return new String(context);
+    }
 }
