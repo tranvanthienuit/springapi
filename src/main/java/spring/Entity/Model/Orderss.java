@@ -1,12 +1,12 @@
 package spring.Entity.Model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import org.hibernate.Hibernate;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.Objects;
+import java.util.List;
 
 @Entity
 @Table(name = "Orderss")
@@ -35,9 +35,12 @@ public class Orderss {
     private String status;
     @Column(name = "nameUser")
     private String nameUser;
-    @ManyToOne(cascade= {CascadeType.ALL})
+    @ManyToOne
     @JoinColumn(name = "UserId")
     private User user;
-
+    @OneToMany(mappedBy = "orderss", cascade = CascadeType.ALL)
+    @JsonIgnore
+    @ToString.Exclude
+    private List<OrderssDetail> orderssDetails;
 
 }

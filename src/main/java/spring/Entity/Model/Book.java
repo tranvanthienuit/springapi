@@ -1,11 +1,11 @@
 package spring.Entity.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import org.hibernate.Hibernate;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.Objects;
+import java.util.List;
 
 @Entity
 @Table(name = "Books")
@@ -41,9 +41,21 @@ public class Book {
     @Column(name = "image")
     @Lob
     private byte[] image;
-    @ManyToOne(cascade= {CascadeType.ALL})
+    @ManyToOne
     @JoinColumn(name = "CategoryId")
     private Categories category;
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
+    @JsonIgnore
+    @ToString.Exclude
+    private List<OrderssDetail> orderssDetails;
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
+    @JsonIgnore
+    @ToString.Exclude
+    private List<Rating> ratings;
+    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
+    @JsonIgnore
+    @ToString.Exclude
+    private List<Comment> comments;
 
     public void setImage(String image) {
         this.image = image.getBytes();

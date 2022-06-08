@@ -1,11 +1,11 @@
 package spring.Entity.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import org.hibernate.Hibernate;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.Objects;
+import java.util.List;
 
 @Entity
 @Table(name = "Categories")
@@ -22,6 +22,9 @@ public class Categories {
     private String categoryId;
     @Column(name = "NameCategory")
     private String nameCate;
-
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
+    @JsonIgnore
+    @ToString.Exclude
+    private List<Book> books;
 
 }

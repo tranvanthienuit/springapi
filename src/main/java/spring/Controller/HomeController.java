@@ -214,6 +214,8 @@ public class HomeController {
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         Role role = roleService.fineRoleByName("ADMIN");
+        if (role==null)
+            role = roleService.fineRoleByName("USER");
         user.setRole(role);
         LocalDate ldate = LocalDate.now();
         java.sql.Date date = java.sql.Date.valueOf(ldate);

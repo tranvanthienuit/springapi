@@ -1,11 +1,9 @@
 package spring.Entity.Model;
 
 import lombok.*;
-import org.hibernate.Hibernate;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
 @Table(name = "OrderssDetail")
@@ -25,10 +23,10 @@ public class OrderssDetail {
     private Integer count;
     @Column(name = "total_Price")
     private Double total;
-    @ManyToOne(cascade= {CascadeType.ALL})
+    @ManyToOne
     @JoinColumn(name = "OrderssId")
     private Orderss orderss;
-    @ManyToOne(cascade= {CascadeType.ALL})
+    @ManyToOne
     @JoinColumn(name = "BooksId")
     private Book book;
 
