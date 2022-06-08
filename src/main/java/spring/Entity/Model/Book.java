@@ -41,7 +41,7 @@ public class Book {
     @Column(name = "image")
     @Lob
     private byte[] image;
-    @ManyToOne(cascade= {CascadeType.ALL}, fetch=FetchType.EAGER)
+    @ManyToOne(cascade= {CascadeType.MERGE}, fetch=FetchType.EAGER)
     @JoinColumn(name = "CategoryId")
     private Categories category;
 

@@ -22,10 +22,10 @@ public class Comment {
     private String commentId;
     @Column(name = "content")
     private String content;
-    @ManyToOne(cascade= {CascadeType.ALL}, fetch=FetchType.EAGER)
+    @ManyToOne(cascade= {CascadeType.MERGE}, fetch=FetchType.EAGER)
     @JoinColumn(name = "User")
     private User user;
-    @ManyToOne(cascade= {CascadeType.ALL}, fetch=FetchType.EAGER)
+    @ManyToOne(cascade= {CascadeType.MERGE}, fetch=FetchType.EAGER)
     @JoinColumn(name = "Book")
     private Book book;
 }
