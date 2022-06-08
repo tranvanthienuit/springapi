@@ -25,7 +25,7 @@ public interface OrderssDeRepository extends JpaRepository<OrderssDetail, String
 
     @Transactional
     @Modifying
-    @Query("delete from OrderssDetail u where u.OrderssDeId=:orderssId ")
+    @Query("delete from OrderssDetail u where u.orderss.OrderssId=:orderssId ")
     void removeByOrderssId(@Param("orderssId") String orderssId);
 
     @Query("select u from OrderssDetail u where u.OrderssDeId=:orderssDeId")

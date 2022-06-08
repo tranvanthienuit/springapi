@@ -58,7 +58,7 @@ public class AdminBook {
         return new ResponseEntity<>("successful",HttpStatus.OK);
     }
 
-    @GetMapping(value = {"/admin/xoa-sach/{bookId}", "/admin/xoa-sach"})
+    @DeleteMapping(value = {"/admin/xoa-sach/{bookId}", "/admin/xoa-sach"})
     public ResponseEntity<String> removeBook(@PathVariable(value = "bookId", required = false) String bookId) throws Exception {
         if (booksService.findBooksByBookId(bookId) != null) {
             booksService.removeBookByBookId(bookId);
