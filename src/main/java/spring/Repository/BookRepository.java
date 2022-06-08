@@ -49,6 +49,8 @@ public interface BookRepository extends JpaRepository<Book, String> {
     @Query("SELECT u FROM Book u where u.nameBook like %:keyword% or u.category.nameCate like %:keyword%")
     List<String> searchByNameBook(@Param("keyword") String keyword);
 
+    @Transactional
+    @Modifying
     @Query("delete from Book u where u.category.categoryId=:categoryId")
     void removeBookByCategory(@Param("categoryId") String categoryId);
 }

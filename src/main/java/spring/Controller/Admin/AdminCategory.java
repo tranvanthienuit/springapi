@@ -31,8 +31,8 @@ public class AdminCategory {
     @DeleteMapping(value = {"/admin/xoa-loai-sach/{categoryId}", "/admin/xoa-loai-sach"})
     public ResponseEntity<String> removeCategory(@PathVariable(value = "categoryId", required = false) String categoryId) throws Exception {
         if (categoryService.findByCategoryId(categoryId) != null) {
-            categoryService.removeCategoriesByCategoryId(categoryId);
             bookService.removeBookByCategory(categoryId);
+            categoryService.removeCategoriesByCategoryId(categoryId);
             return new ResponseEntity<>("successful",HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.OK);
