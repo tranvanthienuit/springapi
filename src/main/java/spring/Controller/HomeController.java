@@ -197,7 +197,7 @@ public class HomeController {
             return new ResponseEntity<>("account exist",HttpStatus.OK);
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        Role role = roleService.fineRoleByName("ADMIN");
+        Role role = roleService.fineRoleByName(user.getRole().getNameRole());
         if (role==null)
             role = roleService.fineRoleByName("USER");
         user.setRole(role);
