@@ -18,6 +18,7 @@ import spring.Repository.UserRepository;
 import spring.Sercurity.userDetail;
 import spring.Service.UserService;
 
+import java.util.Map;
 import java.util.Random;
 
 @RestController
@@ -97,13 +98,14 @@ public class UserController {
         return user.getImage().getBytes();
     }
 
-    @PostMapping(value = {"/quen-mat-khau",})
-    public ResponseEntity<?> forgetPass(@RequestBody String email) {
-        if (mailService.checkMail(email)) {
-            User user = userRepository.findByEmail(email);
+    @PostMapping(value = {"/quen-mat-khau"})
+    public ResponseEntity<?> forgetPass(@RequestBody Map<String, Object> email) {
+        String Email = email.get("email").toString();
+        if (mailService.checkMail(Email)) {
+            User user = userRepository.findByEmail(Email);
             Mail mail = new Mail();
             mail.setMailFrom("uitsneaker@gmail.com");
-            mail.setMailTo(email);
+            mail.setMailTo(Email);
             mail.setMailSubject("Quên password");
             mail.setMailContent("<h1>Reset Password</h1></br></br>\n" +
                     "<h2>Xin chào quý khách mật khẩu của bạn đang được reset.</br>\n" +
