@@ -3,6 +3,9 @@ package spring.Controller.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -11,6 +14,7 @@ import spring.Entity.Mail;
 import spring.Entity.Model.User;
 import spring.Entity.image;
 import spring.Repository.MailService;
+import spring.Repository.UserRepository;
 import spring.Sercurity.userDetail;
 import spring.Service.UserService;
 
@@ -24,8 +28,12 @@ public class UserController {
     PasswordEncoder passwordEncoder;
     @Autowired
     MailService mailService;
+    @Autowired
+    AuthenticationManager manager;
+    @Autowired
+    UserRepository userRepository;
 
-    @PostMapping("/sua-thong-tin")
+    @PostMapping(value = {"/user/sua-thong-tin", "/admin/sua-thong-tin", "/seller/sua-thong-tin"})
     public ResponseEntity<User> editInfo(@RequestBody(required = false) User user) throws Exception {
         userDetail userDetail = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user1 = userService.findUserByUserId(user.getUserId());
@@ -57,7 +65,7 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @PostMapping("/cap-nhat-anh")
+    @PostMapping(value = {"/user/cap-nhat-anh", "/admin/cap-nhat-anh", "/seller/cap-nhat-anh"})
     public ResponseEntity<User> editImg(@RequestBody image image) throws Exception {
         userDetail userDetail = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.findUserByUserId(userDetail.getUserId());
@@ -67,8 +75,8 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @PostMapping("/sua-mat-khau/{old-password}/{new-password}")
-    public ResponseEntity<?> editPassword(@RequestBody @PathVariable("old-password") String oldPassword, @RequestBody @PathVariable("new-password") String newPassword) {
+    @PostMapping(value = {"/user/sua-mat-khau", "/admin/sua-mat-khau", "/seller/sua-mat-khau"})
+    public ResponseEntity<?> editPassword(@RequestBody String oldPassword, @RequestBody @PathVariable("new-password") String newPassword) {
         userDetail userDetail = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.findUserByUserId(userDetail.getUserId());
         if (passwordEncoder.matches(oldPassword, user.getPassword())) {
@@ -89,9 +97,10 @@ public class UserController {
         return user.getImage().getBytes();
     }
 
-    @PostMapping("/quen-mat-khau/{email}")
-    public ResponseEntity<?> forgetPass(@PathVariable("email") String email) {
+    @PostMapping(value = {"/quen-mat-khau",})
+    public ResponseEntity<?> forgetPass(@RequestBody String email) {
         if (mailService.checkMail(email)) {
+            User user = userRepository.findByEmail(email);
             Mail mail = new Mail();
             mail.setMailFrom("uitsneaker@gmail.com");
             mail.setMailTo(email);
@@ -101,14 +110,27 @@ public class UserController {
                     "\tHãy nhấp vào link dưới đây để cài đặt mật khẩu lại. Cảm ơn quý khách\n</h2>\n" +
                     "<h3>Link: </h3>" + "<a href=" + "https://cai-dat-mat-khau-moi/" + ">" + email + "</a>");
             mailService.sendEmail(mail);
+            Authentication authentication = manager.authenticate(new UsernamePasswordAuthenticationToken(user.getNameUser(),
+                    user.getPassword()));
+            SecurityContextHolder.getContext().setAuthentication(authentication);
             return new ResponseEntity<>("successful", HttpStatus.OK);
         }
         return new ResponseEntity<>("không có mail nào trong tài khoản", HttpStatus.OK);
     }
 
-    @PostMapping("/cai-dat-mat-khau-moi/{email}/{password}")
-    public ResponseEntity<?> setPassword(@PathVariable("email") String email, @PathVariable("password") String password) {
+    @PostMapping(value = {"/user/cai-dat-mat-khau-moi", "/admin/cai-dat-mat-khau-moi", "/seller/cai-dat-mat-khau-moi"})
+    public ResponseEntity<?> setPassword(@RequestBody String email, @RequestBody String password) {
         userService.setPassword(passwordEncoder.encode(password), email);
         return new ResponseEntity<>("successful", HttpStatus.OK);
+    }
+
+    @GetMapping(value = {"/user/xem-tai-khoan", "/admin/xem-tai-khoan", "/seller/xem-tai-khoan"})
+    public ResponseEntity<User> getUser() throws Exception {
+        userDetail userDetail = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User user = userService.findUserByUserId(userDetail.getUserId());
+        if (user == null) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 }
