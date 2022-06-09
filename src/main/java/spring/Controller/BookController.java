@@ -79,7 +79,7 @@ public class BookController {
                                                  @PathVariable(value = "gia-thap",required = false)Integer giathap,
                                                  @PathVariable(value = "gia-cao",required = false)Integer giacao,
                                                  @PathVariable(value = "nam-sb",required = false)Integer namsb){
-        List<Book> bookList = booksService.findBookByCondition(tacgia, giathap, giacao, namsb);
+        booksService.findBookByCondition(tacgia, giathap, giacao, namsb);
         return new ResponseEntity<>("successful",HttpStatus.OK);
     }
 }
