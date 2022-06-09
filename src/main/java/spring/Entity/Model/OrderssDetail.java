@@ -1,5 +1,6 @@
 package spring.Entity.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -23,7 +24,8 @@ public class OrderssDetail {
     private Integer count;
     @Column(name = "total_Price")
     private Double total;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     @JoinColumn(name = "OrderssId")
     private Orderss orderss;
     @ManyToOne
