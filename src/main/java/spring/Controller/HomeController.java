@@ -197,9 +197,10 @@ public class HomeController {
             return new ResponseEntity<>("account exist",HttpStatus.OK);
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        Role role = roleService.fineRoleByName(user.getRole().getNameRole());
-        if (role==null)
-            role = roleService.fineRoleByName("USER");
+        Role role = new Role();
+        if (user.getRole()!=null)
+            role = roleService.fineRoleByName(user.getRole().getNameRole());
+
         user.setRole(role);
 //        user.setNameRole(role.getNameRole());
         LocalDate ldate = LocalDate.now();
