@@ -13,11 +13,13 @@ import org.springframework.web.bind.annotation.*;
 import spring.Entity.Mail;
 import spring.Entity.Model.User;
 import spring.Entity.image;
+import spring.JWT.JwtTokenProvider;
 import spring.Repository.MailService;
 import spring.Repository.UserRepository;
 import spring.Sercurity.userDetail;
 import spring.Service.UserService;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -33,6 +35,8 @@ public class UserController {
     AuthenticationManager manager;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    JwtTokenProvider jwtTokenProvider;
 
     @PostMapping(value = {"/user/sua-thong-tin", "/admin/sua-thong-tin", "/seller/sua-thong-tin"})
     public ResponseEntity<User> editInfo(@RequestBody(required = false) User user) throws Exception {
@@ -103,6 +107,7 @@ public class UserController {
         String Email = email.get("email").toString();
         if (mailService.checkMail(Email)) {
             User user = userRepository.findByEmail(Email);
+            String token = jwtTokenProvider.generateAccessToken(user.getUserId(), user.getNameUser());
             Mail mail = new Mail();
             mail.setMailFrom("uitsneaker@gmail.com");
             mail.setMailTo(Email);
@@ -110,20 +115,20 @@ public class UserController {
             mail.setMailContent("<h1>Reset Password</h1></br></br>\n" +
                     "<h2>Xin chào quý khách mật khẩu của bạn đang được reset.</br>\n" +
                     "\tHãy nhấp vào link dưới đây để cài đặt mật khẩu lại. Cảm ơn quý khách\n</h2>\n" +
-                    "<h3>Link: </h3>" + "<a href=" + "https://cai-dat-mat-khau-moi/" + ">" + email + "</a>");
+                    "<h3>Link: </h3>" + "<a href=" + "https://cai-dat-mat-khau-moi/" + token + ">" + email + "</a>");
             mailService.sendEmail(mail);
-            Authentication authentication = manager.authenticate(new UsernamePasswordAuthenticationToken(user.getNameUser(),
-                    user.getPassword()));
-            SecurityContextHolder.getContext().setAuthentication(authentication);
             return new ResponseEntity<>("successful", HttpStatus.OK);
         }
         return new ResponseEntity<>("không có mail nào trong tài khoản", HttpStatus.OK);
     }
 
-    @PostMapping(value = {"/user/cai-dat-mat-khau-moi", "/admin/cai-dat-mat-khau-moi", "/seller/cai-dat-mat-khau-moi"})
-    public ResponseEntity<?> setPassword(@RequestBody String email, @RequestBody String password) {
-        userService.setPassword(passwordEncoder.encode(password), email);
-        return new ResponseEntity<>("successful", HttpStatus.OK);
+    @PostMapping(value = {"/cai-dat-mat-khau-moi/{token}"})
+    public ResponseEntity<?> setPassword(@PathVariable("token")String token, @RequestBody Map<String,Object> emailAndPass) {
+        if (jwtTokenProvider.validateToken(token)){
+            userService.setPassword(passwordEncoder.encode(emailAndPass.get("password").toString()),emailAndPass.get("email").toString());
+            return new ResponseEntity<>("successful", HttpStatus.OK);
+        }
+        return new ResponseEntity<>("error",HttpStatus.OK);
     }
 
     @GetMapping(value = {"/xem-tai-khoan"})
