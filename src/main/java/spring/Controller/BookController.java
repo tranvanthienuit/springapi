@@ -69,7 +69,7 @@ public class BookController {
         List<String> searchString = booksService.searchByNameBook(keywword);
         return new ResponseEntity<>(searchString,HttpStatus.OK);
     }
-    @PostMapping("/search/{categoryId}")
+    @GetMapping("/search/{categoryId}")
     public ResponseEntity<?> findBookByCategory(@PathVariable(value = "categoryId")String categoryId){
         List<Book> bookList = booksService.findBooksByCategoryId(categoryId);
         return new ResponseEntity<>(bookList,HttpStatus.OK);
