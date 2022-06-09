@@ -81,6 +81,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/seller/*","/seller/*/*").hasAnyAuthority("SELLER", "ADMIN")
                 .antMatchers("/user/*","/user/*/*").hasAnyAuthority("USER", "ADMIN")
                 .antMatchers("/admin/*","/admin/*/*").hasAnyAuthority("ADMIN")
+                .antMatchers("/xem-tai-khoan").hasAnyAuthority("SELLER","USER","ADMIN")
                 .and()
                 .logout().logoutUrl("/dang-xuat").permitAll()
                 .logoutSuccessHandler(new SimpleUrlLogoutSuccessHandler()).permitAll()

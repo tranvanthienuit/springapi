@@ -126,7 +126,7 @@ public class UserController {
         return new ResponseEntity<>("successful", HttpStatus.OK);
     }
 
-    @GetMapping(value = {"/user/xem-tai-khoan", "/admin/xem-tai-khoan", "/seller/xem-tai-khoan"})
+    @GetMapping(value = {"/xem-tai-khoan"})
     public ResponseEntity<User> getUser() throws Exception {
         userDetail userDetail = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.findUserByUserId(userDetail.getUserId());
