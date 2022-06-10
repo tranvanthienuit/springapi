@@ -53,7 +53,7 @@ public class User {
             return new ResponseEntity<>(userList, HttpStatus.OK);
         }
     }
-    @PostMapping(value = {"/admin/{userId}","/seller/{userId}"})
+    @RequestMapping(value = {"/admin/{userId}","/seller/{userId}"},method = RequestMethod.GET)
     public ResponseEntity<?> editeRole(@PathVariable("userId") String userId, @RequestBody Map<String,Object> roleName) {
         spring.Entity.Model.User user = userService.findUserByUserId(userId);
 

@@ -31,7 +31,7 @@ public class UserComment {
         commentService.saveComment(comment);
         return new ResponseEntity<>("successfull", HttpStatus.OK);
     }
-    @PostMapping("/user/xoa-comment/{commentId}")
+    @RequestMapping(value = "/user/xoa-comment/{commentId}",method = RequestMethod.GET)
     public ResponseEntity<?> deleteComment(@PathVariable(name = "commentId")String commentId){
         userDetail user1 = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.findUserByUserId(user1.getUserId());
