@@ -15,10 +15,10 @@ import java.util.List;
 @Setter
 @ToString
 @RequiredArgsConstructor
-public class Book  {
+public class Book {
     //Books: id, name, categoryId, author, publishYear, nxb, dayAdded, price, status, description
     @Id
-    @GeneratedValue(generator = "uuid",strategy = GenerationType.IDENTITY)
+    @GeneratedValue(generator = "uuid", strategy = GenerationType.IDENTITY)
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     @Column(name = "bookId", updatable = false)
     private String bookId;
@@ -37,7 +37,7 @@ public class Book  {
     private Integer price;
     @Column(name = "Count")
     private Integer count;
-//    @Column(name = "nameCate")
+    //    @Column(name = "nameCate")
 //    private String nameCate;
     @Column(name = "Description")
     @Lob
@@ -46,7 +46,7 @@ public class Book  {
     @Lob
     private byte[] image;
     @Column(name = "rating")
-    private double rating;
+    private Integer rating;
     @ManyToOne
     @JoinColumn(name = "CategoryId")
     private Categories category;
@@ -68,27 +68,33 @@ public class Book  {
     }
 
     public String getImage() {
-        if (image==null)
+        if (image == null)
             return null;
         return new String(image);
     }
+
     public void setDescription(String description) {
         this.description = description.getBytes();
     }
 
     public String getDescription() {
-        if (description==null)
+        if (description == null)
             return null;
         return new String(description);
     }
+
     //xóa các bảng, thông tin có khóa ngoại liên kết
     @PreRemove
-    public void preRemove(){
+    public void preRemove() {
         this.orderssDetails.remove(this);
         this.ratings.remove(this);
         this.comments.remove(this);
     }
-    public void setRating(double rating){
-        this.rating = (this.rating + rating)/2;
+
+    public void setRating(Integer rating) {
+        if (rating == null)
+            this.rating = 5;
+        else
+            this.rating = (this.rating + rating) / 2;
     }
 }
