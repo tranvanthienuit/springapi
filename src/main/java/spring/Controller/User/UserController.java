@@ -114,7 +114,7 @@ public class UserController {
             mail.setMailContent("<h1>Reset Password</h1></br></br>\n" +
                     "<h2>Xin chào quý khách mật khẩu của bạn đang được reset.</br>\n" +
                     "\tHãy nhấp vào link dưới đây để cài đặt mật khẩu lại. Cảm ơn quý khách\n</h2>\n" +
-                    "<h3>Link: </h3>" + "<a href=" + "https://cai-dat-mat-khau-moi/" + token + ">" + email + "</a>");
+                    "<h3>Link: </h3>" + "<a href=https://cai-dat-mat-khau-moi/" + token + ">" + email + "</a>");
             mailService.sendEmail(mail);
             return new ResponseEntity<>("successful", HttpStatus.OK);
         }
