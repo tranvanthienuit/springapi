@@ -68,7 +68,7 @@ public class HomeController {
 
         // lấy sách dựa trên những phiếu mượn sách trước
         Pageable pageable1 = PageRequest.of(0, 16);
-        List<Book> bookList1 = orderssDeSevice.getBookFromBorrDe(pageable1);
+        List<Book> bookOrder = orderssDeSevice.getBookFromBorrDe(pageable1);
 
         // lấy sách dựa trên số sách mà khách hàng đã mượn
 //        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -76,7 +76,7 @@ public class HomeController {
 //        List<Book> bookUser = orderssDeSevice.getBookFromBorrDeAndUser(pageable1, user);
 
         // lấy sách dựa trên số sao đánh giá cao nhất
-        List<BookRating> bookRatings = ratingService.bookRating();
+        List<Book> bookRating = booksService.getBookByRating();
 
 //        if (bookUser.isEmpty()) {
 //            bookReturn.setBookList(bookList);
@@ -85,8 +85,10 @@ public class HomeController {
 //            return new ResponseEntity<>(bookReturn, HttpStatus.OK);
 //        } else {
         bookReturn.setBookList(bookList);
+        bookReturn.setBookOder(bookOrder);
+        bookReturn.setBookRating(bookRating);
 //            bookReturn.setBooks(bookUser);
-        bookReturn.setBookRatings(bookRatings);
+//        bookReturn.setFullBooks(fullBooks);
         return new ResponseEntity<>(bookReturn, HttpStatus.OK);
 //        }
 
@@ -104,33 +106,36 @@ public class HomeController {
         if (page == null) {
             page = 0;
         }
+        //lấy tất cả các sách và số lưởng tổng
         Pageable pageable = PageRequest.of(page, 16);
         Page<Book> bookPage = booksService.getAllBooks(pageable);
         List<Book> bookPageContent = bookPage.getContent();
         bookList.setBookList(bookPageContent);
         bookList.setCount(bookPageContent.size());
 
-
+        // lấy sách dựa trên những phiếu mượn sách trước
         Pageable pageable1 = PageRequest.of(0, 16);
-        List<Book> bookList1 = orderssDeSevice.getBookFromBorrDe(pageable1);
+        List<Book> bookOrder = orderssDeSevice.getBookFromBorrDe(pageable1);
 
-
+        // lấy sách dựa trên số sách mà khách hàng đã mượn
 //        String userName = SecurityContextHolder.getContext().getAuthentication().getName();
 //        User user = userService.findUserName(userName);
 //        List<Book> bookUser = orderssDeSevice.getBookFromBorrDeAndUser(pageable1, user);
 
+        // lấy sách dựa trên số sao đánh giá cao nhất
+        List<Book> bookRating = booksService.getBookByRating();
 
-        List<BookRating> bookRatings = ratingService.bookRating();
-
-//        if (bookUser == null) {
+//        if (bookUser.isEmpty()) {
 //            bookReturn.setBookList(bookList);
 //            bookReturn.setBooks(bookList1);
 //            bookReturn.setBookRatings(bookRatings);
 //            return new ResponseEntity<>(bookReturn, HttpStatus.OK);
 //        } else {
         bookReturn.setBookList(bookList);
+        bookReturn.setBookOder(bookOrder);
+        bookReturn.setBookRating(bookRating);
 //            bookReturn.setBooks(bookUser);
-        bookReturn.setBookRatings(bookRatings);
+//        bookReturn.setFullBooks(fullBooks);
         return new ResponseEntity<>(bookReturn, HttpStatus.OK);
 //        }
 
@@ -227,19 +232,6 @@ public class HomeController {
 //
 //    }
 
-
-    @PostMapping(value = {"/danh-gia-sach/{bookId}/{star}", "/danh-gia-sach"})
-    public ResponseEntity<?> appriciateBook(@PathVariable(value = "bookId", required = false) String bookId, @PathVariable(value = "star", required = false) int star) {
-        Rating rating = new Rating();
-        userDetail userDetail = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userService.findUserByUserId(userDetail.getUserId());
-        Book book = booksService.findBooksByBookId(bookId);
-        rating.setUser(user);
-        rating.setBook(book);
-        rating.setRating(star);
-        ratingService.save(rating);
-        return new ResponseEntity<>("successful", HttpStatus.OK);
-    }
 
     @GetMapping("/category")
     public ResponseEntity<CateList> getAllCategory() {

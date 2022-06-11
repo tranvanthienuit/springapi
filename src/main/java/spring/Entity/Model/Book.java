@@ -45,6 +45,8 @@ public class Book  {
     @Column(name = "image")
     @Lob
     private byte[] image;
+    @Column(name = "rating")
+    private double rating;
     @ManyToOne
     @JoinColumn(name = "CategoryId")
     private Categories category;
@@ -85,5 +87,12 @@ public class Book  {
         this.orderssDetails.remove(this);
         this.ratings.remove(this);
         this.comments.remove(this);
+    }
+    public void setRating(double rating){
+        double rate = 0.0;
+        for (Rating rating1 : this.ratings){
+            rate = rate+rating1.getRating();
+        }
+        this.rating = rate/this.ratings.size();
     }
 }

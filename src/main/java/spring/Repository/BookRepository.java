@@ -45,6 +45,8 @@ public interface BookRepository extends JpaRepository<Book, String> {
 
     @Query("select u from Book u")
     Page<Book> getAllBook(Pageable pageable);
+    @Query("select u from Book u where u.rating>3")
+    List<Book> getBookByRating();
 
     @Query("SELECT u FROM Book u where u.nameBook like %:keyword% or u.category.nameCate like %:keyword%")
     List<String> searchByNameBook(@Param("keyword") String keyword);
