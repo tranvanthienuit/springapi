@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import spring.Entity.Model.Book;
 import spring.Entity.Model.Comment;
 import spring.Entity.Model.User;
 import spring.Sercurity.userDetail;
@@ -32,14 +33,20 @@ public class UserComment {
         LocalDate ldate = LocalDate.now();
         java.sql.Date date = java.sql.Date.valueOf(ldate);
         comment.setDayAdd(date);
+        Book book = bookService.findBookByBookId(bookId);
+        book.setCmt(true);
+        bookService.saveBook(book);
         commentService.saveComment(comment);
         return new ResponseEntity<>("successfull", HttpStatus.OK);
     }
-    @DeleteMapping(value = "/user/xoa-comment/{commentId}")
-    public ResponseEntity<?> deleteComment(@PathVariable(name = "commentId")String commentId){
+    @DeleteMapping(value = "/user/xoa-comment")
+    public ResponseEntity<?> deleteComment(@RequestBody Map<String,Object> comment){
         userDetail user1 = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.findUserByUserId(user1.getUserId());
-        commentService.deleteUserAndComment(user.getUserId(),commentId);
+        commentService.deleteUserAndComment(user.getUserId(),comment.get("commentId").toString());
+        Book book = bookService.findBookByBookId(comment.get("bookId").toString());
+        book.setCmt(false);
+        bookService.saveBook(book);
         return new ResponseEntity<>("successfull", HttpStatus.OK);
     }
     @PostMapping("/user/sua-comment/{commentId}")

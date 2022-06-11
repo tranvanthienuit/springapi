@@ -47,6 +47,8 @@ public class Book {
     private byte[] image;
     @Column(name = "rating")
     private Integer rating = 5;
+    @Column(name = "Cmt")
+    private Integer Cmt = 0;
     @ManyToOne
     @JoinColumn(name = "CategoryId")
     private Categories category;
@@ -94,5 +96,11 @@ public class Book {
     public void setRating(Integer rating) {
         if (rating != null)
             this.rating = (this.rating + rating) / 2;
+    }
+    public void setCmt(boolean value){
+        if (value)
+            this.Cmt = this.Cmt + 1;
+        if (value == false)
+            this.Cmt = this.Cmt - 1;
     }
 }
