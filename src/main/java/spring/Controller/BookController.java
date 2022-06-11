@@ -32,19 +32,19 @@ public class BookController {
     @Autowired
     RatingService ratingService;
 
-    @GetMapping(value = {"/tim-sach"})
+    @PostMapping(value = {"/tim-sach"})
     public ResponseEntity<List<Book>> findBook(@RequestBody Map<String,Object> infoBook) throws Exception {
         if (infoBook != null) {
-            if (booksService.findBooksByNameBook(infoBook.get("infoBook").toString()) != null) {
+            if (!booksService.findBooksByNameBook(infoBook.get("infoBook").toString()).isEmpty()) {
                 List<Book> booksList = booksService.findBooksByNameBook(infoBook.get("infoBook").toString());
                 return new ResponseEntity<>(booksList, HttpStatus.OK);
             } else {
-                if (booksService.findBooksByAuthor(infoBook.get("infoBook").toString()) != null) {
+                if (!booksService.findBooksByAuthor(infoBook.get("infoBook").toString()).isEmpty()) {
                     List<Book> booksList = booksService.findBooksByAuthor(infoBook.get("infoBook").toString());
                     return new ResponseEntity<>(booksList, HttpStatus.OK);
 
                 } else {
-                    if (booksService.findBooksByCategoryName(infoBook.get("infoBook").toString()) != null) {
+                    if (!booksService.findBooksByCategoryName(infoBook.get("infoBook").toString()).isEmpty()) {
                         List<Book> booksList = booksService.findBooksByCategoryName(infoBook.get("infoBook").toString());
                         return new ResponseEntity<>(booksList, HttpStatus.OK);
 
