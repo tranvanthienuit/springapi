@@ -80,11 +80,11 @@ public class UserController {
     }
 
     @PostMapping(value = {"/user/sua-mat-khau", "/admin/sua-mat-khau", "/seller/sua-mat-khau"})
-    public ResponseEntity<?> editPassword(@RequestBody String oldPassword, @RequestBody @PathVariable("new-password") String newPassword) {
+    public ResponseEntity<?> editPassword(@RequestBody Map<String,Object> password) {
         userDetail userDetail = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.findUserByUserId(userDetail.getUserId());
-        if (passwordEncoder.matches(oldPassword, user.getPassword())) {
-            user.setPassword(passwordEncoder.encode(newPassword));
+        if (passwordEncoder.matches(password.get("oldPassword").toString(), user.getPassword())) {
+            user.setPassword(passwordEncoder.encode(password.get("newPassword").toString()));
             userService.saveUser(user);
 //            userService.editUserPass(passwordEncoder.encode(newPassword), user.getUserId());
             return new ResponseEntity<>("thanh cong roi ban ey", HttpStatus.OK);
