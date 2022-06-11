@@ -14,6 +14,7 @@ import spring.Service.OrderssDeSevice;
 import spring.Service.OrderssSevice;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class Orderss {
@@ -58,12 +59,12 @@ public class Orderss {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping(value = {"/seller/tim-Orderss/{keysearch}", "/seller/tim-Orderss", "/admin/tim-Orderss/{keysearch}", "/admin/tim-Orderss"})
-    public ResponseEntity<List<spring.Entity.Model.Orderss>> findOrderss(@PathVariable(name = "keysearch", required = false) String keysearch) {
+    @PostMapping(value = {"/seller/tim-Orderss", "/seller/tim-Orderss", "/admin/tim-Orderss", "/admin/tim-Orderss"})
+    public ResponseEntity<List<spring.Entity.Model.Orderss>> findOrderss(@RequestBody Map<String,Object> keysearch) {
         if (keysearch == null) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
-            List<spring.Entity.Model.Orderss> orderssList = orderssSevice.findOrder(keysearch);
+            List<spring.Entity.Model.Orderss> orderssList = orderssSevice.findOrder(keysearch.get("keysearch").toString());
             return new ResponseEntity<>(orderssList, HttpStatus.OK);
         }
     }

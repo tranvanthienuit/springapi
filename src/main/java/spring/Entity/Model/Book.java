@@ -46,7 +46,7 @@ public class Book {
     @Lob
     private byte[] image;
     @Column(name = "rating")
-    private Integer rating;
+    private Integer rating = 5;
     @ManyToOne
     @JoinColumn(name = "CategoryId")
     private Categories category;
@@ -92,9 +92,7 @@ public class Book {
     }
 
     public void setRating(Integer rating) {
-        if (rating == null)
-            this.rating = 5;
-        else
+        if (rating != null)
             this.rating = (this.rating + rating) / 2;
     }
 }

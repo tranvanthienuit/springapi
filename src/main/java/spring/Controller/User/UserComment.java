@@ -12,6 +12,7 @@ import spring.Service.BookService;
 import spring.Service.CommentService;
 import spring.Service.UserService;
 
+import java.time.LocalDate;
 import java.util.Map;
 
 @RestController
@@ -28,6 +29,9 @@ public class UserComment {
         User user = userService.findUserByUserId(user1.getUserId());
         comment.setUser(user);
         comment.setBook(bookService.findBookByBookId(bookId));
+        LocalDate ldate = LocalDate.now();
+        java.sql.Date date = java.sql.Date.valueOf(ldate);
+        comment.setDayAdd(date);
         commentService.saveComment(comment);
         return new ResponseEntity<>("successfull", HttpStatus.OK);
     }
