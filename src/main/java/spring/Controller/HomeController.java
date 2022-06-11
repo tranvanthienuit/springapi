@@ -17,9 +17,9 @@ import spring.Entity.Model.*;
 import spring.JWT.JwtTokenProvider;
 import spring.Sercurity.userDetail;
 import spring.Service.*;
+
 import java.time.LocalDate;
 import java.util.List;
-
 
 
 @RestController
@@ -40,12 +40,14 @@ public class HomeController {
     JwtTokenProvider jwtTokenProvider;
     @Autowired
     PasswordEncoder passwordEncoder;
-//    @Autowired
+    //    @Autowired
 //    TokenService tokenService;
     @Autowired
     JwtTokenProvider tokenProvider;
     @Autowired
     RatingService ratingService;
+    @Autowired
+    BlogService blogService;
 
     @GetMapping(value = {"/trang-chu/{page}", "/trang-chu"})
     public ResponseEntity<BookReturn> home(
@@ -82,10 +84,10 @@ public class HomeController {
 //            bookReturn.setBookRatings(bookRatings);
 //            return new ResponseEntity<>(bookReturn, HttpStatus.OK);
 //        } else {
-            bookReturn.setBookList(bookList);
+        bookReturn.setBookList(bookList);
 //            bookReturn.setBooks(bookUser);
-            bookReturn.setBookRatings(bookRatings);
-            return new ResponseEntity<>(bookReturn, HttpStatus.OK);
+        bookReturn.setBookRatings(bookRatings);
+        return new ResponseEntity<>(bookReturn, HttpStatus.OK);
 //        }
 
 
@@ -126,15 +128,13 @@ public class HomeController {
 //            bookReturn.setBookRatings(bookRatings);
 //            return new ResponseEntity<>(bookReturn, HttpStatus.OK);
 //        } else {
-            bookReturn.setBookList(bookList);
+        bookReturn.setBookList(bookList);
 //            bookReturn.setBooks(bookUser);
-            bookReturn.setBookRatings(bookRatings);
-            return new ResponseEntity<>(bookReturn, HttpStatus.OK);
+        bookReturn.setBookRatings(bookRatings);
+        return new ResponseEntity<>(bookReturn, HttpStatus.OK);
 //        }
 
     }
-
-
 
 
     @GetMapping(value = {"/loai-sach/{CategoryId}", "/loai-sach"})
@@ -194,11 +194,11 @@ public class HomeController {
             username = userService.findUserName(user.getNameUser()).getNameUser();
         }
         if (user.getNameUser().equals(username)) {
-            return new ResponseEntity<>("account exist",HttpStatus.OK);
+            return new ResponseEntity<>("account exist", HttpStatus.OK);
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         Role role = user.getRole();
-        if (role==null)
+        if (role == null)
             role = roleService.fineRoleByName("USER");
         user.setRole(role);
 //        user.setNameRole(role.getNameRole());
@@ -238,7 +238,7 @@ public class HomeController {
         rating.setBook(book);
         rating.setRating(star);
         ratingService.save(rating);
-        return new ResponseEntity<>("successful",HttpStatus.OK);
+        return new ResponseEntity<>("successful", HttpStatus.OK);
     }
 
     @GetMapping("/category")
@@ -247,5 +247,10 @@ public class HomeController {
         cateList.setCategoriesList(categoryService.getAllCategory());
         cateList.setCount(categoryService.getAllCategory().size());
         return new ResponseEntity<>(cateList, HttpStatus.OK);
+    }
+
+    @GetMapping("/xem-tat-ca-blog")
+    public ResponseEntity<List<Blog>> findAllBlog() {
+        return new ResponseEntity<>(blogService.findAllBlog(), HttpStatus.OK);
     }
 }
