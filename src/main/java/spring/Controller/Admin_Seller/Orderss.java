@@ -58,7 +58,7 @@ public class Orderss {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @GetMapping(value = {"/seller/tim-Orderss/{userName}", "/seller/tim-Orderss", "/admin/tim-Orderss/{userName}", "/admin/tim-Orderss"})
+    @RequestMapping(value = {"/seller/tim-Orderss/{userName}", "/seller/tim-Orderss", "/admin/tim-Orderss/{userName}", "/admin/tim-Orderss"})
     public ResponseEntity<List<spring.Entity.Model.Orderss>> findOrderss(@PathVariable(name = "userName", required = false) String userName) {
         if (userName == null) {
             return new ResponseEntity<>(HttpStatus.OK);
