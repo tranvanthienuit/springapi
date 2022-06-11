@@ -89,10 +89,6 @@ public class Book  {
         this.comments.remove(this);
     }
     public void setRating(double rating){
-        double rate = 0.0;
-        for (Rating rating1 : this.ratings){
-            rate = rate+rating1.getRating();
-        }
-        this.rating = rate/this.ratings.size();
+        this.rating = (this.rating + rating)/2;
     }
 }

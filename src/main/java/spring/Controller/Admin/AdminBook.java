@@ -51,6 +51,7 @@ public class AdminBook {
                 return new ResponseEntity<>(HttpStatus.OK);
             }
         }
+        book.setRating(5);
         LocalDate ldate = LocalDate.now();
         java.sql.Date date = java.sql.Date.valueOf(ldate);
         book.setDayAdd(date);
