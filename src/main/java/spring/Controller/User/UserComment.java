@@ -39,7 +39,7 @@ public class UserComment {
         commentService.saveComment(comment);
         return new ResponseEntity<>("successfull", HttpStatus.OK);
     }
-    @DeleteMapping(value = "/user/xoa-comment")
+    @PostMapping(value = "/user/xoa-comment")
     public ResponseEntity<?> deleteComment(@RequestBody Map<String,Object> comment){
         userDetail user1 = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.findUserByUserId(user1.getUserId());
