@@ -59,7 +59,7 @@ public class Orderss {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping(value = {"/seller/tim-Orderss", "/seller/tim-Orderss", "/admin/tim-Orderss", "/admin/tim-Orderss"})
+    @PostMapping(value = {"/seller/timorderss", "/seller/timorderss", "/admin/timorderss", "/admin/timorderss"})
     public ResponseEntity<List<spring.Entity.Model.Orderss>> findOrderss(@RequestBody Map<String,Object> keysearch) {
         if (keysearch == null) {
             return new ResponseEntity<>(HttpStatus.OK);
