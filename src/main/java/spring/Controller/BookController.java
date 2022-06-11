@@ -13,6 +13,7 @@ import spring.Service.BookService;
 import spring.Service.CategoryService;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class BookController {
@@ -21,20 +22,20 @@ public class BookController {
     @Autowired
     CategoryService categoryService;
 
-    @GetMapping(value = {"/tim-sach/{infoBook}", "/tim-sach"})
-    public ResponseEntity<List<Book>> findBook(@PathVariable(value = "infoBook", required = false) String infoBook) throws Exception {
+    @GetMapping(value = {"/tim-sach"})
+    public ResponseEntity<List<Book>> findBook(@RequestBody Map<String,Object> infoBook) throws Exception {
         if (infoBook != null) {
-            if (booksService.findBooksByNameBook(infoBook) != null) {
-                List<Book> booksList = booksService.findBooksByNameBook(infoBook);
+            if (booksService.findBooksByNameBook(infoBook.get("infoBook").toString()) != null) {
+                List<Book> booksList = booksService.findBooksByNameBook(infoBook.get("infoBook").toString());
                 return new ResponseEntity<>(booksList, HttpStatus.OK);
             } else {
-                if (booksService.findBooksByAuthor(infoBook) != null) {
-                    List<Book> booksList = booksService.findBooksByAuthor(infoBook);
+                if (booksService.findBooksByAuthor(infoBook.get("infoBook").toString()) != null) {
+                    List<Book> booksList = booksService.findBooksByAuthor(infoBook.get("infoBook").toString());
                     return new ResponseEntity<>(booksList, HttpStatus.OK);
 
                 } else {
-                    if (booksService.findBooksByCategoryName(infoBook) != null) {
-                        List<Book> booksList = booksService.findBooksByCategoryName(infoBook);
+                    if (booksService.findBooksByCategoryName(infoBook.get("infoBook").toString()) != null) {
+                        List<Book> booksList = booksService.findBooksByCategoryName(infoBook.get("infoBook").toString());
                         return new ResponseEntity<>(booksList, HttpStatus.OK);
 
                     }
