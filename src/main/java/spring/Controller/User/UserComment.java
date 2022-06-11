@@ -40,7 +40,7 @@ public class UserComment {
     }
     @PostMapping("/user/sua-comment/{commentId}")
     public ResponseEntity<?> updateComment(@PathVariable(name = "commentId")String commentId,@RequestBody Map<String,Object> content){
-        commentService.updateComment(commentId, content.get("conten").toString());
+        commentService.updateComment(commentId, content.get("content").toString());
         return new ResponseEntity<>("successfull", HttpStatus.OK);
     }
     @GetMapping("/book/comment/{bookId}")
