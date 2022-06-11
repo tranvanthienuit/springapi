@@ -59,11 +59,11 @@ public class Orderss {
     }
 
     @PostMapping(value = {"/seller/tim-Orderss/{keysearch}", "/seller/tim-Orderss", "/admin/tim-Orderss/{keysearch}", "/admin/tim-Orderss"})
-    public ResponseEntity<List<spring.Entity.Model.Orderss>> findOrderss(@PathVariable(name = "keysearch", required = false) String userName) {
-        if (userName == null) {
+    public ResponseEntity<List<spring.Entity.Model.Orderss>> findOrderss(@PathVariable(name = "keysearch", required = false) String keysearch) {
+        if (keysearch == null) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
-            List<spring.Entity.Model.Orderss> orderssList = orderssSevice.findOrder(userName);
+            List<spring.Entity.Model.Orderss> orderssList = orderssSevice.findOrder(keysearch);
             return new ResponseEntity<>(orderssList, HttpStatus.OK);
         }
     }
