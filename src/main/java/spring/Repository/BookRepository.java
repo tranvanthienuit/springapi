@@ -25,7 +25,7 @@ public interface BookRepository extends JpaRepository<Book, String> {
     List<Book> findBooksByCategoryName(@Param("name") String name);
 
     @Query("select u from Book u where u.category.categoryId=:categoryId")
-    List<Book> findBooksByCategoryId(@Param("categoryId") String categoryId);
+    List<Book> findBooksByCategoryId(@Param("categoryId") String categoryId,Pageable pageable);
 
     @Query("select u from Book u where u.bookId=:bookId")
     Book findBooksByBookId(@Param("bookId") String bookId);

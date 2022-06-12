@@ -38,8 +38,8 @@ public class BookService {
         return booksRepository.findBooksByCategoryName(name);
     }
 
-    public List<Book> findBooksByCategoryId(String categoryId){
-        return booksRepository.findBooksByCategoryId(categoryId);
+    public List<Book> findBooksByCategoryId(String categoryId,Pageable pageable){
+        return booksRepository.findBooksByCategoryId(categoryId,pageable);
     }
 
     public Book findBooksByBookId(String idBook) {
