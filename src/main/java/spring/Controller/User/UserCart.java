@@ -38,14 +38,14 @@ public class UserCart {
     MailService mailService;
 
     @PostMapping(value = {"/user/mua-sach", "/mua-sach"})
-    public ResponseEntity<List<CartBook>> Orderss(@RequestBody List<CartBook> cart) throws Exception {
+    public ResponseEntity<List<CartBook>> Orderss(@RequestBody List<CartBook> cart,@RequestBody User userBuy) throws Exception {
         User user = new User();
         userDetail user1 = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//        if (user1 != null) {
+        if (user1 != null) {
             user = userService.findUserByUserId(user1.getUserId());
-//        } else {
-//            user = userBuy;
-//        }
+        } else {
+            user = userBuy;
+        }
         LocalDate ldate = LocalDate.now();
         Date date = Date.valueOf(ldate);
 

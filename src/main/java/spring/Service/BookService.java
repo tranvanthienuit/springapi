@@ -18,7 +18,6 @@ public class BookService {
     public Page<Book> getAllBooks(Pageable pageable) {
         return booksRepository.getAllBooks(pageable);
     }
-
     public Page<Book> getAllBook(Pageable pageable) {
         return booksRepository.getAllBook(pageable);
     }

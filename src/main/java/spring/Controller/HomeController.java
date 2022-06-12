@@ -64,7 +64,7 @@ public class HomeController {
         Page<Book> bookPage = booksService.getAllBooks(pageable);
         List<Book> bookPageContent = bookPage.getContent();
         bookList.setBookList(bookPageContent);
-        bookList.setCount(bookPageContent.size());
+        bookList.setCount(booksService.getAllBook().size());
 
         // lấy sách dựa trên những phiếu mượn sách trước
         Pageable pageable1 = PageRequest.of(0,6);
@@ -111,7 +111,7 @@ public class HomeController {
         Page<Book> bookPage = booksService.getAllBooks(pageable);
         List<Book> bookPageContent = bookPage.getContent();
         bookList.setBookList(bookPageContent);
-        bookList.setCount(bookPageContent.size());
+        bookList.setCount(booksService.getAllBook().size());
 
         // lấy sách dựa trên những phiếu mượn sách trước
         Pageable pageable1 = PageRequest.of(0, 6);
