@@ -72,7 +72,7 @@ public class OrderssDe {
         }
     }
 
-    @PostMapping(value = {"/seller/tim-Orderssde/{orderId}", "/seller/tim-Orderss", "/admin/tim-Orderssde/{orderId}", "/admin/tim-Orderss"})
+    @PostMapping(value = {"/seller/tim-Orderssde/{orderId}", "/seller/tim-Orderss", "/admin/tim-Orderssde/{orderId}", "/admin/tim-Orderss","/user/tim-Orderssde/{orderId}","/user/tim-Orderssde"})
     public ResponseEntity<?> findOrderDe(@PathVariable("orderId")String orderDeId) {
         if (orderDeId == null){
             return new ResponseEntity<>(HttpStatus.OK);

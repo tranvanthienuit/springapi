@@ -97,4 +97,8 @@ public class UserService {
     User findByEmail(String mail) {
         return userRepository.findByEmail(mail);
     }
+
+    public List<User> findUser(String keyword){
+        return userRepository.findUser(keyword);
+    }
 }
