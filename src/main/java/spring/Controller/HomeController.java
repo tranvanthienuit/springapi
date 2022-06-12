@@ -76,7 +76,7 @@ public class HomeController {
 //        List<Book> bookUser = orderssDeSevice.getBookFromBorrDeAndUser(pageable1, user);
 
         // lấy sách dựa trên số sao đánh giá cao nhất
-        List<Book> bookRating = booksService.getBookByRating();
+        List<Book> bookRating = booksService.getBookByRating(pageable1);
 
 //        if (bookUser.isEmpty()) {
 //            bookReturn.setBookList(bookList);
@@ -123,7 +123,7 @@ public class HomeController {
 //        List<Book> bookUser = orderssDeSevice.getBookFromBorrDeAndUser(pageable1, user);
 
         // lấy sách dựa trên số sao đánh giá cao nhất
-        List<Book> bookRating = booksService.getBookByRating();
+        List<Book> bookRating = booksService.getBookByRating(pageable1);
 
 //        if (bookUser.isEmpty()) {
 //            bookReturn.setBookList(bookList);

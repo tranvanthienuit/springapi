@@ -80,8 +80,8 @@ public class BookService {
         return booksRepository.findBookByCondition(tacgia, giathap, giacao, namsb,pageable);
     }
 
-    public List<Book> getBookByRating(){
-        return booksRepository.getBookByRating();
+    public List<Book> getBookByRating(Pageable pageable){
+        return booksRepository.getBookByRating(pageable);
     }
 }
 
