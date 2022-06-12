@@ -31,7 +31,7 @@ public class AdminBlog {
         return new ResponseEntity<>("successful", HttpStatus.OK);
     }
 
-    @GetMapping("/admin/xoa-blog/{blogId}")
+    @DeleteMapping("/admin/xoa-blog/{blogId}")
     public ResponseEntity<?> deleteBlog(@RequestBody @PathVariable(name = "blogId") String blogId){
         blogService.findAndDeleteBlog(blogId);
         return new ResponseEntity<>("successful", HttpStatus.OK);

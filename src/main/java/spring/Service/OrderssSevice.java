@@ -41,10 +41,12 @@ public class OrderssSevice {
     }
 
     public List<Orderss> findOrder(String keysearch) {
-        if (orderssRepository.findOrderssByUser(keysearch)!=null)
-            return orderssRepository.findOrderssByUser(keysearch);
-        if (orderssRepository.findOrderssByAddress(keysearch)!=null)
+        if (orderssRepository.findOrderssByFullName(keysearch).size()!=0)
+            return orderssRepository.findOrderssByFullName(keysearch);
+        if (orderssRepository.findOrderssByAddress(keysearch).size()!=0)
             return orderssRepository.findOrderssByAddress(keysearch);
+        if (orderssRepository.findOrderssByTelephone(keysearch).size()!=0)
+            return orderssRepository.findOrderssByTelephone(keysearch);
         return orderssRepository.findOrderssByStatus(keysearch);
     }
 
