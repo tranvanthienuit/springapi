@@ -92,7 +92,7 @@ public class BookController {
             page = 0;
         Pageable pageable = PageRequest.of(page, 1);
         List<Book> bookList = booksService.findBookByCondition(keyword.get("tacgia").toString(), (Integer) keyword.get("giathap"),
-                (Integer) keyword.get("tacgia"), (Integer) keyword.get("namsb"), pageable);
+                (Integer) keyword.get("giacao"), (Integer) keyword.get("namsb"), pageable);
         return new ResponseEntity<>(bookList, HttpStatus.OK);
     }
 
