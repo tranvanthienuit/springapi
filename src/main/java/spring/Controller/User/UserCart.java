@@ -56,7 +56,8 @@ public class UserCart {
 
         Orderss orderss = new Orderss();
         orderss.setOrderssDate(date);
-        if (objectCart.getUser() == null)
+        if (objectCart.getUser().getFullName() == null & objectCart.getUser().getEmail() == null
+                & objectCart.getUser().getAddress() == null & objectCart.getUser().getTelephone() == null)
             orderss.setUser(user);
         Integer totalBook = 0;
         Double totalPrice = 0.0;
