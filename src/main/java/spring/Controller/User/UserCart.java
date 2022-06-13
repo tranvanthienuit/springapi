@@ -3,6 +3,7 @@ package spring.Controller.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,8 +45,8 @@ public class UserCart {
         List<CartBook> cart = objectCart.getCartBooks();
 
         User user = new User();
-        if (objectCart.getUser().getFullName() == null && objectCart.getUser().getEmail() == null
-                && objectCart.getUser().getAddress() == null && objectCart.getUser().getTelephone() == null) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth.getName()!=null) {
             userDetail user1 = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             user = userService.findUserByUserId(user1.getUserId());
         } else {
