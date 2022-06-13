@@ -66,9 +66,9 @@ public class BookController {
         return new ResponseEntity<>(bookList, HttpStatus.OK);
     }
 
-    @GetMapping(value = {"/search/book/{keyword}", "/search/book"})
-    public ResponseEntity<List<String>> searchByNameBook(@RequestBody @PathVariable(name = "keyword", required = false) String keywword) {
-        List<String> searchString = booksService.searchAuto(keywword);
+    @PostMapping(value = {"/search/book"})
+    public ResponseEntity<List<String>> searchByNameBook(@RequestBody Map<String,String> keywword) {
+        List<String> searchString = booksService.searchAuto(keywword.get("keyword"));
         return new ResponseEntity<>(searchString, HttpStatus.OK);
     }
 
