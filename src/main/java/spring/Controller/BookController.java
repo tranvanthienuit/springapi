@@ -81,7 +81,7 @@ public class BookController {
         List<String> searchString = booksService.searchByNameBook(keywword);
         return new ResponseEntity<>(searchString,HttpStatus.OK);
     }
-    @GetMapping(value = {"/search/{page}/{categoryId}","/search/{page}"})
+    @GetMapping(value = {"/search/{categoryId}/{page}","/search/{page}"})
     public ResponseEntity<?> findBookByCategory(@PathVariable(name = "page", required = false) Integer page, @PathVariable(value = "categoryId", required = false)String categoryId){
         if (page == null) {
             page = 0;
