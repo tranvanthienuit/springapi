@@ -23,6 +23,7 @@ import spring.Service.UserService;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class UserCart {
@@ -38,7 +39,9 @@ public class UserCart {
     MailService mailService;
 
     @PostMapping(value = {"/user/mua-sach", "/mua-sach"})
-    public ResponseEntity<List<CartBook>> Orderss(@RequestBody List<CartBook> cart,@RequestBody User userBuy) throws Exception {
+    public ResponseEntity<List<CartBook>> Orderss(@RequestBody Map<String,Object> objectMap) throws Exception {
+        List<CartBook> cart = (List<CartBook>) objectMap.get("cart");
+        User userBuy = (User) objectMap.get("userBuy");
         User user = new User();
         userDetail user1 = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (user1 != null) {

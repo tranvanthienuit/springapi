@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import spring.Entity.Mail;
@@ -16,11 +13,11 @@ import spring.JWT.JwtTokenProvider;
 import spring.Repository.MailService;
 import spring.Repository.UserRepository;
 import spring.Sercurity.userDetail;
+import spring.Service.OrderssSevice;
 import spring.Service.UserService;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 @RestController
 public class UserController {
@@ -36,6 +33,8 @@ public class UserController {
     UserRepository userRepository;
     @Autowired
     JwtTokenProvider jwtTokenProvider;
+    @Autowired
+    OrderssSevice orderssSevice;
 
     @PostMapping(value = {"/user/sua-thong-tin", "/admin/sua-thong-tin", "/seller/sua-thong-tin"})
     public ResponseEntity<User> editInfo(@RequestBody(required = false) User user) throws Exception {
@@ -144,5 +143,14 @@ public class UserController {
         if (email!=null)
             return new ResponseEntity<>(userService.findUser(email),HttpStatus.OK);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+    @PostMapping(value = {"/user/timorderss"})
+    public ResponseEntity<List<spring.Entity.Model.Orderss>> findOrderss(@RequestBody Map<String,Object> keysearch) {
+        if (keysearch == null) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            List<spring.Entity.Model.Orderss> orderssList = orderssSevice.findOrder(keysearch.get("keysearch").toString());
+            return new ResponseEntity<>(orderssList, HttpStatus.OK);
+        }
     }
 }
