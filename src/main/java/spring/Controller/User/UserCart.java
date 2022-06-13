@@ -22,6 +22,7 @@ import spring.Service.UserService;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -39,17 +40,23 @@ public class UserCart {
     MailService mailService;
 
     @PostMapping(value = {"/user/mua-sach", "/mua-sach"})
-    public ResponseEntity<List<CartBook>> Orderss(@RequestBody List<CartBook> cart ) throws Exception {
+    public ResponseEntity<List<CartBook>> Orderss(@RequestBody Cart objectCart) throws Exception {
+        List<CartBook> cart = objectCart.getCartBooks();
         User user = new User();
-        userDetail user1 = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        user = userService.findUserByUserId(user1.getUserId());
+        if (objectCart.getUser() == null) {
+            userDetail user1 = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            user = userService.findUserByUserId(user1.getUserId());
+        } else {
+            user = objectCart.getUser();
+        }
         LocalDate ldate = LocalDate.now();
         Date date = Date.valueOf(ldate);
 
 
         Orderss orderss = new Orderss();
         orderss.setOrderssDate(date);
-        orderss.setUser(user);
+        if (objectCart.getUser() == null)
+            orderss.setUser(user);
         Integer totalBook = 0;
         Double totalPrice = 0.0;
 
