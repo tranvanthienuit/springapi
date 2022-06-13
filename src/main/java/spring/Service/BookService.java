@@ -26,16 +26,8 @@ public class BookService {
         return booksRepository.save(book);
     }
 
-    public List<Book> findBooksByNameBook(String name) {
-        return booksRepository.findBooksByNameBook(name);
-    }
-
-    public List<Book> findBooksByAuthor(String name) {
-        return booksRepository.findBooksByAuthor(name);
-    }
-
-    public List<Book> findBooksByCategoryName(String name) {
-        return booksRepository.findBooksByCategoryName(name);
+    public List<Book> searchBook(String keyword){
+        return booksRepository.searchBook(keyword);
     }
 
     public List<Book> findBooksByCategoryId(String categoryId,Pageable pageable){
@@ -68,13 +60,10 @@ public class BookService {
         return booksRepository.findBooksByBookId(IdBook);
     }
 
-    public List<String> searchByNameBook(String keyword){
-        return booksRepository.searchByNameBook(keyword);
+    public List<String> searchAuto(String keyword){
+        return booksRepository.searchAuto(keyword);
     }
 
-    public void removeBookByCategory(String categoryId){
-        booksRepository.removeBookByCategory(categoryId);
-    }
 
     public List<Book> findBookByCondition(String tacgia,Integer giathap,Integer giacao,Integer namsb,Pageable pageable){
         return booksRepository.findBookByCondition(tacgia, giathap, giacao, namsb,pageable);
