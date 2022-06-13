@@ -39,9 +39,13 @@ public class UserCart {
     MailService mailService;
 
     @PostMapping(value = {"/user/mua-sach", "/mua-sach"})
-    public ResponseEntity<List<CartBook>> Orderss(@RequestBody Map<String,Object> objectMap) throws Exception {
+    public ResponseEntity<List<CartBook>> Orderss(@RequestBody Map<String, Object> objectMap) throws Exception {
         List<CartBook> cart = (List<CartBook>) objectMap.get("cart");
-        User userBuy = (User) objectMap.get("userBuy");
+        for (Map.Entry<String, Object> entry : objectMap.entrySet()) {
+            if (entry.equals("userBuy")) {
+
+            }
+        }
         User user = new User();
         userDetail user1 = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (user1 != null) {
@@ -116,7 +120,7 @@ public class UserCart {
                 "}\n" +
                 ".styled-table th,\n" +
                 ".styled-table td {\n" +
-                "text-align: center;"+
+                "text-align: center;" +
                 "padding: 12px 15px;\n" +
                 "size: fixed;\n" +
                 "}\n" +
@@ -135,7 +139,7 @@ public class UserCart {
                 "    font-weight: bold;\n" +
                 "    color: #009879;\n" +
                 "}\n" +
-                "    </style>" +"<h2>TÊN CỦA KHÁCH HÀNG: "+user.getFullName()+"</h2></br>"+
+                "    </style>" + "<h2>TÊN CỦA KHÁCH HÀNG: " + user.getFullName() + "</h2></br>" +
                 "<table class=\"styled-table\">\n" +
                 "    <thead>\n" +
                 "        <tr>\n" +
@@ -145,16 +149,16 @@ public class UserCart {
                 "        </tr>\n" +
                 "    </thead><tbody>";
         String table = "";
-        for (CartBook cartBook : cart){
+        for (CartBook cartBook : cart) {
             Book book = bookService.findBookByBookId(cartBook.getBooks());
             table = table + "<tr>\n" +
-                    "<td>"+book.getNameBook()+"</td>\n" +
-                    "<td>"+cartBook.getQuantity()+"</td>\n" +
-                    "<td>"+cartBook.getTotal()+"</td>\n" +
+                    "<td>" + book.getNameBook() + "</td>\n" +
+                    "<td>" + cartBook.getQuantity() + "</td>\n" +
+                    "<td>" + cartBook.getTotal() + "</td>\n" +
                     "</tr>";
         }
         html = html + table + " </tbody>\n" +
-                "</table>"+"</br><h3>TỔNG GIÁ TIỀN CỦA BẠN LÀ : "+totalPrice+"</h3></br><h3>TỔNG SỐ SÁCH BẠN ĐÃ MUA : "+totalBook+"</h3>";
+                "</table>" + "</br><h3>TỔNG GIÁ TIỀN CỦA BẠN LÀ : " + totalPrice + "</h3></br><h3>TỔNG SỐ SÁCH BẠN ĐÃ MUA : " + totalBook + "</h3>";
         mail.setMailContent(html);
         mailService.sendEmail(mail);
         return new ResponseEntity<>(cart, HttpStatus.OK);

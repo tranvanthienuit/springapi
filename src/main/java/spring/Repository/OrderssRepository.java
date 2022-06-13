@@ -23,16 +23,9 @@ public interface OrderssRepository extends JpaRepository<Orderss, String> {
     @Query("select u from Orderss u where u.OrderssDate=:date and u.user=:user")
     Orderss findOrderssByOrderssDateAndUserId(Date date, User user);
 
-//    @Query("select u from Orderss u where u.user.fullName=:fullName")
-    @Query("select u from Orderss u where u.fullName like %:keyword%")
-    List<Orderss> findOrderssByFullName(@Param("keyword")String keyword);
+    @Query("select u from Orderss u where u.fullName like %:keyword% or u.address like %:keyword% or u.status like %:keyword% or u.telephone like %:keyword%")
+    List<Orderss> findOrderss(@Param("keyword")String keyword);
 
-    @Query("select u from Orderss u where u.address like %:keyword%")
-    List<Orderss> findOrderssByAddress(@Param("keyword")String keyword);
-    @Query("select u from Orderss u where u.status like %:keyword%")
-    List<Orderss> findOrderssByStatus(@Param("keyword")String keyword);
-    @Query("select u from Orderss u where u.telephone like %:keyword%")
-    List<Orderss> findOrderssByTelephone(@Param("keyword")String keyword);
 
     @Query("select u from Orderss u where u.user.userId=:keyword")
     List<Orderss> findOrderssByUserId(@Param("keyword")String keyword);

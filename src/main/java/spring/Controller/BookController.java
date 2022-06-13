@@ -77,11 +77,11 @@ public class BookController {
         if (page == null) {
             page = 0;
         }
-        Pageable pageable = PageRequest.of(page, 12);
+        Pageable pageable = PageRequest.of(page, 8);
         List<Book> book = booksService.findBooksByCategoryId(categoryId, pageable);
         BookList bookList = new BookList();
         bookList.setBookList(book);
-
+        bookList.setCount(booksService.findBooksByCategoryId(categoryId).size());
         return new ResponseEntity<>(bookList, HttpStatus.OK);
     }
 

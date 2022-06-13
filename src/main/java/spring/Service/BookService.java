@@ -72,5 +72,9 @@ public class BookService {
     public List<Book> getBookByRating(Pageable pageable){
         return booksRepository.getBookByRating(pageable);
     }
+
+    public List<Book> findBooksByCategoryId(String categoryId){
+        return booksRepository.findBooksByCategoryId(categoryId);
+    }
 }
 

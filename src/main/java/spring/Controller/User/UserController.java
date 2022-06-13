@@ -65,7 +65,8 @@ public class UserController {
 //            userService.editUserSex(user.getSex(), userDetail.getUserId());
         }
         userService.saveUser(user1);
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        user1 = userService.findUserByUserId(user.getUserId());
+        return new ResponseEntity<>(user1, HttpStatus.OK);
     }
 
     @PostMapping(value = {"/user/cap-nhat-anh", "/admin/cap-nhat-anh", "/seller/cap-nhat-anh"})
