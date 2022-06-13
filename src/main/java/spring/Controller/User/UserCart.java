@@ -51,7 +51,7 @@ public class UserCart {
         if (user1 != null) {
             user = userService.findUserByUserId(user1.getUserId());
         } else {
-            user = userBuy;
+//            user = userBuy;
         }
         LocalDate ldate = LocalDate.now();
         Date date = Date.valueOf(ldate);

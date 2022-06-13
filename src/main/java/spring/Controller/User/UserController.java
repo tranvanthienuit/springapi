@@ -147,7 +147,7 @@ public class UserController {
     }
     @PostMapping(value = {"/user/timorderss"})
     public ResponseEntity<List<spring.Entity.Model.Orderss>> findOrderss(@RequestBody Map<String,Object> keysearch) {
-        if (keysearch == null) {
+        if (orderssSevice.findOrder(keysearch.get("keysearch").toString()).size()==0) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             List<spring.Entity.Model.Orderss> orderssList = orderssSevice.findOrder(keysearch.get("keysearch").toString());
