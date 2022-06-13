@@ -43,7 +43,8 @@ public class UserCart {
     public ResponseEntity<List<CartBook>> Orderss(@RequestBody Cart objectCart) throws Exception {
         List<CartBook> cart = objectCart.getCartBooks();
         User user = new User();
-        if (objectCart.getUser() == null) {
+        if (objectCart.getUser().getFullName() == null & objectCart.getUser().getEmail() == null
+                & objectCart.getUser().getAddress() == null & objectCart.getUser().getTelephone() == null) {
             userDetail user1 = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             user = userService.findUserByUserId(user1.getUserId());
         } else {
