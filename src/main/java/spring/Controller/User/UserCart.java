@@ -85,6 +85,7 @@ public class UserCart {
             }
             orderss.setTotalBook(totalBook);
             orderss.setStatus("chưa giao hàng");
+            orderss.setPay(objectCart.getPay());
             orderss.setTelephone(user.getTelephone());
             orderss.setAddress(user.getAddress());
             orderss.setNameUser(user.getNameUser());
