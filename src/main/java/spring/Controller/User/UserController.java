@@ -139,4 +139,10 @@ public class UserController {
         }
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
+    @GetMapping("/tim-user/{email}")
+    public ResponseEntity<?> getUserByEmail(@PathVariable(name = "email")String email){
+        if (email!=null)
+            return new ResponseEntity<>(userService.findUser(email),HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
