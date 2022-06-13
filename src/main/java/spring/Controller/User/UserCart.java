@@ -39,20 +39,10 @@ public class UserCart {
     MailService mailService;
 
     @PostMapping(value = {"/user/mua-sach", "/mua-sach"})
-    public ResponseEntity<List<CartBook>> Orderss(@RequestBody Map<String, Object> objectMap) throws Exception {
-        List<CartBook> cart = (List<CartBook>) objectMap.get("cart");
-        for (Map.Entry<String, Object> entry : objectMap.entrySet()) {
-            if (entry.equals("userBuy")) {
-
-            }
-        }
+    public ResponseEntity<List<CartBook>> Orderss(@RequestBody List<CartBook> cart ) throws Exception {
         User user = new User();
         userDetail user1 = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (user1 != null) {
-            user = userService.findUserByUserId(user1.getUserId());
-        } else {
-//            user = userBuy;
-        }
+        user = userService.findUserByUserId(user1.getUserId());
         LocalDate ldate = LocalDate.now();
         Date date = Date.valueOf(ldate);
 
