@@ -34,6 +34,9 @@ public interface OrderssRepository extends JpaRepository<Orderss, String> {
     @Query("select u from Orderss u where u.telephone like %:keyword%")
     List<Orderss> findOrderssByTelephone(@Param("keyword")String keyword);
 
+    @Query("select u from Orderss u where u.user.userId=:keyword")
+    List<Orderss> findOrderssByUserId(@Param("keyword")String keyword);
+
     @Query("select new spring.Entity.month_book(month(u.OrderssDate),sum(u.totalBook)) from Orderss u group by month(u.OrderssDate)")
     List<month_book> getBookAndMonth();
 }
