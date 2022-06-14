@@ -24,6 +24,7 @@ import spring.Service.UserService;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @RestController
 public class BookController {
@@ -110,7 +111,7 @@ public class BookController {
     public ResponseEntity<?> appriciateBook(@PathVariable(value = "bookId", required = false) String bookId, @PathVariable(value = "star", required = false) int star) {
         Rating rating = new Rating();
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication.getName() == null) {
+        if (Objects.equals(authentication.getName(), "anonymousUser")) {
             return new ResponseEntity<>("error", HttpStatus.OK);
         }
         userDetail userDetail = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
