@@ -18,11 +18,11 @@ public class OrderssSevice {
     @Autowired
     OrderssRepository orderssRepository;
 
-    public Orderss findOrderssByOrderssId(String orderssId) {
+    public Orderss findByOrderssId(String orderssId) {
         return orderssRepository.findOrderssByOrderssId(orderssId);
     }
 
-    public void removeOrderssByOrderssId(String orderssId) {
+    public void removeByOrderssId(String orderssId) {
         Orderss orderss = orderssRepository.findOrderssByOrderssId(orderssId);
         orderssRepository.delete(orderss);
     }

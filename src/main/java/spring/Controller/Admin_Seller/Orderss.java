@@ -45,9 +45,9 @@ public class Orderss {
 
     @DeleteMapping(value = {"/seller/xoa-Orderss/{OrderssId}", "/seller/xoa-Orderss", "/admin/xoa-Orderss/{OrderssId}", "/admin/xoa-Orderss"})
     public ResponseEntity<String> removeOrderss(@PathVariable(value = "OrderssId", required = false) String OrderssId) throws Exception {
-        spring.Entity.Model.Orderss orderss = orderssSevice.findOrderssByOrderssId(OrderssId);
+        spring.Entity.Model.Orderss orderss = orderssSevice.findByOrderssId(OrderssId);
         if (orderss != null) {
-            orderssSevice.removeOrderssByOrderssId(orderss.getOrderssId());
+            orderssSevice.removeByOrderssId(orderss.getOrderssId());
             return new ResponseEntity<>("successful", HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.OK);
@@ -65,7 +65,7 @@ public class Orderss {
 
     @PostMapping(value = {"/seller/sua-orderss", "/admin/sua-orderss"})
     public ResponseEntity<?> editeStatus(@RequestBody spring.Entity.Model.Orderss orderss) {
-        spring.Entity.Model.Orderss orderss1 = orderssSevice.findOrderssByOrderssId(orderss.getOrderssId());
+        spring.Entity.Model.Orderss orderss1 = orderssSevice.findByOrderssId(orderss.getOrderssId());
         orderss1.setTelephone(orderss.getTelephone());
         orderss1.setAddress(orderss.getAddress());
         orderss1.setStatus(orderss.getStatus());
