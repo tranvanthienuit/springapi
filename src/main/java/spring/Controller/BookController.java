@@ -8,6 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import spring.Entity.BookList;
@@ -108,6 +109,10 @@ public class BookController {
     @PostMapping(value = {"/danh-gia-sach/{bookId}/{star}", "/danh-gia-sach"})
     public ResponseEntity<?> appriciateBook(@PathVariable(value = "bookId", required = false) String bookId, @PathVariable(value = "star", required = false) int star) {
         Rating rating = new Rating();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication.getName() == null) {
+            return new ResponseEntity<>("error", HttpStatus.OK);
+        }
         userDetail userDetail = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.findUserByUserId(userDetail.getUserId());
         Book book = booksService.findBookByBookId(bookId);
