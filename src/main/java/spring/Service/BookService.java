@@ -27,8 +27,8 @@ public class BookService {
         return booksRepository.getAllBook(pageable);
     }
 
-    public Book saveBook(Book book) {
-        return booksRepository.save(book);
+    public void saveBook(Book book) {
+        booksRepository.save(book);
     }
 
     public List<Book> searchBook(String keyword) {

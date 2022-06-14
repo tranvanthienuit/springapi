@@ -23,8 +23,8 @@ public class CategoryService {
         categoryRepository.delete(category);
     }
 
-    public Category findByCategoryId(String categoryid) {
-        return categoryRepository.findByCategoryId(categoryid);
+    public Category findByCategoryId(String categoryId) {
+        return categoryRepository.findByCategoryId(categoryId);
     }
 
     public Page<Category> getAllCate(Pageable pageable) {
