@@ -88,7 +88,7 @@ public class BookController {
 
     @PostMapping("/search/{page}")
     public ResponseEntity<?> findBookByCondition(@RequestBody Filter keyword,
-                                                 @RequestParam(name = "page", required = false) Integer page) {
+                                                 @PathVariable(name = "page", required = false) Integer page) {
         if (page == null)
             page = 0;
         Pageable pageable = null;
