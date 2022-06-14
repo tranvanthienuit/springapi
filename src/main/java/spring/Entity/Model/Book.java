@@ -2,11 +2,9 @@ package spring.Entity.Model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
-import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.List;
 
 @Entity
@@ -51,7 +49,7 @@ public class Book {
     private Integer cmt = 0;
     @ManyToOne
     @JoinColumn(name = "CategoryId")
-    private Categories category;
+    private Category category;
     @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
     @JsonIgnore
     @ToString.Exclude

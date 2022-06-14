@@ -1,18 +1,12 @@
 package spring.Controller.Admin;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import spring.Entity.CateList;
-import spring.Entity.Model.Categories;
+import spring.Entity.Model.Category;
 import spring.Service.BookService;
 import spring.Service.CategoryService;
-
-import java.util.List;
 
 
 @RestController
@@ -23,8 +17,8 @@ public class AdminCategory {
     BookService bookService;
 
     @PostMapping(value = "/admin/luu-loai-sach")
-    public ResponseEntity<String> saveCategory(@RequestBody Categories categories) throws Exception {
-        categoryService.saveCategory(categories);
+    public ResponseEntity<String> saveCategory(@RequestBody Category category) throws Exception {
+        categoryService.saveCategory(category);
         return new ResponseEntity<>("successful",HttpStatus.OK);
     }
 
@@ -38,8 +32,8 @@ public class AdminCategory {
         return new ResponseEntity<>(HttpStatus.OK);
     }
     @PostMapping("/admin/sua-loai-sach")
-    public ResponseEntity<?> editeCategory(@RequestBody Categories category){
-        Categories categories = categoryService.findByCategoryId(category.getCategoryId());
+    public ResponseEntity<?> editeCategory(@RequestBody Category category){
+        Category categories = categoryService.findByCategoryId(category.getCategoryId());
         categories.setNameCate(category.getNameCate());
         categoryService.saveCategory(categories);
         return new ResponseEntity<>("successful",HttpStatus.OK);

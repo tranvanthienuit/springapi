@@ -124,11 +124,11 @@ public class HomeController {
         if (CategoryId == null) {
             return new ResponseEntity<>(categoryService.getAllCategory(), HttpStatus.OK);
         } else {
-            Categories categoriesList = categoryService.findByCategoryId(CategoryId);
-            if (categoriesList == null) {
+            Category categoryList = categoryService.findByCategoryId(CategoryId);
+            if (categoryList == null) {
                 return new ResponseEntity<>(HttpStatus.OK);
             }
-            return new ResponseEntity<>(categoriesList, HttpStatus.OK);
+            return new ResponseEntity<>(categoryList, HttpStatus.OK);
         }
     }
 
@@ -213,7 +213,7 @@ public class HomeController {
     @GetMapping("/category")
     public ResponseEntity<CateList> getAllCategory() {
         CateList cateList = new CateList();
-        cateList.setCategoriesList(categoryService.getAllCategory());
+        cateList.setCategoryList(categoryService.getAllCategory());
         cateList.setCount(categoryService.getAllCategory().size());
         return new ResponseEntity<>(cateList, HttpStatus.OK);
     }
