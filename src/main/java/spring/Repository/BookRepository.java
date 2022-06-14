@@ -41,11 +41,11 @@ public interface BookRepository extends JpaRepository<Book, String> {
     @Query("SELECT u.nameBook FROM Book u where u.nameBook like %:keyword% or u.category.nameCate like %:keyword% or u.publishYear like %:keyword% or u.author like %:keyword%")
     List<String> searchAuto(@Param("keyword") String keyword);
 
-    @Query("select u from Book u where u.author=:tacgia and u.price<:giathap and u.price<:giacao and u.publishYear=:namsb ")
+    @Query("select u from Book u where u.author like %:tacgia% and u.price>=:giathap and u.price<=:giacao and u.publishYear like %:namsb%")
     List<Book> findBookByCondition(@Param("tacgia") String tacgia, @Param(("giathap")) Integer giathap,
                                    @Param("giacao") Integer giacao, @Param("namsb") String namsb, Pageable pageable);
 
-    @Query("select count (u) from Book u where u.author=:tacgia and u.price<:giathap and u.price<:giacao and u.publishYear=:namsb ")
+    @Query("select count (u) from Book u where u.author like %:tacgia% and u.price>=:giathap and u.price<=:giacao and u.publishYear like %:namsb%")
     Integer findBookByCondition(@Param("tacgia") String tacgia, @Param(("giathap")) Integer giathap,
                                 @Param("giacao") Integer giacao, @Param("namsb") String namsb);
 
