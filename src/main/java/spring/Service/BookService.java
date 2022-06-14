@@ -76,8 +76,8 @@ public class BookService {
             filter.setGiathap(0);
         if (filter.getGiacao() == null)
             filter.setGiacao(booksRepository.maxPrice());
-        bookList.setBookList(booksRepository.findBookByCondition(filter.getTacgia(), filter.getGiathap(), filter.getGiacao(), filter.getNamsb(), pageable));
-        bookList.setCount(booksRepository.findBookByCondition(filter.getTacgia(), filter.getGiathap(), filter.getGiacao(), filter.getNamsb()));
+        bookList.setBookList(booksRepository.findBookByCondition(filter.getTacgia(), filter.getGiathap(), filter.getGiacao(), filter.getNamsb(), filter.getLoai(), pageable));
+        bookList.setCount(booksRepository.findBookByCondition(filter.getTacgia(), filter.getGiathap(), filter.getGiacao(), filter.getNamsb(), filter.getLoai()));
         return bookList;
     }
 
