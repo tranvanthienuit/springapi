@@ -26,10 +26,6 @@ public class OrderssDeSevice {
     @Autowired
     OrderssDeRepository orderssDeRepository;
 
-    public void removeByOrderssId(String idOrderss) {
-        orderssDeRepository.removeByOrderssId(idOrderss);
-    }
-
     public void removeByOrderssDeId(String idOrderssDe) {
         OrderssDetail orderssDetail = orderssDeRepository.findOrderssDetailByOrderssDeId(idOrderssDe);
         orderssDeRepository.delete(orderssDetail);

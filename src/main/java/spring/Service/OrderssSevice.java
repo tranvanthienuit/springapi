@@ -32,10 +32,6 @@ public class OrderssSevice {
         orderssRepository.save(orderss);
     }
 
-    public Orderss findOrderssByOrderssDateAndUserId(Date date, User user) {
-        return orderssRepository.findOrderssByOrderssDateAndUserId(date, user);
-    }
-
     public Page<Orderss> getAllOrderss(Pageable pageable) {
         return orderssRepository.findAll(pageable);
     }

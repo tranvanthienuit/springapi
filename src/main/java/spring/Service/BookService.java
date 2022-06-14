@@ -23,7 +23,7 @@ public class BookService {
         return booksRepository.getAllBooks(pageable);
     }
 
-    public Page<Book> getAllBook(Pageable pageable) {
+    public Page<Book> getAllBookByAdmin(Pageable pageable) {
         return booksRepository.getAllBook(pageable);
     }
 
