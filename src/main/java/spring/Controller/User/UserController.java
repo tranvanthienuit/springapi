@@ -158,7 +158,7 @@ public class UserController {
             return new ResponseEntity<>(orderssList, HttpStatus.OK);
         }
     }
-    @PostMapping(value = {"/seller/tim-Orderssde/{orderId}", "/seller/tim-Orderss", "/admin/tim-Orderssde/{orderId}", "/admin/tim-Orderss","/user/tim-Orderssde/{orderId}","/user/tim-Orderssde"})
+    @PostMapping(value = {"/user/tim-Orderssde/{orderId}","/user/tim-Orderssde"})
     public ResponseEntity<?> findOrderDe(@PathVariable("orderId")String orderDeId) {
         if (orderDeId == null){
             return new ResponseEntity<>(HttpStatus.OK);
