@@ -32,7 +32,7 @@ public class Orderss {
         if (page == null) {
             page = 0;
         }
-        Pageable pageable = PageRequest.of(page, 6);
+        Pageable pageable = PageRequest.of(page, 8);
         Page<spring.Entity.Model.Orderss> OrderssPage = orderssSevice.getAllOrderss(pageable);
         List<spring.Entity.Model.Orderss> orderssPageContent = OrderssPage.getContent();
         if (orderssPageContent.isEmpty()) {

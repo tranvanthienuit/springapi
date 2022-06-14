@@ -45,23 +45,4 @@ public class AdminCategory {
         return new ResponseEntity<>("successful",HttpStatus.OK);
     }
 
-//    @GetMapping(value = {"/admin/xem-tat-ca-loai-sach/{page}", "/admin/xem-tat-ca-loai-sach"})
-//    public ResponseEntity<CateList> getAllCate(
-//            @PathVariable(name = "page", required = false) Integer page) throws Exception {
-//        CateList cateList = new CateList();
-//        if (page == null) {
-//            page = 0;
-//        }
-//        Pageable pageable = PageRequest.of(page, 4);
-//        Page<Categories> categoriesList = categoryService.getAllCate(pageable);
-//        List<Categories> categoriesListContent = categoriesList.getContent();
-//        if (categoriesListContent.isEmpty()) {
-//            return new ResponseEntity<>(HttpStatus.OK);
-//        } else {
-//            cateList.setCategoriesList(categoriesListContent);
-//            cateList.setCount(categoryService.getAllCategory().size());
-//            return new ResponseEntity<>(cateList, HttpStatus.OK);
-//        }
-//    }
-
 }

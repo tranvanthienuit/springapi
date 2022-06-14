@@ -58,7 +58,7 @@ public class BookController {
 
     @GetMapping("/sach-moi")
     public ResponseEntity<List<Book>> findbyarrive() throws Exception {
-        Pageable pageable = PageRequest.of(0, 6, Sort.by("dayAdd").descending());
+        Pageable pageable = PageRequest.of(0, 8, Sort.by("dayAdd").descending());
         Page<Book> bookPage = booksService.getBookByDayAdd(pageable);
         List<Book> bookList = bookPage.getContent();
         if (bookList.isEmpty()) {
@@ -93,9 +93,9 @@ public class BookController {
             page = 0;
         Pageable pageable = null;
         if (keyword.isMa())
-            pageable = PageRequest.of(page, 6, Sort.by("price").ascending());
+            pageable = PageRequest.of(page, 8, Sort.by("price").ascending());
         else
-            pageable = PageRequest.of(page, 6, Sort.by("price").descending());
+            pageable = PageRequest.of(page, 8, Sort.by("price").descending());
         BookList bookList = booksService.findBookByCondition(keyword, pageable);
         return new ResponseEntity<>(bookList, HttpStatus.OK);
     }
