@@ -49,7 +49,7 @@ public class BookController {
 
     @GetMapping(value = {"/xem-chi-tiet-sach/{bookId}", "/xem-chi-tiet-sach"})
     public ResponseEntity<Book> productdetail(@PathVariable(value = "bookId", required = false) String bookId) throws Exception {
-        Book book = booksService.findBooksByBookId(bookId);
+        Book book = booksService.findBookByBookId(bookId);
         if (book != null) {
             return new ResponseEntity<>(book, HttpStatus.OK);
         }
@@ -110,7 +110,7 @@ public class BookController {
         Rating rating = new Rating();
         userDetail userDetail = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.findUserByUserId(userDetail.getUserId());
-        Book book = booksService.findBooksByBookId(bookId);
+        Book book = booksService.findBookByBookId(bookId);
         rating.setUser(user);
         rating.setBook(book);
         rating.setRating(star);

@@ -39,11 +39,6 @@ public class BookService {
         return booksRepository.findBooksByCategoryId(categoryId, pageable);
     }
 
-    public Book findBooksByBookId(String idBook) {
-        return booksRepository.findBooksByBookId(idBook);
-    }
-
-
     public void removeBookByBookId(String idBook) {
         Book book = booksRepository.findBooksByBookId(idBook);
         booksRepository.delete(book);
@@ -61,8 +56,8 @@ public class BookService {
         booksRepository.findBookAndUpdate(count, bookId);
     }
 
-    public Book findBookByBookId(String IdBook) {
-        return booksRepository.findBooksByBookId(IdBook);
+    public Book findBookByBookId(String bookId) {
+        return booksRepository.findBooksByBookId(bookId);
     }
 
     public List<String> searchAuto(String keyword) {
