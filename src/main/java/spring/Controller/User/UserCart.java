@@ -44,7 +44,7 @@ public class UserCart {
 
         User user = new User();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if (auth.isAuthenticated()) {
+        if (!Objects.equals(auth.getName(), "anonymousUser")) {
             userDetail user1 = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             user = userService.findUserByUserId(user1.getUserId());
         } else {
