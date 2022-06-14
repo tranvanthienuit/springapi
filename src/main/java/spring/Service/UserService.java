@@ -53,8 +53,8 @@ public class UserService {
         return userRepository.getUserAndMonnth();
     }
 
-    User findByEmail(String mail) {
-        return userRepository.findByEmail(mail);
+    User findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
     public List<User> findUser(String keyword){

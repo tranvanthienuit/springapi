@@ -181,7 +181,7 @@ public class HomeController {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         Role role = user.getRole();
         if (role == null)
-            role = roleService.fineRoleByName("USER");
+            role = roleService.findRoleByName("USER");
         user.setRole(role);
 //        user.setNameRole(role.getNameRole());
         LocalDate ldate = LocalDate.now();
