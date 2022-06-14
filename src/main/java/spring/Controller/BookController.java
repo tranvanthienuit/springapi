@@ -111,7 +111,7 @@ public class BookController {
     public ResponseEntity<?> appriciateBook(@PathVariable(value = "bookId", required = false) String bookId, @PathVariable(value = "star", required = false) int star) {
         Rating rating = new Rating();
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (Objects.equals(authentication.getName(), "anonymousUser")) {
+        if (!authentication.isAuthenticated()) {
             return new ResponseEntity<>("error", HttpStatus.OK);
         }
         userDetail userDetail = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
