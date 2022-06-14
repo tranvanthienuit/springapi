@@ -26,7 +26,7 @@ public class AdminCategory {
     public ResponseEntity<String> removeCategory(@PathVariable(value = "categoryId", required = false) String categoryId) throws Exception {
         if (categoryService.findByCategoryId(categoryId) != null) {
 //            bookService.removeBookByCategory(categoryId);
-            categoryService.removeCategoriesByCategoryId(categoryId);
+            categoryService.removeByCategoryId(categoryId);
             return new ResponseEntity<>("successful",HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.OK);

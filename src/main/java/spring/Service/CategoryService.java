@@ -18,7 +18,7 @@ public class CategoryService {
         categoryRepository.save(category);
     }
 
-    public void removeCategoriesByCategoryId(String categoryId) {
+    public void removeByCategoryId(String categoryId) {
         Category category = categoryRepository.findByCategoryId(categoryId);
         categoryRepository.delete(category);
     }
@@ -27,7 +27,7 @@ public class CategoryService {
         return categoryRepository.findByCategoryId(categoryId);
     }
 
-    public Page<Category> getAllCate(Pageable pageable) {
+    public Page<Category> getAllCategory(Pageable pageable) {
         return categoryRepository.findAll(pageable);
     }
 
