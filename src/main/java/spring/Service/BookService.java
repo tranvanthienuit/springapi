@@ -52,7 +52,7 @@ public class BookService {
     }
 
     public List<Book> getAllBook() {
-        return booksRepository.findAll();
+        return booksRepository.countBook();
     }
 
     public void findBookAndUpdate(Integer count, String bookId) {

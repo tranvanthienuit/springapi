@@ -55,4 +55,7 @@ public interface BookRepository extends JpaRepository<Book, String> {
 
     @Query("select u.publishYear from Book u")
     List<String> findYearPublic();
+
+    @Query("select u from Book u where u.count<>0")
+    List<Book> countBook();
 }
