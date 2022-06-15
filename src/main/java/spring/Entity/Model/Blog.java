@@ -33,7 +33,7 @@ public class Blog {
     private byte[] image;
     //    @Column(name = "nameAuthor")
 //    private String nameAuthor;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "UserId")
     private User user;
 

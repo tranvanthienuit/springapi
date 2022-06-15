@@ -21,10 +21,10 @@ public class Rating {
     private Long ratingId;
     @Column(name = "rating")
     private int rating;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "user")
     private User user;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "book")
     private Book book;
 }

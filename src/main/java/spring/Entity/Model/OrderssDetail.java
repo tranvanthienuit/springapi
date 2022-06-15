@@ -24,11 +24,11 @@ public class OrderssDetail {
     private Integer count;
     @Column(name = "total_Price")
     private Double total;
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore
     @JoinColumn(name = "OrderssId")
     private Orderss orderss;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "BooksId")
     private Book book;
 
