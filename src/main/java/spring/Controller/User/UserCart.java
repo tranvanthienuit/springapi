@@ -9,16 +9,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import spring.Entity.*;
-import spring.Entity.Model.Book;
-import spring.Entity.Model.Orderss;
-import spring.Entity.Model.OrderssDetail;
-import spring.Entity.Model.User;
+import spring.Entity.Model.*;
 import spring.Repository.MailService;
 import spring.Sercurity.userDetail;
-import spring.Service.BookService;
-import spring.Service.OrderssDeSevice;
-import spring.Service.OrderssSevice;
-import spring.Service.UserService;
+import spring.Service.*;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -37,6 +31,8 @@ public class UserCart {
     UserService userService;
     @Autowired
     MailService mailService;
+    @Autowired
+    RoleService roleService;
 
     @PostMapping(value = {"/user/mua-sach", "/mua-sach"})
     public ResponseEntity<List<CartBook>> Orderss(@RequestBody Cart objectCart) throws Exception {
@@ -49,6 +45,10 @@ public class UserCart {
             user = userService.findUserByUserId(user1.getUserId());
         } else {
             user = objectCart.getUser();
+        }
+        if (user.getUserId() == null){
+            Role role = roleService.findRoleByName("USER");
+            user.setRole(role);
         }
         user.setAddress(objectCart.getUser().getAddress());
         user.setTelephone(objectCart.getUser().getTelephone());
