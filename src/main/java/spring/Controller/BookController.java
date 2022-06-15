@@ -102,9 +102,9 @@ public class BookController {
         return new ResponseEntity<>(bookList, HttpStatus.OK);
     }
 
-    @GetMapping("/data-filter")
-    public ResponseEntity<?> findDataFilter() {
-        return new ResponseEntity<>(booksService.dataFilters(), HttpStatus.OK);
+    @GetMapping("/data-filter/{categoryId}")
+    public ResponseEntity<?> findDataFilter(@PathVariable("categoryId")String categoryId) {
+        return new ResponseEntity<>(booksService.dataFilters(categoryId), HttpStatus.OK);
     }
 
     @PostMapping(value = {"/danh-gia-sach/{bookId}/{star}", "/danh-gia-sach"})
