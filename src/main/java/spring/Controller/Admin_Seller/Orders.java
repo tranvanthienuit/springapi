@@ -16,7 +16,8 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-public class Orderss {
+@RequestMapping(value = {"/api/seller/order","/api/admin/order"})
+public class Orders {
     @Autowired
     OrderssSevice orderssSevice;
     @Autowired
@@ -24,9 +25,9 @@ public class Orderss {
     @Autowired
     BookService bookService;
 
-    @GetMapping(value = {"/seller/xem-tat-ca-Orderss/{page}", "/seller/xem-tat-ca-Orderss", "/admin/xem-tat-ca-Orderss/{page}", "/admin/xem-tat-ca-Orderss"})
+    @GetMapping(value = {"page/{number}"})
     public ResponseEntity<OrderssList> getAllOrderss(
-            @PathVariable(name = "page", required = false) Integer page) throws Exception {
+            @PathVariable(name = "number", required = false) Integer page) throws Exception {
         OrderssList orderssList = new OrderssList();
         if (page == null) {
             page = 0;
@@ -43,8 +44,8 @@ public class Orderss {
         }
     }
 
-    @DeleteMapping(value = {"/seller/xoa-Orderss/{OrderssId}", "/seller/xoa-Orderss", "/admin/xoa-Orderss/{OrderssId}", "/admin/xoa-Orderss"})
-    public ResponseEntity<String> removeOrderss(@PathVariable(value = "OrderssId", required = false) String OrderssId) throws Exception {
+    @DeleteMapping(value = {"delete/{id}"})
+    public ResponseEntity<String> removeOrderss(@PathVariable(value = "id", required = false) String OrderssId) throws Exception {
         spring.Entity.Model.Orderss orderss = orderssSevice.findByOrderssId(OrderssId);
         if (orderss != null) {
             orderssSevice.removeByOrderssId(orderss.getOrderssId());
@@ -53,7 +54,7 @@ public class Orderss {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PostMapping(value = {"/seller/timorderss", "/admin/timorderss"})
+    @PostMapping(value = {"/search"})
     public ResponseEntity<List<spring.Entity.Model.Orderss>> findOrderss(@RequestBody Map<String,Object> keysearch) {
         if (keysearch == null) {
             return new ResponseEntity<>(HttpStatus.OK);

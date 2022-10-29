@@ -20,8 +20,8 @@ public class AdminUser {
     RoleService roleService;
 
 
-    @PostMapping(value = {"/admin/{userId}"})
-    public ResponseEntity<?> editeRole(@PathVariable("userId") String userId, @RequestBody Map<String,Object> roleName) {
+    @PostMapping(value = {"/api/admin/{id}"})
+    public ResponseEntity<?> editeRole(@PathVariable("id") String userId, @RequestBody Map<String,Object> roleName) {
         spring.Entity.Model.User user = userService.findUserByUserId(userId);
 
         Role role = roleService.findRoleByName(roleName.get("roleName").toString());

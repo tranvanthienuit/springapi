@@ -17,13 +17,14 @@ import java.time.LocalDate;
 import java.util.List;
 
 @RestController
+@RequestMapping("/api/admin/book")
 public class AdminBook {
     @Autowired
     BookService booksService;
     @Autowired
     CategoryService categoryService;
 
-    @PostMapping(value = "/admin/luu-sach")
+    @PostMapping(value = "/create")
     public ResponseEntity<String> saveBook(@RequestBody Book book) throws Exception {
         List<Book> books = booksService.getAllBook();
         for (Book book1 : books) {
@@ -39,15 +40,15 @@ public class AdminBook {
         return new ResponseEntity<>("successful",HttpStatus.OK);
     }
 
-    @DeleteMapping(value = {"/admin/xoa-sach/{bookId}", "/admin/xoa-sach"})
-    public ResponseEntity<String> removeBook(@PathVariable(value = "bookId", required = false) String bookId) throws Exception {
+    @DeleteMapping(value = {"/delete/{id}"})
+    public ResponseEntity<String> removeBook(@PathVariable(value = "id", required = false) String bookId) throws Exception {
         if (booksService.findBookByBookId(bookId) != null) {
             booksService.removeBookByBookId(bookId);
             return new ResponseEntity<>("successful",HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    @PostMapping(value = {"/admin/sua-sach/{idBook}"})
+    @PostMapping(value = {"/update"})
     public ResponseEntity<Book> editBook(@RequestBody Book book){
         Book newBook = booksService.findBookByBookId(book.getBookId());
         if (book.getNameBook()!=null){

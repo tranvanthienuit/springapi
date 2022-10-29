@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@RequestMapping(value = {"api/app"})
 public class UserController {
     @Autowired
     UserService userService;
@@ -40,7 +41,7 @@ public class UserController {
     @Autowired
     OrderssDeSevice orderssDeSevice;
 
-    @PostMapping(value = {"/user/sua-thong-tin", "/admin/sua-thong-tin", "/seller/sua-thong-tin"})
+    @PostMapping(value = {"update/profile"})
     public ResponseEntity<User> editInfo(@RequestBody(required = false) User user) throws Exception {
         userDetail userDetail = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user1 = userService.findUserByUserId(user.getUserId());
@@ -73,7 +74,7 @@ public class UserController {
         return new ResponseEntity<>(user1, HttpStatus.OK);
     }
 
-    @PostMapping(value = {"/user/cap-nhat-anh", "/admin/cap-nhat-anh", "/seller/cap-nhat-anh"})
+    @PostMapping(value = {"update/avatar"})
     public ResponseEntity<User> editImg(@RequestBody Map<String,Object> image) throws Exception {
         userDetail userDetail = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.findUserByUserId(userDetail.getUserId());
@@ -83,7 +84,7 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @PostMapping(value = {"/user/sua-mat-khau", "/admin/sua-mat-khau", "/seller/sua-mat-khau"})
+    @PostMapping(value = {"update/password"})
     public ResponseEntity<?> editPassword(@RequestBody Map<String,Object> password) {
         userDetail userDetail = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.findUserByUserId(userDetail.getUserId());
@@ -105,7 +106,7 @@ public class UserController {
         return user.getImage().getBytes();
     }
 
-    @PostMapping(value = {"/quen-mat-khau"})
+    @PostMapping(value = {"forget/password"})
     public ResponseEntity<?> forgetPass(@RequestBody Map<String, Object> email) {
         String Email = email.get("email").toString();
         if (mailService.checkMail(Email)) {
@@ -127,7 +128,7 @@ public class UserController {
         return new ResponseEntity<>("không có mail nào trong tài khoản", HttpStatus.OK);
     }
 
-    @PostMapping(value = {"/cai-dat-mat-khau-moi/{token}"})
+    @PostMapping(value = {"reset/password/{token}"})
     public ResponseEntity<?> setPassword(@PathVariable("token")String token, @RequestBody Map<String,Object> emailAndPass) {
         if (jwtTokenProvider.validateToken(token)){
             userService.setPassword(passwordEncoder.encode(emailAndPass.get("password").toString()),emailAndPass.get("email").toString());
@@ -136,7 +137,7 @@ public class UserController {
         return new ResponseEntity<>("error",HttpStatus.OK);
     }
 
-    @GetMapping(value = {"/xem-tai-khoan"})
+    @GetMapping(value = {"profile"})
     public ResponseEntity<User> getUser() throws Exception {
         userDetail userDetail = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.findUserByUserId(userDetail.getUserId());
@@ -145,13 +146,13 @@ public class UserController {
         }
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
-    @GetMapping("/tim-user/{email}")
+    @GetMapping("user/{email}")
     public ResponseEntity<?> getUserByEmail(@PathVariable(name = "email")String email){
         if (email!=null)
             return new ResponseEntity<>(userService.findUser(email),HttpStatus.OK);
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    @PostMapping(value = {"/user/timorderss"})
+    @PostMapping(value = {"order"})
     public ResponseEntity<List<spring.Entity.Model.Orderss>> findOrderss(@RequestBody Map<String,Object> keysearch) {
         if (orderssSevice.findOrder(keysearch.get("keysearch").toString()).size()==0) {
             return new ResponseEntity<>(HttpStatus.OK);
@@ -160,8 +161,8 @@ public class UserController {
             return new ResponseEntity<>(orderssList, HttpStatus.OK);
         }
     }
-    @PostMapping(value = {"/user/tim-Orderssde/{orderId}","/user/tim-Orderssde"})
-    public ResponseEntity<?> findOrderDe(@PathVariable("orderId")String orderDeId) {
+    @PostMapping(value = {"order-detail/{id}"})
+    public ResponseEntity<?> findOrderDe(@PathVariable("id")String orderDeId) {
         if (orderDeId == null){
             return new ResponseEntity<>(HttpStatus.OK);
         } else {

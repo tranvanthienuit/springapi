@@ -18,7 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-public class OrderssDe {
+@RequestMapping(value = {"/api/seller/order-detail","/api/admin/order-detail"})
+public class OrdersDetail {
     @Autowired
     OrderssDeSevice orderssDeSevice;
     @Autowired
@@ -26,8 +27,8 @@ public class OrderssDe {
     @Autowired
     BookService bookService;
 
-    @DeleteMapping(value = {"/seller/xoa-Orderss-detail/{OrderssDeId}", "/seller/xoa-Orderss-detail", "/admin/xoa-Orderss-detail/{OrderssDeId}", "/admin/xoa-Orderss-detail"})
-    public ResponseEntity<String> removeOrderssDe(@PathVariable(value = "OrderssDeId", required = false) String OrderssDeId) throws Exception {
+    @DeleteMapping(value = {"/delete/{id}"})
+    public ResponseEntity<String> removeOrderssDe(@PathVariable(value = "id", required = false) String OrderssDeId) throws Exception {
         if (orderssDeSevice.findOrderssDe(OrderssDeId) != null) {
             orderssDeSevice.removeByOrderssDeId(OrderssDeId);
             return new ResponseEntity<>("successful", HttpStatus.OK);
@@ -36,9 +37,9 @@ public class OrderssDe {
 
     }
 
-    @GetMapping(value = {"/seller/xem-tat-ca-Orderss-Detail/{page}", "/seller/xem-tat-ca-Orderss-Detail", "/admin/xem-tat-ca-Orderss-Detail/{page}", "/admin/xem-tat-ca-Orderss-Detail"})
+    @GetMapping(value = {"page/{number}"})
     public ResponseEntity<OrderssDelist> getAllOrderssDe(
-            @PathVariable(name = "page", required = false) Integer page) throws Exception {
+            @PathVariable(name = "number", required = false) Integer page) throws Exception {
         OrderssDelist orderssDelist = new OrderssDelist();
         if (page == null) {
             page = 0;
@@ -55,7 +56,7 @@ public class OrderssDe {
         }
     }
 
-    @GetMapping(value = {"/seller/tim-Orderssde/{userName}", "/seller/tim-Orderss", "/admin/tim-Orderssde/{userName}", "/admin/tim-Orderss"})
+    @GetMapping(value = { "search/{userName}"})
     public ResponseEntity<List<OrderssDetail>> findOrderssDe(@PathVariable(name = "userName", required = false) String userName) {
         if (userName == null) {
             return new ResponseEntity<>(HttpStatus.OK);

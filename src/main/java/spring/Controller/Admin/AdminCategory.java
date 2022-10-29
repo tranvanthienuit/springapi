@@ -10,20 +10,21 @@ import spring.Service.CategoryService;
 
 
 @RestController
+@RequestMapping("/api/admin/category")
 public class AdminCategory {
     @Autowired
     CategoryService categoryService;
     @Autowired
     BookService bookService;
 
-    @PostMapping(value = "/admin/luu-loai-sach")
+    @PostMapping(value = "/create")
     public ResponseEntity<String> saveCategory(@RequestBody Category category) throws Exception {
         categoryService.saveCategory(category);
         return new ResponseEntity<>("successful",HttpStatus.OK);
     }
 
-    @DeleteMapping(value = {"/admin/xoa-loai-sach/{categoryId}", "/admin/xoa-loai-sach"})
-    public ResponseEntity<String> removeCategory(@PathVariable(value = "categoryId", required = false) String categoryId) throws Exception {
+    @DeleteMapping(value = {"/delete/{id}"})
+    public ResponseEntity<String> removeCategory(@PathVariable(value = "id", required = false) String categoryId) throws Exception {
         if (categoryService.findByCategoryId(categoryId) != null) {
 //            bookService.removeBookByCategory(categoryId);
             categoryService.removeByCategoryId(categoryId);
@@ -31,7 +32,7 @@ public class AdminCategory {
         }
         return new ResponseEntity<>(HttpStatus.OK);
     }
-    @PostMapping("/admin/sua-loai-sach")
+    @PostMapping("/update")
     public ResponseEntity<?> editeCategory(@RequestBody Category category){
         Category categories = categoryService.findByCategoryId(category.getCategoryId());
         categories.setNameCate(category.getNameCate());

@@ -19,9 +19,9 @@ public class Category {
     @Autowired
     CategoryService categoryService;
 
-    @GetMapping(value = {"/seller/xem-tat-ca-loai-sach/{page}", "/seller/xem-tat-ca-loai-sach","/admin/xem-tat-ca-loai-sach/{page}", "/admin/xem-tat-ca-loai-sach"})
+    @GetMapping(value = {"api/seller/category/page/{number}","api/admin/category/page/{number}"})
     public ResponseEntity<CateList> getAllCate(
-            @PathVariable(name = "page", required = false) Integer page) throws Exception {
+            @PathVariable(name = "number", required = false) Integer page) throws Exception {
         CateList cateList = new CateList();
         if (page == null) {
             page = 0;

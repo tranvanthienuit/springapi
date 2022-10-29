@@ -21,7 +21,7 @@ public class AdminChart {
     OrderssDeSevice orderssDeSevice;
     @Autowired
     UserService userService;
-    @GetMapping(value = "/admin/chart")
+    @GetMapping(value = "/api/admin/chart")
     public ResponseEntity<?> chart(){
         List<month_book> bookAndMonth = orderssSevice.getBookAndMonth();
         if (orderssSevice.getBookAndMonth() == null || orderssSevice.getBookAndMonth().isEmpty()){

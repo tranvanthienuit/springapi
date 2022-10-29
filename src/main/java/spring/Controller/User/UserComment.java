@@ -17,6 +17,7 @@ import java.time.LocalDate;
 import java.util.Map;
 
 @RestController
+@RequestMapping("/api/user/comment")
 public class UserComment {
     @Autowired
     CommentService commentService;
@@ -24,7 +25,7 @@ public class UserComment {
     UserService userService;
     @Autowired
     BookService bookService;
-    @PostMapping("/user/luu-comment/{bookId}")
+    @PostMapping("create/{bookId}")
     public ResponseEntity<?> saveComment(@PathVariable(name = "bookId")String bookId,@RequestBody Comment comment){
         userDetail user1 = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.findUserByUserId(user1.getUserId());
@@ -39,7 +40,7 @@ public class UserComment {
         commentService.saveComment(comment);
         return new ResponseEntity<>("successfull", HttpStatus.OK);
     }
-    @PostMapping(value = "/user/xoa-comment")
+    @PostMapping(value = "delete")
     public ResponseEntity<?> deleteComment(@RequestBody Map<String,Object> comment){
         userDetail user1 = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userService.findUserByUserId(user1.getUserId());
@@ -49,12 +50,12 @@ public class UserComment {
         bookService.saveBook(book);
         return new ResponseEntity<>("successfull", HttpStatus.OK);
     }
-    @PostMapping("/user/sua-comment/{commentId}")
-    public ResponseEntity<?> updateComment(@PathVariable(name = "commentId")String commentId,@RequestBody Map<String,Object> content){
+    @PostMapping("update/{id}")
+    public ResponseEntity<?> updateComment(@PathVariable(name = "id")String commentId,@RequestBody Map<String,Object> content){
         commentService.updateComment(commentId, content.get("content").toString());
         return new ResponseEntity<>("successfull", HttpStatus.OK);
     }
-    @GetMapping("/book/comment/{bookId}")
+    @GetMapping("book/{bookId}")
     public ResponseEntity<?> commentBook(@PathVariable(name = "bookId")String bookId){
         return new ResponseEntity<>(commentService.findAllByBookId(bookId), HttpStatus.OK);
     }

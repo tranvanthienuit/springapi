@@ -22,9 +22,9 @@ public class Book {
     @Autowired
     CategoryService categoryService;
 
-    @GetMapping(value = {"/seller/xem-tat-ca-sach/{page}", "/seller/xem-tat-ca-sach","/admin/xem-tat-ca-sach/{page}", "/admin/xem-tat-ca-sach"})
+    @GetMapping(value = {"api/seller/page/{number}","api/admin/page/{number}"})
     public ResponseEntity<BookList> getAllBook(
-            @PathVariable(name = "page", required = false) Integer page) throws Exception {
+            @PathVariable(name = "number", required = false) Integer page) throws Exception {
         BookList bookList = new BookList();
         if (page == null) {
             page = 0;
