@@ -49,8 +49,8 @@ public class UserController {
             user1.setFullName(user.getFullName());
 //            userService.editUserFullname(user.getFullName(), userDetail.getUserId());
         }
-        if (user.getNameUser() != null) {
-            user1.setNameUser(user.getNameUser());
+        if (user.getUsername() != null) {
+            user1.setUsername(user.getUsername());
 //            userService.editUserName(user.getNameUser(), userDetail.getUserId());
         }
         if (user.getAddress() != null) {
@@ -111,7 +111,7 @@ public class UserController {
         String Email = email.get("email").toString();
         if (mailService.checkMail(Email)) {
             User user = userRepository.findByEmail(Email);
-            String token = jwtTokenProvider.generateAccessToken(user.getUserId(), user.getNameUser());
+            String token = jwtTokenProvider.generateAccessToken(user.getUserId(), user.getUsername());
             Mail mail = new Mail();
             mail.setMailFrom("uitsneaker@gmail.com");
             mail.setMailTo(Email);

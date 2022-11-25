@@ -94,7 +94,7 @@ public class UserCart {
             orderss.setPay(objectCart.getPay());
             orderss.setTelephone(user.getTelephone());
             orderss.setAddress(user.getAddress());
-            orderss.setNameUser(user.getNameUser());
+            orderss.setNameUser(user.getUsername());
             orderss.setFullName(user.getFullName());
             orderss.setTotalPrice(totalPrice);
             orderssSevice.saveOrderss(orderss);

@@ -9,7 +9,6 @@ import spring.Entity.month_user;
 import spring.Repository.UserRepository;
 
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class UserService {
@@ -26,7 +25,7 @@ public class UserService {
     }
 
     public User findUserName(String username) {
-        return userRepository.findByNameUser(username);
+        return userRepository.findByUsername(username);
     }
 
     public User findUserByUserId(String userId) {

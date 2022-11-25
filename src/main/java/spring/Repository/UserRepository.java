@@ -10,12 +10,11 @@ import spring.Entity.month_user;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Map;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, String> {
 
-    User findByNameUser(String username);
+    User findByUsername(String username);
 
     User findUserByUserId(String userId);
 

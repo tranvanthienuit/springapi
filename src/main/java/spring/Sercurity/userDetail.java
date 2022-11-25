@@ -23,7 +23,7 @@ public class userDetail implements UserDetails {
     public static UserDetails createUserDetail(User user){
         Role role = user.getRole();
         List<SimpleGrantedAuthority> authority = Collections.singletonList(new SimpleGrantedAuthority(role.getNameRole()));
-        return new userDetail(user.getUserId(),user.getNameUser(), user.getPassword(), authority);
+        return new userDetail(user.getUserId(),user.getUsername(), user.getPassword(), authority);
     }
 
 

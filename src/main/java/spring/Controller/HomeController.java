@@ -136,7 +136,7 @@ public class HomeController {
 
     @PostMapping("login")
     public LoginResponse getlogin(@RequestBody LoginReQuest loginReQuest) throws Exception {
-        Authentication authentication = manager.authenticate(new UsernamePasswordAuthenticationToken(loginReQuest.getNameUser(),
+        Authentication authentication = manager.authenticate(new UsernamePasswordAuthenticationToken(loginReQuest.getUsername(),
                 loginReQuest.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         userDetail user = (userDetail) authentication.getPrincipal();
@@ -149,12 +149,12 @@ public class HomeController {
     @PostMapping("register")
     public ResponseEntity<?> getregister(@RequestBody User user) throws Exception {
         String username;
-        if (userService.findUserName(user.getNameUser()) == null) {
+        if (userService.findUserName(user.getUsername()) == null) {
             username = "";
         } else {
-            username = userService.findUserName(user.getNameUser()).getNameUser();
+            username = userService.findUserName(user.getUsername()).getUsername();
         }
-        if (user.getNameUser().equals(username)) {
+        if (user.getUsername().equals(username)) {
             return new ResponseEntity<>("account exist", HttpStatus.OK);
         }
         user.setPassword(passwordEncoder.encode(user.getPassword()));
