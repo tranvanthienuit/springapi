@@ -5,13 +5,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-import spring.Entity.Model.Book;
-import spring.Entity.Model.Comment;
-import spring.Entity.Model.User;
+import spring.Entity.Book;
+import spring.Entity.Comment;
+import spring.Entity.User;
 import spring.Sercurity.userDetail;
-import spring.Service.BookService;
-import spring.Service.CommentService;
-import spring.Service.UserService;
+import spring.factory.BookFactory;
+import spring.factory.CommentFactory;
+import spring.factory.UserFactory;
 
 import java.time.LocalDate;
 import java.util.Map;
@@ -20,43 +20,47 @@ import java.util.Map;
 @RequestMapping("/api/user/comment")
 public class UserComment {
     @Autowired
-    CommentService commentService;
+    CommentFactory commentFactory;
     @Autowired
-    UserService userService;
+    UserFactory userFactory;
     @Autowired
-    BookService bookService;
+    BookFactory bookFactory;
+
     @PostMapping("create/{bookId}")
-    public ResponseEntity<?> saveComment(@PathVariable(name = "bookId")String bookId,@RequestBody Comment comment){
+    public ResponseEntity<?> saveComment(@PathVariable(name = "bookId") String bookId, @RequestBody Comment comment) {
         userDetail user1 = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userService.findUserByUserId(user1.getUserId());
+        User user = userFactory.findUserByUserId(user1.getUserId());
         comment.setUser(user);
-        comment.setBook(bookService.findBookByBookId(bookId));
+        comment.setBook(bookFactory.findBookByBookId(bookId));
         LocalDate ldate = LocalDate.now();
         java.sql.Date date = java.sql.Date.valueOf(ldate);
         comment.setDayAdd(date);
-        Book book = bookService.findBookByBookId(bookId);
+        Book book = bookFactory.findBookByBookId(bookId);
         book.setCmt(true);
-        bookService.saveBook(book);
-        commentService.saveComment(comment);
+        bookFactory.saveBook(book);
+        commentFactory.saveComment(comment);
         return new ResponseEntity<>("successfull", HttpStatus.OK);
     }
+
     @PostMapping(value = "delete")
-    public ResponseEntity<?> deleteComment(@RequestBody Map<String,Object> comment){
+    public ResponseEntity<?> deleteComment(@RequestBody Map<String, Object> comment) {
         userDetail user1 = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userService.findUserByUserId(user1.getUserId());
-        commentService.deleteUserAndComment(user.getUserId(),comment.get("commentId").toString());
-        Book book = bookService.findBookByBookId(comment.get("bookId").toString());
+        User user = userFactory.findUserByUserId(user1.getUserId());
+        commentFactory.deleteUserAndComment(user.getUserId(), comment.get("commentId").toString());
+        Book book = bookFactory.findBookByBookId(comment.get("bookId").toString());
         book.setCmt(false);
-        bookService.saveBook(book);
+        bookFactory.saveBook(book);
         return new ResponseEntity<>("successfull", HttpStatus.OK);
     }
+
     @PostMapping("update/{id}")
-    public ResponseEntity<?> updateComment(@PathVariable(name = "id")String commentId,@RequestBody Map<String,Object> content){
-        commentService.updateComment(commentId, content.get("content").toString());
+    public ResponseEntity<?> updateComment(@PathVariable(name = "id") String commentId, @RequestBody Map<String, Object> content) {
+        commentFactory.updateComment(commentId, content.get("content").toString());
         return new ResponseEntity<>("successfull", HttpStatus.OK);
     }
+
     @GetMapping("book/{bookId}")
-    public ResponseEntity<?> commentBook(@PathVariable(name = "bookId")String bookId){
-        return new ResponseEntity<>(commentService.findAllByBookId(bookId), HttpStatus.OK);
+    public ResponseEntity<?> commentBook(@PathVariable(name = "bookId") String bookId) {
+        return new ResponseEntity<>(commentFactory.findAllByBookId(bookId), HttpStatus.OK);
     }
 }

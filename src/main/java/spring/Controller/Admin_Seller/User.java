@@ -7,29 +7,28 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import spring.Entity.Model.Role;
-import spring.Entity.UserList;
-import spring.Service.RoleService;
-import spring.Service.UserService;
+import spring.factory.RoleFactory;
+import spring.factory.UserFactory;
+import spring.model.UserList;
 
 import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping(value = {"/api/seller/user","/api/admin/user"})
+@RequestMapping(value = {"/api/seller/user", "/api/admin/user"})
 public class User {
     @Autowired
-    UserService userService;
+    UserFactory userFactory;
     @Autowired
-    RoleService roleService;
+    RoleFactory roleFactory;
 
 
     @DeleteMapping(value = {"delete/{id}}"})
     public ResponseEntity<String> removeUser(@PathVariable(value = "id", required = false) String userId) throws Exception {
-        if (userService.findUserByUserId(userId) != null) {
-            if (!userService.countUser().equals(1)) {
-                userService.removeUserByUserId(userId);
-                return new ResponseEntity<>("successful",HttpStatus.OK);
+        if (userFactory.findUserByUserId(userId) != null) {
+            if (!userFactory.countUser().equals(1)) {
+                userFactory.removeUserByUserId(userId);
+                return new ResponseEntity<>("successful", HttpStatus.OK);
             }
             return new ResponseEntity<>(HttpStatus.OK);
         }
@@ -44,20 +43,21 @@ public class User {
             page = 0;
         }
         Pageable pageable = PageRequest.of(page, 12);
-        Page<spring.Entity.Model.User> userPage = userService.getAllUser(pageable);
-        List<spring.Entity.Model.User> userPageContent = userPage.getContent();
+        Page<spring.Entity.User> userPage = userFactory.getAllUser(pageable);
+        List<spring.Entity.User> userPageContent = userPage.getContent();
         if (userPageContent.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
             userList.setUserList(userPageContent);
-            userList.setCount(userService.getAllUsers().size());
+            userList.setCount(userFactory.getAllUsers().size());
             return new ResponseEntity<>(userList, HttpStatus.OK);
         }
     }
+
     @PostMapping(value = {"search"})
-    public ResponseEntity<?> findUser(@RequestBody Map<String,Object> keyword){
-        if (keyword!=null)
-            return new ResponseEntity<>(userService.findUser(keyword.get("keyword").toString()),HttpStatus.OK);
-        return new ResponseEntity<>("Không có người dùng nào cả",HttpStatus.OK);
+    public ResponseEntity<?> findUser(@RequestBody Map<String, Object> keyword) {
+        if (keyword != null)
+            return new ResponseEntity<>(userFactory.findUser(keyword.get("keyword").toString()), HttpStatus.OK);
+        return new ResponseEntity<>("Không có người dùng nào cả", HttpStatus.OK);
     }
 }

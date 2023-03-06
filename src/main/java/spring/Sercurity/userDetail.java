@@ -1,11 +1,12 @@
 package spring.Sercurity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import spring.Entity.Model.Role;
-import spring.Entity.Model.User;
+import spring.Entity.Role;
+import spring.Entity.User;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -20,10 +21,10 @@ public class userDetail implements UserDetails {
     private Collection<? extends GrantedAuthority> authorities;
 
 
-    public static UserDetails createUserDetail(User user){
+    public static UserDetails createUserDetail(User user) {
         Role role = user.getRole();
         List<SimpleGrantedAuthority> authority = Collections.singletonList(new SimpleGrantedAuthority(role.getNameRole()));
-        return new userDetail(user.getUserId(),user.getUsername(), user.getPassword(), authority);
+        return new userDetail(user.getUserId(), user.getUsername(), user.getPassword(), authority);
     }
 
 

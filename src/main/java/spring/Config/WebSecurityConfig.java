@@ -9,8 +9,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.session.SessionRegistry;
-import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -19,6 +17,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import spring.JWT.JwtAuthenticationFilter;
+import spring.Sercurity.userServiceDetail;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
@@ -27,7 +26,7 @@ import java.util.Arrays;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    spring.Sercurity.userServiceDetail userServiceDetail;
+    userServiceDetail userServiceDetail;
 
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() {
@@ -50,8 +49,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth)
             throws Exception {
-        auth.userDetailsService(userServiceDetail) // Cung cáp userservice cho spring security
-                .passwordEncoder(passwordEncoder()); // cung cấp password encoder
+        auth.userDetailsService(userServiceDetail) // cáp userservice cho spring security
+                .passwordEncoder(passwordEncoder()); // cấp password encoder
     }
 
     @Override
@@ -76,12 +75,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf()
                 .disable()
                 .authorizeRequests()
-                .antMatchers("/*","/cai-mat-khau-moi/*").permitAll()
+                .antMatchers("/*", "/cai-mat-khau-moi/*").permitAll()
                 .antMatchers("/dang-xuat").authenticated()
-                .antMatchers("/seller/*","/seller/*/*").hasAnyAuthority("SELLER", "ADMIN")
-                .antMatchers("/user/*","/user/*/*").hasAnyAuthority("USER", "ADMIN","SELLER")
-                .antMatchers("/admin/*","/admin/*/*").hasAnyAuthority("ADMIN")
-                .antMatchers("/xem-tai-khoan").hasAnyAuthority("SELLER","USER","ADMIN")
+                .antMatchers("/seller/*", "/seller/*/*").hasAnyAuthority("SELLER", "ADMIN")
+                .antMatchers("/user/*", "/user/*/*").hasAnyAuthority("USER", "ADMIN", "SELLER")
+                .antMatchers("/admin/*", "/admin/*/*").hasAnyAuthority("ADMIN")
+                .antMatchers("/xem-tai-khoan").hasAnyAuthority("SELLER", "USER", "ADMIN")
                 .and()
                 .logout().logoutUrl("/dang-xuat").permitAll()
                 .logoutSuccessHandler(new SimpleUrlLogoutSuccessHandler()).permitAll()
@@ -94,7 +93,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
 
     }
-//    @Bean
+
+    //    @Bean
 //    public SessionRegistry sessionRegistry(){
 //        SessionRegistry sessionRegistry = new SessionRegistryImpl();
 //        return sessionRegistry;

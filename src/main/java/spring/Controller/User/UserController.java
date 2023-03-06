@@ -7,16 +7,17 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import spring.Entity.Mail;
-import spring.Entity.Model.OrderssDetail;
-import spring.Entity.Model.User;
+import spring.Entity.Orderss;
+import spring.Entity.OrderssDetail;
+import spring.Entity.User;
 import spring.JWT.JwtTokenProvider;
-import spring.Repository.MailService;
-import spring.Repository.UserRepository;
 import spring.Sercurity.userDetail;
-import spring.Service.OrderssDeSevice;
-import spring.Service.OrderssSevice;
-import spring.Service.UserService;
+import spring.factory.OrderssDeFactory;
+import spring.factory.OrderssFactory;
+import spring.factory.UserFactory;
+import spring.model.Mail;
+import spring.repository.MailService;
+import spring.repository.UserRepository;
 
 import java.util.List;
 import java.util.Map;
@@ -25,7 +26,7 @@ import java.util.Map;
 @RequestMapping(value = {"api/app"})
 public class UserController {
     @Autowired
-    UserService userService;
+    UserFactory userFactory;
     @Autowired
     PasswordEncoder passwordEncoder;
     @Autowired
@@ -37,14 +38,14 @@ public class UserController {
     @Autowired
     JwtTokenProvider jwtTokenProvider;
     @Autowired
-    OrderssSevice orderssSevice;
+    OrderssFactory orderssFactory;
     @Autowired
-    OrderssDeSevice orderssDeSevice;
+    OrderssDeFactory orderssDeFactory;
 
     @PostMapping(value = {"update/profile"})
     public ResponseEntity<User> editInfo(@RequestBody(required = false) User user) throws Exception {
         userDetail userDetail = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user1 = userService.findUserByUserId(user.getUserId());
+        User user1 = userFactory.findUserByUserId(user.getUserId());
         if (user.getFullName() != null) {
             user1.setFullName(user.getFullName());
 //            userService.editUserFullname(user.getFullName(), userDetail.getUserId());
@@ -69,28 +70,28 @@ public class UserController {
             user1.setSex(user.getSex());
 //            userService.editUserSex(user.getSex(), userDetail.getUserId());
         }
-        userService.saveUser(user1);
-        user1 = userService.findUserByUserId(user.getUserId());
+        userFactory.saveUser(user1);
+        user1 = userFactory.findUserByUserId(user.getUserId());
         return new ResponseEntity<>(user1, HttpStatus.OK);
     }
 
     @PostMapping(value = {"update/avatar"})
-    public ResponseEntity<User> editImg(@RequestBody Map<String,Object> image) throws Exception {
+    public ResponseEntity<User> editImg(@RequestBody Map<String, Object> image) throws Exception {
         userDetail userDetail = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userService.findUserByUserId(userDetail.getUserId());
+        User user = userFactory.findUserByUserId(userDetail.getUserId());
         user.setImage(image.get("image").toString());
-        userService.saveUser(user);
+        userFactory.saveUser(user);
 //        userService.editImage(getImageByte(), user.getUserId());
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @PostMapping(value = {"update/password"})
-    public ResponseEntity<?> editPassword(@RequestBody Map<String,Object> password) {
+    public ResponseEntity<?> editPassword(@RequestBody Map<String, Object> password) {
         userDetail userDetail = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userService.findUserByUserId(userDetail.getUserId());
+        User user = userFactory.findUserByUserId(userDetail.getUserId());
         if (passwordEncoder.matches(password.get("oldPassword").toString(), user.getPassword())) {
             user.setPassword(passwordEncoder.encode(password.get("newPassword").toString()));
-            userService.saveUser(user);
+            userFactory.saveUser(user);
 //            userService.editUserPass(passwordEncoder.encode(newPassword), user.getUserId());
             return new ResponseEntity<>("thanh cong roi ban ey", HttpStatus.OK);
         } else {
@@ -100,7 +101,7 @@ public class UserController {
 
     public byte[] getImageByte() {
         userDetail userDetail = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userService.findUserByUserId(userDetail.getUserId());
+        User user = userFactory.findUserByUserId(userDetail.getUserId());
         if (user.getImage() == null)
             return null;
         return user.getImage().getBytes();
@@ -120,7 +121,7 @@ public class UserController {
                     "<h2>Xin chào quý khách mật khẩu của bạn đang được reset.</br>\n" +
                     "\tHãy nhấp vào link dưới đây để cài đặt mật khẩu lại. Cảm ơn quý khách\n</h2>\n" +
 //                    "<h3>Link: </h3>" + "<a href=https://uitbook.netlify.app/cai-dat-mat-khau-moi/"+Email+"/" + token + ">" + email + "</a>");
-            "<h3>Link: </h3>" + "<a href=http://localhost:3000/cai-dat-mat-khau-moi/"+Email+"/" + token + ">" + email + "</a>");
+                    "<h3>Link: </h3>" + "<a href=http://localhost:3000/cai-dat-mat-khau-moi/" + Email + "/" + token + ">" + email + "</a>");
 
             mailService.sendEmail(mail);
             return new ResponseEntity<>("successful", HttpStatus.OK);
@@ -129,45 +130,48 @@ public class UserController {
     }
 
     @PostMapping(value = {"reset/password/{token}"})
-    public ResponseEntity<?> setPassword(@PathVariable("token")String token, @RequestBody Map<String,Object> emailAndPass) {
-        if (jwtTokenProvider.validateToken(token)){
-            userService.setPassword(passwordEncoder.encode(emailAndPass.get("password").toString()),emailAndPass.get("email").toString());
+    public ResponseEntity<?> setPassword(@PathVariable("token") String token, @RequestBody Map<String, Object> emailAndPass) {
+        if (jwtTokenProvider.validateToken(token)) {
+            userFactory.setPassword(passwordEncoder.encode(emailAndPass.get("password").toString()), emailAndPass.get("email").toString());
             return new ResponseEntity<>("successful", HttpStatus.OK);
         }
-        return new ResponseEntity<>("error",HttpStatus.OK);
+        return new ResponseEntity<>("error", HttpStatus.OK);
     }
 
     @GetMapping(value = {"profile"})
     public ResponseEntity<User> getUser() throws Exception {
         userDetail userDetail = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userService.findUserByUserId(userDetail.getUserId());
+        User user = userFactory.findUserByUserId(userDetail.getUserId());
         if (user == null) {
             return new ResponseEntity<>(HttpStatus.OK);
         }
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
+
     @GetMapping("user/{email}")
-    public ResponseEntity<?> getUserByEmail(@PathVariable(name = "email")String email){
-        if (email!=null)
-            return new ResponseEntity<>(userService.findUser(email),HttpStatus.OK);
+    public ResponseEntity<?> getUserByEmail(@PathVariable(name = "email") String email) {
+        if (email != null)
+            return new ResponseEntity<>(userFactory.findUser(email), HttpStatus.OK);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+
     @PostMapping(value = {"order"})
-    public ResponseEntity<List<spring.Entity.Model.Orderss>> findOrderss(@RequestBody Map<String,Object> keysearch) {
-        if (orderssSevice.findOrder(keysearch.get("keysearch").toString()).size()==0) {
+    public ResponseEntity<List<Orderss>> findOrderss(@RequestBody Map<String, Object> keysearch) {
+        if (orderssFactory.findOrder(keysearch.get("keysearch").toString()).size() == 0) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
-            List<spring.Entity.Model.Orderss> orderssList = orderssSevice.findOrder(keysearch.get("keysearch").toString());
+            List<Orderss> orderssList = orderssFactory.findOrder(keysearch.get("keysearch").toString());
             return new ResponseEntity<>(orderssList, HttpStatus.OK);
         }
     }
+
     @PostMapping(value = {"order-detail/{id}"})
-    public ResponseEntity<?> findOrderDe(@PathVariable("id")String orderDeId) {
-        if (orderDeId == null){
+    public ResponseEntity<?> findOrderDe(@PathVariable("id") String orderDeId) {
+        if (orderDeId == null) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {
-            List<OrderssDetail> orderssDetail = orderssDeSevice.findOrderssDe(orderDeId);
-            return new ResponseEntity<>(orderssDetail,HttpStatus.OK);
+            List<OrderssDetail> orderssDetail = orderssDeFactory.findOrderssDe(orderDeId);
+            return new ResponseEntity<>(orderssDetail, HttpStatus.OK);
         }
     }
 }

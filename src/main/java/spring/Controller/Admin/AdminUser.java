@@ -3,30 +3,32 @@ package spring.Controller.Admin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import spring.Entity.Model.Role;
-import spring.Entity.Model.User;
-import spring.Service.RoleService;
-import spring.Service.UserService;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
+import spring.Entity.Role;
+import spring.Entity.User;
+import spring.factory.RoleFactory;
+import spring.factory.UserFactory;
 
-import java.util.List;
 import java.util.Map;
 
 @RestController
 public class AdminUser {
     @Autowired
-    UserService userService;
+    UserFactory userFactory;
     @Autowired
-    RoleService roleService;
+    RoleFactory roleFactory;
 
 
     @PostMapping(value = {"/api/admin/{id}"})
-    public ResponseEntity<?> editeRole(@PathVariable("id") String userId, @RequestBody Map<String,Object> roleName) {
-        spring.Entity.Model.User user = userService.findUserByUserId(userId);
+    public ResponseEntity<?> editeRole(@PathVariable("id") String userId, @RequestBody Map<String, Object> roleName) {
+        User user = userFactory.findUserByUserId(userId);
 
-        Role role = roleService.findRoleByName(roleName.get("roleName").toString());
+        Role role = roleFactory.findRoleByName(roleName.get("roleName").toString());
         user.setRole(role);
-        userService.saveUser(user);
+        userFactory.saveUser(user);
         return new ResponseEntity<>("successful", HttpStatus.OK);
     }
 }

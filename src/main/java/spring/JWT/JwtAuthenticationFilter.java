@@ -7,9 +7,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
-import spring.Entity.Model.User;
+import spring.Entity.User;
 import spring.Sercurity.userDetail;
-import spring.Service.UserService;
+import spring.factory.UserFactory;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -19,7 +19,7 @@ import java.io.IOException;
 
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Autowired
-    UserService userService;
+    UserFactory userFactory;
     @Autowired
     JwtTokenProvider tokenProvider;
 
@@ -29,10 +29,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             String jwt = getJwtFromRequest(request);
             if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
                 String userId = tokenProvider.getUserIdFromJWT(jwt);
-                User user = userService.findUserByUserId(userId);
+                User user = userFactory.findUserByUserId(userId);
                 if (user != null) {
-                //Phải chuyển user thành userdetails bằng userdetail implement userdetailservice
-                UserDetails userDetails = userDetail.createUserDetail(user);
+                    //Phải chuyển user thành userdetails bằng userdetail implement userdetailservice
+                    UserDetails userDetails = userDetail.createUserDetail(user);
                     UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                     authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authenticationToken);

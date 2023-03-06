@@ -9,20 +9,20 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
-import spring.Entity.BookList;
-import spring.Service.BookService;
-import spring.Service.CategoryService;
+import spring.factory.BookFactory;
+import spring.factory.CategoryFactory;
+import spring.model.BookList;
 
 import java.util.List;
 
 @RestController
 public class Book {
     @Autowired
-    BookService booksService;
+    BookFactory booksService;
     @Autowired
-    CategoryService categoryService;
+    CategoryFactory categoryFactory;
 
-    @GetMapping(value = {"api/seller/page/{number}","api/admin/page/{number}"})
+    @GetMapping(value = {"api/seller/page/{number}", "api/admin/page/{number}"})
     public ResponseEntity<BookList> getAllBook(
             @PathVariable(name = "number", required = false) Integer page) throws Exception {
         BookList bookList = new BookList();
@@ -30,8 +30,8 @@ public class Book {
             page = 0;
         }
         Pageable pageable = PageRequest.of(page, 12);
-        Page<spring.Entity.Model.Book> bookPage = booksService.getAllBookByAdmin(pageable);
-        List<spring.Entity.Model.Book> bookPageContent = bookPage.getContent();
+        Page<spring.Entity.Book> bookPage = booksService.getAllBookByAdmin(pageable);
+        List<spring.Entity.Book> bookPageContent = bookPage.getContent();
         if (bookPageContent.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.OK);
         } else {

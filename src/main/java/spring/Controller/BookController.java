@@ -5,22 +5,21 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-import spring.Entity.BookList;
-import spring.Entity.Filter;
-import spring.Entity.Model.Book;
-import spring.Entity.Model.Rating;
-import spring.Entity.Model.User;
+import spring.Entity.Book;
+import spring.Entity.Rating;
+import spring.Entity.User;
 import spring.Sercurity.userDetail;
-import spring.Service.BookService;
-import spring.Service.CategoryService;
-import spring.Service.RatingService;
-import spring.Service.UserService;
+import spring.factory.BookFactory;
+import spring.factory.CategoryFactory;
+import spring.factory.RatingFactory;
+import spring.factory.UserFactory;
+import spring.model.BookList;
+import spring.model.filter.Filter;
 
 import java.util.List;
 import java.util.Map;
@@ -30,13 +29,13 @@ import java.util.Objects;
 @RequestMapping(value = {"api/app"})
 public class BookController {
     @Autowired
-    BookService booksService;
+    BookFactory booksService;
     @Autowired
-    CategoryService categoryService;
+    CategoryFactory categoryFactory;
     @Autowired
-    UserService userService;
+    UserFactory userFactory;
     @Autowired
-    RatingService ratingService;
+    RatingFactory ratingFactory;
 
     @PostMapping(value = {"search/book"})
     public ResponseEntity<List<Book>> findBook(@RequestBody Map<String, Object> infoBook) throws Exception {
@@ -104,7 +103,7 @@ public class BookController {
     }
 
     @GetMapping("category/data-filter/{id}")
-    public ResponseEntity<?> findDataFilter(@PathVariable("id")String categoryId) {
+    public ResponseEntity<?> findDataFilter(@PathVariable("id") String categoryId) {
         return new ResponseEntity<>(booksService.dataFilters(categoryId), HttpStatus.OK);
     }
 
@@ -116,12 +115,12 @@ public class BookController {
             return new ResponseEntity<>("error", HttpStatus.OK);
         }
         userDetail userDetail = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userService.findUserByUserId(userDetail.getUserId());
+        User user = userFactory.findUserByUserId(userDetail.getUserId());
         Book book = booksService.findBookByBookId(bookId);
         rating.setUser(user);
         rating.setBook(book);
         rating.setRating(star);
-        ratingService.save(rating);
+        ratingFactory.save(rating);
         book.setRating(rating.getRating());
         booksService.saveBook(book);
         return new ResponseEntity<>("successful", HttpStatus.OK);

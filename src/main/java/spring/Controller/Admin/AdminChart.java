@@ -5,41 +5,45 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import spring.Entity.*;
-import spring.Service.OrderssDeSevice;
-import spring.Service.OrderssSevice;
-import spring.Service.UserService;
+import spring.factory.OrderssDeFactory;
+import spring.factory.OrderssFactory;
+import spring.factory.UserFactory;
+import spring.model.BookCategory;
+import spring.model.response.Chart;
+import spring.model.response.MonthBook;
+import spring.model.response.MonthPrice;
+import spring.model.response.MonthUser;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 public class AdminChart {
     @Autowired
-    OrderssSevice orderssSevice;
+    OrderssFactory orderssFactory;
     @Autowired
-    OrderssDeSevice orderssDeSevice;
+    OrderssDeFactory orderssDeFactory;
     @Autowired
-    UserService userService;
+    UserFactory userFactory;
+
     @GetMapping(value = "/api/admin/chart")
-    public ResponseEntity<?> chart(){
-        List<month_book> bookAndMonth = orderssSevice.getBookAndMonth();
-        if (orderssSevice.getBookAndMonth() == null || orderssSevice.getBookAndMonth().isEmpty()){
+    public ResponseEntity<?> chart() {
+        List<MonthBook> bookAndMonth = orderssFactory.getBookAndMonth();
+        if (orderssFactory.getBookAndMonth() == null || orderssFactory.getBookAndMonth().isEmpty()) {
             bookAndMonth.clear();
         }
-        List<book_category> bookAndCategory = orderssDeSevice.getBookAndCategory();
-        if (bookAndCategory == null || bookAndCategory.isEmpty()){
+        List<BookCategory> bookAndCategory = orderssDeFactory.getBookAndCategory();
+        if (bookAndCategory == null || bookAndCategory.isEmpty()) {
             bookAndCategory.clear();
         }
-        List<month_price> priceAndMonth = orderssDeSevice.getPriceAndMonth();
-        if (priceAndMonth == null || priceAndMonth.isEmpty()){
+        List<MonthPrice> priceAndMonth = orderssDeFactory.getPriceAndMonth();
+        if (priceAndMonth == null || priceAndMonth.isEmpty()) {
             priceAndMonth.clear();
         }
-        List<month_user> userAndMonth = userService.getUserAndMonnth();
-        if (userAndMonth == null || userAndMonth.isEmpty()){
+        List<MonthUser> userAndMonth = userFactory.getUserAndMonnth();
+        if (userAndMonth == null || userAndMonth.isEmpty()) {
             userAndMonth.clear();
         }
-        Chart chart = new Chart(bookAndMonth,bookAndCategory,userAndMonth,priceAndMonth);
+        Chart chart = new Chart(bookAndMonth, bookAndCategory, userAndMonth, priceAndMonth);
         return new ResponseEntity<>(chart, HttpStatus.OK);
     }
 }

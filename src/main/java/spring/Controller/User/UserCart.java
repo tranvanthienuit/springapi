@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import spring.Entity.*;
-import spring.Entity.Model.*;
-import spring.Repository.MailService;
 import spring.Sercurity.userDetail;
-import spring.Service.*;
+import spring.factory.*;
+import spring.model.Cart;
+import spring.model.CartBook;
+import spring.model.Mail;
+import spring.repository.MailService;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -24,17 +26,17 @@ import java.util.Objects;
 @RestController
 public class UserCart {
     @Autowired
-    BookService bookService;
+    BookFactory bookFactory;
     @Autowired
-    OrderssSevice orderssSevice;
+    OrderssFactory orderssFactory;
     @Autowired
-    OrderssDeSevice orderssDeSevice;
+    OrderssDeFactory orderssDeFactory;
     @Autowired
-    UserService userService;
+    UserFactory userFactory;
     @Autowired
     MailService mailService;
     @Autowired
-    RoleService roleService;
+    RoleFactory roleFactory;
 
     @PostMapping(value = {"api/user/buy"})
     public ResponseEntity<List<CartBook>> Orderss(@RequestBody Cart objectCart) throws Exception {
@@ -44,12 +46,12 @@ public class UserCart {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (!Objects.equals(auth.getName(), "anonymousUser")) {
             userDetail user1 = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-            user = userService.findUserByUserId(user1.getUserId());
+            user = userFactory.findUserByUserId(user1.getUserId());
         } else {
             user = objectCart.getUser();
         }
         if (user.getUserId() == null) {
-            Role role = roleService.findRoleByName("USER");
+            Role role = roleFactory.findRoleByName("USER");
             user.setRole(role);
         }
         user.setAddress(objectCart.getUser().getAddress());
@@ -68,24 +70,24 @@ public class UserCart {
             totalBook = totalBook + cartBook.getQuantity();
             totalPrice = totalPrice + cartBook.getTotal();
             OrderssDetail orderssDetail = new OrderssDetail();
-            for (Book book1 : bookService.getAllBook()) {
+            for (Book book1 : bookFactory.getAllBook()) {
                 // tìm từng cuốn sách
-                Book book = bookService.findBookByBookId(cartBook.getBooks());
+                Book book = bookFactory.findBookByBookId(cartBook.getBooks());
                 //so sánh có trong list sach không
                 if (book.getBookId().equals(book1.getBookId())) {
                     //nếu sách nhiều hơn mua thì lấy sách trừ mua
                     if (book1.getCount() - cartBook.getQuantity() >= 0) {
                         orderssDetail.setCount(cartBook.getQuantity());
                         orderssDetail.setTotal((Double) cartBook.getTotal());
-                        bookService.findBookAndUpdate(book1.getCount() - cartBook.getQuantity(), book.getBookId());
+                        bookFactory.findBookAndUpdate(book1.getCount() - cartBook.getQuantity(), book.getBookId());
                     } else {
-                        bookService.findBookAndUpdate(0, book.getBookId());
+                        bookFactory.findBookAndUpdate(0, book.getBookId());
                         orderssDetail.setTotal((Double) cartBook.getTotal());
                         orderssDetail.setCount(book1.getCount());
                     }
                 }
             }
-            sendEmail sendEmail = new sendEmail(cart,user,totalPrice,totalBook);
+            sendEmail sendEmail = new sendEmail(cart, user, totalPrice, totalBook);
             Thread thread = new Thread(sendEmail);
             thread.start();
 
@@ -97,20 +99,21 @@ public class UserCart {
             orderss.setNameUser(user.getUsername());
             orderss.setFullName(user.getFullName());
             orderss.setTotalPrice(totalPrice);
-            orderssSevice.saveOrderss(orderss);
+            orderssFactory.saveOrderss(orderss);
 
 
             orderssDetail.setOrderss(orderss);
-            Book book = bookService.findBookByBookId(cartBook.getBooks());
+            Book book = bookFactory.findBookByBookId(cartBook.getBooks());
             orderssDetail.setBook(book);
-            orderssDeSevice.saveOrderssDe(orderssDetail);
+            orderssDeFactory.saveOrderssDe(orderssDetail);
         }
 
         return new ResponseEntity<>(cart, HttpStatus.OK);
     }
+
     @Data
     @AllArgsConstructor
-    private class sendEmail implements Runnable{
+    private class sendEmail implements Runnable {
         private List<CartBook> cart;
         private User user;
         private Double totalPrice;
@@ -170,7 +173,7 @@ public class UserCart {
                         "    </thead><tbody>";
                 String table = "";
                 for (CartBook cartBook : cart) {
-                    Book book = bookService.findBookByBookId(cartBook.getBooks());
+                    Book book = bookFactory.findBookByBookId(cartBook.getBooks());
                     table = table + "<tr>\n" +
                             "<td>" + book.getNameBook() + "</td>\n" +
                             "<td>" + cartBook.getQuantity() + "</td>\n" +
@@ -181,7 +184,7 @@ public class UserCart {
                         "</table>" + "</br><h3>TỔNG GIÁ TIỀN CỦA BẠN LÀ : " + totalPrice + "</h3></br><h3>TỔNG SỐ SÁCH BẠN ĐÃ MUA : " + totalBook + "</h3>";
                 mail.setMailContent(html);
                 mailService.sendEmail(mail);
-            } catch (Exception e){
+            } catch (Exception e) {
                 System.out.println("Exception is caught");
             }
         }

@@ -5,56 +5,54 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
-import spring.Entity.Model.Blog;
-import spring.Entity.Model.User;
+import spring.Entity.Blog;
+import spring.Entity.User;
 import spring.Sercurity.userDetail;
-import spring.Service.BlogService;
-import spring.Service.UserService;
+import spring.factory.BlogFactory;
+import spring.factory.UserFactory;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @RestController
 @RequestMapping("api/admin/blog")
 public class AdminBlog {
     @Autowired
-    BlogService blogService;
+    BlogFactory blogFactory;
     @Autowired
-    UserService userService;
-
+    UserFactory userFactory;
 
 
     @PostMapping("/create")
-    public ResponseEntity<?> saveBlog(@RequestBody Blog blog) throws Exception{
+    public ResponseEntity<?> saveBlog(@RequestBody Blog blog) throws Exception {
         userDetail user1 = (userDetail) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        User user = userService.findUserByUserId(user1.getUserId());
+        User user = userFactory.findUserByUserId(user1.getUserId());
         blog.setUser(user);
         LocalDate ldate = LocalDate.now();
         java.sql.Date date = java.sql.Date.valueOf(ldate);
         blog.setDayAdd(date);
-        blogService.saveBlog(blog);
+        blogFactory.saveBlog(blog);
         return new ResponseEntity<>("successful", HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteBlog(@RequestBody @PathVariable(name = "id") String blogId){
-        blogService.findAndDeleteBlog(blogId);
+    public ResponseEntity<?> deleteBlog(@RequestBody @PathVariable(name = "id") String blogId) {
+        blogFactory.findAndDeleteBlog(blogId);
         return new ResponseEntity<>("successful", HttpStatus.OK);
     }
 
 
     @PostMapping("/update")
-    public ResponseEntity<?> updateBlog(@RequestBody Blog blog){
-        Blog blog1 = blogService.findBlog(blog.getBlogId());
-        if (blog.getContent()!=null)
+    public ResponseEntity<?> updateBlog(@RequestBody Blog blog) {
+        Blog blog1 = blogFactory.findBlog(blog.getBlogId());
+        if (blog.getContent() != null)
             blog1.setContent(blog.getContent());
-        if (blog.getContext()!=null)
+        if (blog.getContext() != null)
             blog1.setContext(blog.getContext());
-        if (blog.getTitle()!=null)
+        if (blog.getTitle() != null)
             blog1.setTitle(blog.getTitle());
-        if (blog.getImage()!=null)
+        if (blog.getImage() != null)
             blog1.setImage(blog.getImage());
-        blogService.saveBlog(blog1);
+        blogFactory.saveBlog(blog1);
         return new ResponseEntity<>("successful", HttpStatus.OK);
     }
 
