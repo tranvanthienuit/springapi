@@ -3,10 +3,8 @@ package spring.JWT;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import spring.Sercurity.userDetail;
 
 import java.util.Date;
-import java.util.UUID;
 
 @Component
 @Slf4j
@@ -16,7 +14,7 @@ public class JwtTokenProvider {
     private final long JWT_EXPIRATION_REFRESH = 604800000L;
 
 
-    public String generateAccessToken(String userId,String userName) {
+    public String generateAccessToken(String userId, String userName) {
         // Lấy thông tin user
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + JWT_EXPIRATION);
@@ -29,7 +27,8 @@ public class JwtTokenProvider {
                 .signWith(SignatureAlgorithm.HS512, JWT_SECRET)
                 .compact();
     }
-    public String generateRefreshToken(String userId,String userName) {
+
+    public String generateRefreshToken(String userId, String userName) {
         // Lấy thông tin user
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + JWT_EXPIRATION_REFRESH);
